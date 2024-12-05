@@ -286,7 +286,7 @@ public class BackupImageView extends View {
     protected void onDetachedFromWindow() {
         super.onDetachedFromWindow();
         attached = false;
-        if (applyAttach) imageReceiver.onDetachedFromWindow();
+        imageReceiver.onDetachedFromWindow();
         if (blurAllowed) {
             blurImageReceiver.onDetachedFromWindow();
         }
@@ -295,13 +295,11 @@ public class BackupImageView extends View {
         }
     }
 
-    public boolean applyAttach = true;
-
     @Override
     protected void onAttachedToWindow() {
         super.onAttachedToWindow();
         attached = true;
-        if (applyAttach) imageReceiver.onAttachedToWindow();
+        imageReceiver.onAttachedToWindow();
         if (blurAllowed) {
             blurImageReceiver.onAttachedToWindow();
         }

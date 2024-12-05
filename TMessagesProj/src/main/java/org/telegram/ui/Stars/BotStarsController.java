@@ -48,62 +48,49 @@ public class BotStarsController {
         currentAccount = account;
     }
 
-    private final HashMap<Long, Long> lastLoadedBotStarsStats = new HashMap<>();
-    private final HashMap<Long, TLRPC.TL_payments_starsRevenueStats> botStarsStats = new HashMap<>();
+    private final HashMap<Long, Long> lastLoadedStats = new HashMap<>();
+    private final HashMap<Long, TLRPC.TL_payments_starsRevenueStats> stats = new HashMap<>();
 
-    private final HashMap<Long, Long> lastLoadedTonStats = new HashMap<>();
-    private final HashMap<Long, TL_stats.TL_broadcastRevenueStats> tonStats = new HashMap<>();
+    private final HashMap<Long, Long> lastLoadedChannelStats = new HashMap<>();
+    private final HashMap<Long, TL_stats.TL_broadcastRevenueStats> channelStats = new HashMap<>();
 
-    public long getBotStarsBalance(long did) {
-        TLRPC.TL_payments_starsRevenueStats botStats = getStarsRevenueStats(did);
+    public long getBalance(long did) {
+        TLRPC.TL_payments_starsRevenueStats botStats = getRevenueStats(did);
         return botStats == null ? 0 : botStats.status.current_balance;
     }
 
-    public long getTONBalance(long did) {
-        TL_stats.TL_broadcastRevenueStats botStats = getTONRevenueStats(did, false);
+    public long getChannelBalance(long did) {
+        TL_stats.TL_broadcastRevenueStats botStats = getChannelRevenueStats(did, false);
         return botStats == null || botStats.balances == null ? 0 : botStats.balances.current_balance;
     }
 
     public long getAvailableBalance(long did) {
-        TLRPC.TL_payments_starsRevenueStats botStats = getStarsRevenueStats(did);
+        TLRPC.TL_payments_starsRevenueStats botStats = getRevenueStats(did);
         return botStats == null ? 0 : botStats.status.available_balance;
     }
 
-    public boolean isStarsBalanceAvailable(long did) {
-        return getStarsRevenueStats(did) != null;
+    public boolean isBalanceAvailable(long did) {
+        return getRevenueStats(did) != null;
     }
 
-    public boolean isTONBalanceAvailable(long did) {
-        return getTONRevenueStats(did, false) != null;
+    public TLRPC.TL_payments_starsRevenueStats getRevenueStats(long did) {
+        return getRevenueStats(did, false);
     }
 
-    public TLRPC.TL_payments_starsRevenueStats getStarsRevenueStats(long did) {
-        return getStarsRevenueStats(did, false);
-    }
-
-    public boolean botHasStars(long did) {
-        TLRPC.TL_payments_starsRevenueStats stats = getStarsRevenueStats(did);
+    public boolean hasStars(long did) {
+        TLRPC.TL_payments_starsRevenueStats stats = getRevenueStats(did);
         return stats != null && stats.status != null && (stats.status.available_balance > 0 || stats.status.overall_revenue > 0 || stats.status.current_balance > 0);
     }
 
-    public boolean botHasTON(long did) {
-        TL_stats.TL_broadcastRevenueStats stats = getTONRevenueStats(did, false);
-        return stats != null && (stats.balances.current_balance > 0 || stats.balances.available_balance > 0 || stats.balances.overall_revenue > 0);
+    public void preloadRevenueStats(long did) {
+        Long lastLoaded = lastLoadedStats.get(did);
+        TLRPC.TL_payments_starsRevenueStats botStats = stats.get(did);
+        getRevenueStats(did, lastLoaded == null || System.currentTimeMillis() - lastLoaded > 1000 * 30);
     }
 
-    public void preloadStarsStats(long did) {
-        Long lastLoaded = lastLoadedBotStarsStats.get(did);
-        getStarsRevenueStats(did, lastLoaded == null || System.currentTimeMillis() - lastLoaded > 1000 * 30);
-    }
-
-    public void preloadTonStats(long did) {
-        Long lastLoaded = lastLoadedTonStats.get(did);
-        getTONRevenueStats(did, lastLoaded == null || System.currentTimeMillis() - lastLoaded > 1000 * 30);
-    }
-
-    public TLRPC.TL_payments_starsRevenueStats getStarsRevenueStats(long did, boolean force) {
-        Long lastLoaded = lastLoadedBotStarsStats.get(did);
-        TLRPC.TL_payments_starsRevenueStats botStats = botStarsStats.get(did);
+    public TLRPC.TL_payments_starsRevenueStats getRevenueStats(long did, boolean force) {
+        Long lastLoaded = lastLoadedStats.get(did);
+        TLRPC.TL_payments_starsRevenueStats botStats = stats.get(did);
         if (lastLoaded == null || System.currentTimeMillis() - lastLoaded > 1000 * 60 * 5 || force) {
             TLRPC.TL_payments_getStarsRevenueStats req = new TLRPC.TL_payments_getStarsRevenueStats();
             req.dark = Theme.isCurrentThemeDark();
@@ -111,39 +98,35 @@ public class BotStarsController {
             ConnectionsManager.getInstance(currentAccount).sendRequest(req, (res, err) -> AndroidUtilities.runOnUIThread(() -> {
                 if (res instanceof TLRPC.TL_payments_starsRevenueStats) {
                     TLRPC.TL_payments_starsRevenueStats r = (TLRPC.TL_payments_starsRevenueStats) res;
-                    botStarsStats.put(did, r);
+                    stats.put(did, r);
                 } else {
-                    botStarsStats.put(did, null);
+                    stats.put(did, null);
                 }
-                lastLoadedBotStarsStats.put(did, System.currentTimeMillis());
+                lastLoadedStats.put(did, System.currentTimeMillis());
                 NotificationCenter.getInstance(currentAccount).postNotificationName(NotificationCenter.botStarsUpdated, did);
             }));
         }
         return botStats;
     }
 
-    public TL_stats.TL_broadcastRevenueStats getTONRevenueStats(long did, boolean force) {
-        Long lastLoaded = lastLoadedTonStats.get(did);
-        TL_stats.TL_broadcastRevenueStats botStats = tonStats.get(did);
+    public TL_stats.TL_broadcastRevenueStats getChannelRevenueStats(long did, boolean force) {
+        Long lastLoaded = lastLoadedChannelStats.get(did);
+        TL_stats.TL_broadcastRevenueStats botStats = channelStats.get(did);
         if (lastLoaded == null || System.currentTimeMillis() - lastLoaded > 1000 * 60 * 5 || force) {
             TL_stats.TL_getBroadcastRevenueStats req = new TL_stats.TL_getBroadcastRevenueStats();
             req.dark = Theme.isCurrentThemeDark();
-            req.peer = MessagesController.getInstance(currentAccount).getInputPeer(did);
-            final int stats_dc;
+            req.channel = MessagesController.getInstance(currentAccount).getInputChannel(-did);
             TLRPC.ChatFull chatFull = MessagesController.getInstance(currentAccount).getChatFull(-did);
-            if (chatFull != null) {
-                stats_dc = chatFull.stats_dc;
-            } else {
-                stats_dc = ConnectionsManager.DEFAULT_DATACENTER_ID;
-            }
+            if (chatFull == null) return botStats;
+            final int stats_dc = chatFull.stats_dc;
             ConnectionsManager.getInstance(currentAccount).sendRequest(req, (res, err) -> AndroidUtilities.runOnUIThread(() -> {
                 if (res instanceof TL_stats.TL_broadcastRevenueStats) {
                     TL_stats.TL_broadcastRevenueStats r = (TL_stats.TL_broadcastRevenueStats) res;
-                    tonStats.put(did, r);
+                    channelStats.put(did, r);
                 } else {
-                    tonStats.put(did, null);
+                    channelStats.put(did, null);
                 }
-                lastLoadedTonStats.put(did, System.currentTimeMillis());
+                lastLoadedChannelStats.put(did, System.currentTimeMillis());
                 NotificationCenter.getInstance(currentAccount).postNotificationName(NotificationCenter.botStarsUpdated, did);
             }), null, null, 0, stats_dc, ConnectionsManager.ConnectionTypeGeneric, true);
         }
@@ -159,7 +142,7 @@ public class BotStarsController {
                 ChannelMonetizationLayout.instance.reloadTransactions();
             }
         } else {
-            TLRPC.TL_payments_starsRevenueStats s = getStarsRevenueStats(dialogId, true);
+            TLRPC.TL_payments_starsRevenueStats s = getRevenueStats(dialogId, true);
             if (s != null) {
                 s.status = update.status;
                 NotificationCenter.getInstance(currentAccount).postNotificationName(NotificationCenter.botStarsUpdated, dialogId);

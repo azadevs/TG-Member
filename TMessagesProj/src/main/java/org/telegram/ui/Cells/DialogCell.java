@@ -1590,7 +1590,7 @@ public class DialogCell extends BaseCell implements StoriesListPlaceProvider.Ava
                                             }
                                             w -= currentMessagePaint.measureText(": ");
                                         }
-                                        if (w > 0 && message.messageTrimmedToHighlightCut) {
+                                        if (w > 0) {
                                             text = AndroidUtilities.ellipsizeCenterEnd(text, message.highlightedWords.get(0), w, currentMessagePaint, 130).toString();
                                         }
                                         messageString = new SpannableStringBuilder(emoji).append(text);
@@ -1672,9 +1672,7 @@ public class DialogCell extends BaseCell implements StoriesListPlaceProvider.Ava
                                                 messageString = message.messageTrimmedToHighlight;
                                             }
                                             int w = getMeasuredWidth() - dp(messagePaddingStart + 23 );
-                                            if (message.messageTrimmedToHighlightCut) {
-                                                messageString = AndroidUtilities.ellipsizeCenterEnd(messageString, message.highlightedWords.get(0), w, currentMessagePaint, 130);
-                                            }
+                                            messageString = AndroidUtilities.ellipsizeCenterEnd(messageString, message.highlightedWords.get(0), w, currentMessagePaint, 130);
                                         } else {
                                             SpannableStringBuilder stringBuilder = new SpannableStringBuilder(msgText);
                                             if (message != null) {
@@ -1705,9 +1703,7 @@ public class DialogCell extends BaseCell implements StoriesListPlaceProvider.Ava
                                             messageString = message.messageTrimmedToHighlight;
                                         }
                                         int w = getMeasuredWidth() - dp(messagePaddingStart + 23 + (thumbSize + 2) * thumbsCount - 2 + 5);
-                                        if (message.messageTrimmedToHighlightCut) {
-                                            messageString = AndroidUtilities.ellipsizeCenterEnd(messageString, message.highlightedWords.get(0), w, currentMessagePaint, 130).toString();
-                                        }
+                                        messageString = AndroidUtilities.ellipsizeCenterEnd(messageString, message.highlightedWords.get(0), w, currentMessagePaint, 130).toString();
                                     } else {
                                         if (messageString.length() > 150) {
                                             messageString = messageString.subSequence(0, 150);
@@ -5178,7 +5174,7 @@ public class DialogCell extends BaseCell implements StoriesListPlaceProvider.Ava
                     }
                     w -= currentMessagePaint.measureText(": ");
                 }
-                if (w > 0 && message.messageTrimmedToHighlightCut) {
+                if (w > 0) {
                     text = AndroidUtilities.ellipsizeCenterEnd(text, message.highlightedWords.get(0), w, currentMessagePaint, 130).toString();
                 }
                 stringBuilder = new SpannableStringBuilder(emoji).append(text);

@@ -10,11 +10,14 @@ package org.telegram.ui.Cells;
 
 import android.content.Context;
 import android.graphics.Canvas;
+import android.graphics.PorterDuff;
+import android.graphics.PorterDuffColorFilter;
 import android.graphics.RectF;
 import android.graphics.drawable.Drawable;
 import android.view.Gravity;
 import android.view.accessibility.AccessibilityNodeInfo;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 
 import org.telegram.messenger.AndroidUtilities;
 import org.telegram.messenger.ContactsController;
@@ -23,6 +26,7 @@ import org.telegram.messenger.MessagesController;
 import org.telegram.messenger.MessagesStorage;
 import org.telegram.messenger.NotificationCenter;
 import org.telegram.messenger.NotificationsController;
+import org.telegram.messenger.R;
 import org.telegram.messenger.UserConfig;
 import org.telegram.messenger.UserObject;
 import org.telegram.tgnet.TLRPC;
@@ -42,6 +46,7 @@ public class DrawerUserCell extends FrameLayout implements NotificationCenter.No
     private AvatarDrawable avatarDrawable;
     private GroupCreateCheckBox checkBox;
     private AnimatedEmojiDrawable.SwapAnimatedEmojiDrawable status;
+    private ImageView settingsButton;
 
     private int accountNumber;
     private RectF rect = new RectF();
@@ -65,6 +70,22 @@ public class DrawerUserCell extends FrameLayout implements NotificationCenter.No
         textView.setGravity(Gravity.LEFT | Gravity.CENTER_VERTICAL);
         textView.setEllipsizeByGradient(24);
         addView(textView, LayoutHelper.createFrame(LayoutHelper.MATCH_PARENT, LayoutHelper.WRAP_CONTENT, Gravity.LEFT | Gravity.CENTER_VERTICAL, 72, 0, 14, 0));
+
+        settingsButton = new ImageView(context);
+        settingsButton.setImageResource(R.drawable.msg_settings);
+        settingsButton.setLayoutParams(new FrameLayout.LayoutParams(
+                AndroidUtilities.dp(20),
+                AndroidUtilities.dp(20)
+        ));
+        settingsButton.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
+        settingsButton.setPadding(0, 0, 0, 0);
+        settingsButton.setColorFilter(new PorterDuffColorFilter(Theme.getColor(Theme.key_chats_menuItemIcon), PorterDuff.Mode.MULTIPLY));
+        settingsButton.setBackground(Theme.createSelectorDrawable(Theme.getColor(Theme.key_listSelector), 1));
+        settingsButton.setOnClickListener(v -> {
+            // Button bosilganda bajariladigan kod
+
+        });
+        addView(settingsButton, LayoutHelper.createFrame(20, 20, Gravity.RIGHT | Gravity.CENTER_VERTICAL, 0, 0, 14, 0));
 
         status = new AnimatedEmojiDrawable.SwapAnimatedEmojiDrawable(textView, AndroidUtilities.dp(20));
         textView.setRightDrawable(status);
@@ -180,7 +201,7 @@ public class DrawerUserCell extends FrameLayout implements NotificationCenter.No
         int countTop = AndroidUtilities.dp(12.5f);
         int textWidth = (int) Math.ceil(Theme.dialogs_countTextPaint.measureText(text));
         int countWidth = Math.max(AndroidUtilities.dp(10), textWidth);
-        int countLeft = getMeasuredWidth() - countWidth - AndroidUtilities.dp(25);
+        int countLeft = getMeasuredWidth() - countWidth - AndroidUtilities.dp(56);
 
         int x = countLeft - AndroidUtilities.dp(5.5f);
         rect.set(x, countTop, x + countWidth + AndroidUtilities.dp(14), countTop + AndroidUtilities.dp(23));

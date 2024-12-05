@@ -647,9 +647,7 @@ public class BlurringShader {
                 }
                 canvas.rotate(orientation);
                 canvas.translate(-padding - width / 2f, -padding - height / 2f);
-                try {
-                    canvas.drawBitmap(bitmap, src, dst, null);
-                } catch (Exception e) {}
+                canvas.drawBitmap(bitmap, src, dst, null);
                 Utilities.stackBlurBitmap(resultBitmap, 6);
                 if (padding > 0) {
                     // clear borders

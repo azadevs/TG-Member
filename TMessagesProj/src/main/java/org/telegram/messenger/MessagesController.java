@@ -697,7 +697,6 @@ public class MessagesController extends BaseController implements NotificationCe
     public int stargiftsMessageLengthMax;
     public int stargiftsConvertPeriodMax;
     public boolean videoIgnoreAltDocuments;
-    public boolean disableBotFullscreenBlur;
 
     public int checkResetLangpack;
     public boolean folderTags;
@@ -966,6 +965,7 @@ public class MessagesController extends BaseController implements NotificationCe
         public Integer posts_between;
         public long loadTime;
         public boolean loading;
+        public boolean faked;
     }
 
     private class SendAsPeersInfo {
@@ -1553,7 +1553,6 @@ public class MessagesController extends BaseController implements NotificationCe
         stargiftsMessageLengthMax = mainPreferences.getInt("stargiftsMessageLengthMax", 255);
         stargiftsConvertPeriodMax = mainPreferences.getInt("stargiftsConvertPeriodMax", isTest ? 300 : 90 * 86400);
         videoIgnoreAltDocuments = mainPreferences.getBoolean("videoIgnoreAltDocuments", false);
-        disableBotFullscreenBlur = mainPreferences.getBoolean("disableBotFullscreenBlur", false);
         storiesPosting = mainPreferences.getString("storiesPosting", "enabled");
         storiesEntities = mainPreferences.getString("storiesEntities", "premium");
         storiesExportNopublicLink = mainPreferences.getBoolean("storiesExportNopublicLink", false);
@@ -2382,7 +2381,7 @@ public class MessagesController extends BaseController implements NotificationCe
     private Runnable loadAppConfigRunnable = this::loadAppConfig;
 
     public void loadAppConfig() {
-        loadAppConfig(true);
+        loadAppConfig(false);
     }
 
     public void loadAppConfig(boolean force) {
@@ -3739,17 +3738,6 @@ public class MessagesController extends BaseController implements NotificationCe
                     }
                     break;
                 }
-                case "bot_fullscreen_blur_disable": {
-                    if (value.value instanceof TLRPC.TL_jsonBool) {
-                        TLRPC.TL_jsonBool bool = (TLRPC.TL_jsonBool) value.value;
-                        if (bool.value != disableBotFullscreenBlur) {
-                            disableBotFullscreenBlur = bool.value;
-                            editor.putBoolean("disableBotFullscreenBlur", disableBotFullscreenBlur);
-                            changed = true;
-                        }
-                    }
-                    break;
-                }
                 case "stories_posting": {
                     if (value.value instanceof TLRPC.TL_jsonString) {
                         TLRPC.TL_jsonString str = (TLRPC.TL_jsonString) value.value;
@@ -4941,8 +4929,7 @@ public class MessagesController extends BaseController implements NotificationCe
         canEditFactcheck = false;
         starsLocked = true;
         factcheckLengthLimit = 1024;
-        videoIgnoreAltDocuments = false;
-        mainPreferences.edit().remove("starsLocked").remove("getfileExperimentalParams").remove("smsjobsStickyNotificationEnabled").remove("channelRevenueWithdrawalEnabled").remove("showAnnualPerMonth").remove("canEditFactcheck").remove("factcheckLengthLimit").remove("videoIgnoreAltDocuments").apply();
+        mainPreferences.edit().remove("starsLocked").remove("getfileExperimentalParams").remove("smsjobsStickyNotificationEnabled").remove("channelRevenueWithdrawalEnabled").remove("showAnnualPerMonth").remove("canEditFactcheck").remove("factcheckLengthLimit").apply();
     }
 
     private boolean savePremiumFeaturesPreviewOrder(String key, SparseIntArray array, SharedPreferences.Editor editor, ArrayList<TLRPC.JSONValue> value) {
@@ -8333,10 +8320,6 @@ public class MessagesController extends BaseController implements NotificationCe
     }
 
     public void deleteMessages(ArrayList<Integer> messages, ArrayList<Long> randoms, TLRPC.EncryptedChat encryptedChat, long dialogId, boolean forAll, int mode, boolean cacheOnly, long taskId, TLObject taskRequest, int topicId) {
-        deleteMessages(messages, randoms, encryptedChat, dialogId, forAll, mode, cacheOnly, taskId, taskRequest, topicId, false, 0);
-    }
-
-    public void deleteMessages(ArrayList<Integer> messages, ArrayList<Long> randoms, TLRPC.EncryptedChat encryptedChat, long dialogId, boolean forAll, int mode, boolean cacheOnly, long taskId, TLObject taskRequest, int topicId, boolean movedToScheduled, int movedToScheduledMessageId) {
         final boolean scheduled = mode == ChatActivity.MODE_SCHEDULED;
         final boolean quickReplies = mode == ChatActivity.MODE_QUICK_REPLIES;
         if ((messages == null || messages.isEmpty()) && taskId == 0) {
@@ -8382,7 +8365,7 @@ public class MessagesController extends BaseController implements NotificationCe
                 getMessagesStorage().markMessagesAsDeleted(dialogId, messages, true, forAll, 0, topicId);
                 getMessagesStorage().updateDialogsWithDeletedMessages(dialogId, channelId, messages, null, true);
             }
-            getNotificationCenter().postNotificationName(NotificationCenter.messagesDeleted, messages, channelId, scheduled, false, movedToScheduled, movedToScheduledMessageId);
+            getNotificationCenter().postNotificationName(NotificationCenter.messagesDeleted, messages, channelId, scheduled);
         } else {
             if (taskRequest instanceof TLRPC.TL_channels_deleteMessages) {
                 channelId = ((TLRPC.TL_channels_deleteMessages) taskRequest).channel.channel_id;
@@ -10831,14 +10814,6 @@ public class MessagesController extends BaseController implements NotificationCe
             Timer.done(t3);
             Timer.finish(loaderLogger);
         });
-    }
-
-    public void forceNoReload(long dialogId, int mode) {
-        if (mode == ChatActivity.MODE_SCHEDULED) {
-            lastScheduledServerQueryTime.put(dialogId, SystemClock.elapsedRealtime());
-        } else if (mode == ChatActivity.MODE_DEFAULT) {
-            lastServerQueryTime.put(dialogId, SystemClock.elapsedRealtime());
-        }
     }
 
     public void loadHintDialogs() {
@@ -16673,7 +16648,6 @@ public class MessagesController extends BaseController implements NotificationCe
         LongSparseArray<ArrayList<Integer>> deletedMessages = null;
         LongSparseArray<ArrayList<Integer>> deletedQuickReplyMessages = null;
         LongSparseArray<ArrayList<Integer>> scheduledDeletedMessages = null;
-        LongSparseArray<ArrayList<Integer>> scheduledDeletedMessagesSent = null;
         LongSparseArray<ArrayList<Long>> groupSpeakingActions = null;
         LongSparseIntArray importingActions = null;
         LongSparseIntArray clearHistoryMessages = null;
@@ -17020,24 +16994,12 @@ public class MessagesController extends BaseController implements NotificationCe
                     scheduledDeletedMessages = new LongSparseArray<>();
                 }
                 long id = MessageObject.getPeerId(update.peer);
-                ArrayList<Integer> arrayList = scheduledDeletedMessages.get(id);
+                ArrayList<Integer> arrayList = scheduledDeletedMessages.get(MessageObject.getPeerId(update.peer));
                 if (arrayList == null) {
                     arrayList = new ArrayList<>();
                     scheduledDeletedMessages.put(id, arrayList);
                 }
                 arrayList.addAll(update.messages);
-
-                if (!update.sent_messages.isEmpty()) {
-                    if (scheduledDeletedMessagesSent == null) {
-                        scheduledDeletedMessagesSent = new LongSparseArray<>();
-                    }
-                    ArrayList<Integer> arrayList2 = scheduledDeletedMessagesSent.get(id);
-                    if (arrayList2 == null) {
-                        arrayList2 = new ArrayList<>();
-                        scheduledDeletedMessagesSent.put(id, arrayList2);
-                    }
-                    arrayList2.addAll(update.sent_messages);
-                }
             } else if (baseUpdate instanceof TLRPC.TL_updateUserTyping || baseUpdate instanceof TLRPC.TL_updateChatUserTyping || baseUpdate instanceof TLRPC.TL_updateChannelUserTyping) {
                 long userId;
                 long chatId;
@@ -17929,10 +17891,6 @@ public class MessagesController extends BaseController implements NotificationCe
                             getContactsController().setPrivacyRules(update.rules, ContactsController.PRIVACY_RULES_TYPE_VOICE_MESSAGES);
                         } else if (update.key instanceof TLRPC.TL_privacyKeyAbout) {
                             getContactsController().setPrivacyRules(update.rules, ContactsController.PRIVACY_RULES_TYPE_BIO);
-                        } else if (update.key instanceof TLRPC.TL_privacyKeyBirthday) {
-                            getContactsController().setPrivacyRules(update.rules, ContactsController.PRIVACY_RULES_TYPE_BIRTHDAY);
-                        } else if (update.key instanceof TLRPC.TL_privacyKeyStarGiftsAutoSave) {
-                            getContactsController().setPrivacyRules(update.rules, ContactsController.PRIVACY_RULES_TYPE_GIFTS);
                         }
                     } else if (baseUpdate instanceof TLRPC.TL_updateStarsRevenueStatus) {
                         BotStarsController.getInstance(currentAccount).onUpdate((TLRPC.TL_updateStarsRevenueStatus) baseUpdate);
@@ -18525,7 +18483,7 @@ public class MessagesController extends BaseController implements NotificationCe
                                 svc.onCallUpdated(call);
                             } else {
                                 if (call instanceof TLRPC.TL_phoneCallDiscarded) {
-                                    VoIPPreNotificationService.dismiss(ApplicationLoader.applicationContext, false);
+                                    VoIPPreNotificationService.dismiss(ApplicationLoader.applicationContext);
                                 }
                                 if (VoIPService.callIShouldHavePutIntoIntent != null) {
                                     if (BuildVars.LOGS_ENABLED) {
@@ -18927,7 +18885,6 @@ public class MessagesController extends BaseController implements NotificationCe
         LongSparseArray<ArrayList<Integer>> deletedMessagesFinal = deletedMessages;
         LongSparseArray<ArrayList<Integer>> deletedQuickRepliesMessagesFinal = deletedQuickReplyMessages;
         LongSparseArray<ArrayList<Integer>> scheduledDeletedMessagesFinal = scheduledDeletedMessages;
-        LongSparseArray<ArrayList<Integer>> scheduledDeletedMessagesSentFinal = scheduledDeletedMessagesSent;
         LongSparseIntArray clearHistoryMessagesFinal = clearHistoryMessages;
         getMessagesStorage().getStorageQueue().postRunnable(() -> AndroidUtilities.runOnUIThread(() -> {
             int updateMask = 0;
@@ -19066,8 +19023,8 @@ public class MessagesController extends BaseController implements NotificationCe
                     if (arrayList == null) {
                         continue;
                     }
-                    ArrayList<Integer> sentMessageIds = scheduledDeletedMessagesSentFinal != null ? scheduledDeletedMessagesSentFinal.get(key) : null;
-                    getNotificationCenter().postNotificationName(NotificationCenter.messagesDeleted, arrayList, DialogObject.isChatDialog(key) && ChatObject.isChannel(getChat(-key)) ? -key : 0, true, false, false, 0, sentMessageIds);
+
+                    getNotificationCenter().postNotificationName(NotificationCenter.messagesDeleted, arrayList, DialogObject.isChatDialog(key) && ChatObject.isChannel(getChat(-key)) ? -key : 0, true);
                 }
             }
             if (clearHistoryMessagesFinal != null) {
@@ -19358,19 +19315,36 @@ public class MessagesController extends BaseController implements NotificationCe
     }
 
     public SponsoredMessagesInfo getSponsoredMessages(long dialogId) {
+//        for (int i = 0; i < sponsoredMessages.size(); ++i) {
+//            if (sponsoredMessages.valueAt(i).messages != null && !sponsoredMessages.valueAt(i).messages.isEmpty()) {
+//                SponsoredMessagesInfo info = sponsoredMessages.valueAt(i);
+//                if (info.faked) {
+//                    return info;
+//                }
+//                info.loading = true;
+//                info.faked = true;
+//                AndroidUtilities.runOnUIThread(() -> {
+//                    info.loading = false;
+//                    getNotificationCenter().postNotificationName(NotificationCenter.didLoadSponsoredMessages, dialogId, info.messages);
+//                    AndroidUtilities.runOnUIThread(() -> { info.faked = false; }, 500);
+//                }, 1500);
+//                return null;
+//            }
+//        }
         SponsoredMessagesInfo info = sponsoredMessages.get(dialogId);
         if (info != null && (info.loading || Math.abs(SystemClock.elapsedRealtime() - info.loadTime) <= 5 * 60 * 1000)) {
             return info;
         }
-        if (dialogId < 0 ? !ChatObject.isChannel(getChat(-dialogId)) : !UserObject.isBot(getUser(dialogId))) {
+        TLRPC.Chat chat = getChat(-dialogId);
+        if (!ChatObject.isChannel(chat)) {
             return null;
         }
         info = new SponsoredMessagesInfo();
         info.loading = true;
         sponsoredMessages.put(dialogId, info);
         SponsoredMessagesInfo infoFinal = info;
-        TLRPC.TL_messages_getSponsoredMessages req = new TLRPC.TL_messages_getSponsoredMessages();
-        req.peer = getInputPeer(dialogId);
+        TLRPC.TL_channels_getSponsoredMessages req = new TLRPC.TL_channels_getSponsoredMessages();
+        req.channel = getInputChannel(chat);
         getConnectionsManager().sendRequest(req, (response, error) -> {
             ArrayList<MessageObject> result;
             Integer posts_between;
@@ -21944,9 +21918,6 @@ public class MessagesController extends BaseController implements NotificationCe
         openApp(null, bot, null, classGuid, null);
     }
     public void openApp(BaseFragment _fragment, TLRPC.User bot, String param, int classGuid, Browser.Progress progress) {
-        openApp(_fragment, bot, param, classGuid, progress, false, false);
-    }
-    public void openApp(BaseFragment _fragment, TLRPC.User bot, String param, int classGuid, Browser.Progress progress, boolean botCompact, boolean botFullscreen) {
         if (bot == null) return;
 
         boolean[] cancelled = new boolean[] { false };
@@ -21968,50 +21939,50 @@ public class MessagesController extends BaseController implements NotificationCe
                     fragment = ((ActionBarLayout) fragment.getParentLayout()).getSheetFragment();
                 }
                 AndroidUtilities.hideKeyboard(fragment.getFragmentView());
-                WebViewRequestProps props = WebViewRequestProps.of(currentAccount, bot.id, bot.id, null, null, BotWebViewAttachedSheet.TYPE_WEB_VIEW_BOT_MAIN, 0, false, null, false, param, bot, 0, botCompact, botFullscreen);
+                WebViewRequestProps props = WebViewRequestProps.of(currentAccount, bot.id, bot.id, null, null, BotWebViewAttachedSheet.TYPE_WEB_VIEW_BOT_MAIN, 0, false, null, false, param, bot, 0, false);
                 if (LaunchActivity.instance != null && LaunchActivity.instance.getBottomSheetTabs() != null && LaunchActivity.instance.getBottomSheetTabs().tryReopenTab(props) != null) {
                     return;
                 }
-//                if (AndroidUtilities.isTablet() || true) {
+                if (AndroidUtilities.isTablet()) {
                     BotWebViewSheet webViewSheet = new BotWebViewSheet(fragment.getContext(), fragment.getResourceProvider());
                     webViewSheet.setDefaultFullsize(true);
-                    webViewSheet.setNeedsContext(false);
+                    webViewSheet.setNeedsContext(true);
                     webViewSheet.setParentActivity(fragment.getParentActivity());
                     webViewSheet.requestWebView(fragment, props);
                     webViewSheet.show();
-//                } else {
-//                    BotWebViewAttachedSheet sheet = fragment.createBotViewer();
-//                    sheet.setDefaultFullsize(true);
-//                    sheet.setNeedsContext(false);
-//                    sheet.setParentActivity(fragment.getParentActivity());
-//                    sheet.requestWebView(fragment, props);
-//                    sheet.show();
-//                }
+                } else {
+                    BotWebViewAttachedSheet sheet = fragment.createBotViewer();
+                    sheet.setDefaultFullsize(true);
+                    sheet.setNeedsContext(false);
+                    sheet.setParentActivity(fragment.getParentActivity());
+                    sheet.requestWebView(fragment, props);
+                    sheet.show();
+                }
             } else if (botInfo[0] != null && botInfo[0].menu_button instanceof TL_bots.TL_botMenuButton) {
                 if (fragment.getParentLayout() instanceof ActionBarLayout) {
                     fragment = ((ActionBarLayout) fragment.getParentLayout()).getSheetFragment();
                 }
                 TL_bots.TL_botMenuButton btn = (TL_bots.TL_botMenuButton) botInfo[0].menu_button;
                 AndroidUtilities.hideKeyboard(fragment.getFragmentView());
-                WebViewRequestProps props = WebViewRequestProps.of(currentAccount, bot.id, bot.id, btn.text, btn.url, BotWebViewAttachedSheet.TYPE_BOT_MENU_BUTTON, 0, false, null, false, param, bot, 0, botCompact, botFullscreen);
+                WebViewRequestProps props = WebViewRequestProps.of(currentAccount, bot.id, bot.id, btn.text, btn.url, BotWebViewAttachedSheet.TYPE_BOT_MENU_BUTTON, 0, false, null, false, param, bot, 0, false);
                 if (LaunchActivity.instance != null && LaunchActivity.instance.getBottomSheetTabs() != null && LaunchActivity.instance.getBottomSheetTabs().tryReopenTab(props) != null) {
                     return;
                 }
-//                if (AndroidUtilities.isTablet() || true) {
+                if (AndroidUtilities.isTablet()) {
                     BotWebViewSheet webViewSheet = new BotWebViewSheet(fragment.getContext(), fragment.getResourceProvider());
                     webViewSheet.setDefaultFullsize(false);
                     webViewSheet.setNeedsContext(true);
                     webViewSheet.setParentActivity(fragment.getParentActivity());
                     webViewSheet.requestWebView(fragment, props);
                     webViewSheet.show();
-//                } else {
-//                    BotWebViewAttachedSheet sheet = fragment.createBotViewer();
-//                    sheet.setDefaultFullsize(false);
-//                    sheet.setNeedsContext(false);
-//                    sheet.setParentActivity(fragment.getParentActivity());
-//                    sheet.requestWebView(fragment, props);
-//                    sheet.show();
-//                }
+                } else {
+                    BotWebViewAttachedSheet sheet = fragment.createBotViewer();
+                    sheet.setDefaultFullsize(false);
+                    sheet.setNeedsContext(false);
+                    sheet.setParentActivity(fragment.getParentActivity());
+                    sheet.requestWebView(fragment, props);
+                    sheet.show();
+                }
             } else {
                 fragment.presentFragment(ChatActivity.of(bot.id));
             }

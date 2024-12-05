@@ -221,7 +221,7 @@ public class TopicCreateFragment extends BaseFragment {
                             editForumRequest.title = topicName;
                             editForumRequest.flags |= 1;
                         }
-                        if (topicForEdit.icon_emoji_id != selectedEmojiDocumentId) {
+                        if (topicForEdit.icon_emoji_id != editForumRequest.icon_emoji_id) {
                             editForumRequest.icon_emoji_id = selectedEmojiDocumentId;
                             editForumRequest.flags |= 2;
                         }

@@ -129,9 +129,7 @@ public class GroupCreateActivity extends BaseFragment implements NotificationCen
     private boolean searching;
     private int chatAddType;
     private boolean allowPremium;
-    private boolean allowMiniapps;
     private GroupCreateSpan selectedPremium;
-    private GroupCreateSpan selectedMiniapps;
     private LongSparseArray<GroupCreateSpan> selectedContacts = new LongSparseArray<>();
     private ArrayList<GroupCreateSpan> allSpans = new ArrayList<>();
     private GroupCreateSpan currentDeletingSpan;
@@ -145,7 +143,7 @@ public class GroupCreateActivity extends BaseFragment implements NotificationCen
     private PermanentLinkBottomSheet sharedLinkBottomSheet;
 
     public interface GroupCreateActivityDelegate {
-        void didSelectUsers(boolean withPremium, boolean withMiniapps, ArrayList<Long> ids);
+        void didSelectUsers(boolean withPremium, ArrayList<Long> ids);
     }
 
     public interface GroupCreateActivityImportDelegate {
@@ -162,12 +160,10 @@ public class GroupCreateActivity extends BaseFragment implements NotificationCen
 
     private ArrayList<Long> toSelectIds;
     private boolean toSelectPremium;
-    private boolean toSelectMiniapps;
-    public void select(ArrayList<Long> ids, boolean premium, boolean miniapps) {
+    public void select(ArrayList<Long> ids, boolean premium) {
         if (spansContainer == null) {
             toSelectIds = ids;
             toSelectPremium = premium;
-            toSelectMiniapps = miniapps;
             return;
         }
         if (premium && selectedPremium == null) {
@@ -177,14 +173,6 @@ public class GroupCreateActivity extends BaseFragment implements NotificationCen
         } else if (!premium && selectedPremium != null) {
             spansContainer.removeSpan(selectedPremium);
             selectedPremium = null;
-        }
-        if (miniapps && selectedMiniapps == null) {
-            selectedMiniapps = new GroupCreateSpan(getContext(), "miniapps");
-            spansContainer.addSpan(selectedMiniapps);
-            selectedMiniapps.setOnClickListener(GroupCreateActivity.this);
-        } else if (!miniapps && selectedMiniapps != null) {
-            spansContainer.removeSpan(selectedMiniapps);
-            selectedMiniapps = null;
         }
         for (long id : ids) {
             TLObject obj;
@@ -372,9 +360,6 @@ public class GroupCreateActivity extends BaseFragment implements NotificationCen
             if (span == selectedPremium) {
                 selectedPremium = null;
             }
-            if (span == selectedMiniapps) {
-                selectedMiniapps = null;
-            }
             allSpans.remove(span);
             span.setOnClickListener(null);
 
@@ -475,7 +460,6 @@ public class GroupCreateActivity extends BaseFragment implements NotificationCen
         addToGroup = args.getBoolean("addToGroup", false);
         chatAddType = args.getInt("chatAddType", 0);
         allowPremium = args.getBoolean("allowPremium", false);
-        allowMiniapps = args.getBoolean("allowMiniapps", false);
         chatId = args.getLong("chatId");
         channelId = args.getLong("channelId");
         if (isAlwaysShare || isNeverShare || addToGroup) {
@@ -784,7 +768,7 @@ public class GroupCreateActivity extends BaseFragment implements NotificationCen
         });
 
         if (toSelectIds != null) {
-            select(toSelectIds, toSelectPremium, toSelectMiniapps);
+            select(toSelectIds, toSelectPremium);
         }
 
         FlickerLoadingView flickerLoadingView = new FlickerLoadingView(context);
@@ -823,18 +807,6 @@ public class GroupCreateActivity extends BaseFragment implements NotificationCen
                     } else {
                         spansContainer.removeSpan(selectedPremium);
                         selectedPremium = null;
-                    }
-                    checkVisibleRows();
-                    return;
-                }
-                if (cell.currentMiniapps) {
-                    if (selectedMiniapps == null) {
-                        selectedMiniapps = new GroupCreateSpan(editText.getContext(), "miniapps");
-                        spansContainer.addSpan(selectedMiniapps);
-                        selectedMiniapps.setOnClickListener(GroupCreateActivity.this);
-                    } else {
-                        spansContainer.removeSpan(selectedMiniapps);
-                        selectedMiniapps = null;
                     }
                     checkVisibleRows();
                     return;
@@ -1116,10 +1088,6 @@ public class GroupCreateActivity extends BaseFragment implements NotificationCen
                     cell.setChecked(selectedPremium != null, true);
                     cell.setCheckBoxEnabled(true);
                     continue;
-                } else if (object instanceof String && "miniapps".equalsIgnoreCase((String) object)) {
-                    cell.setChecked(selectedMiniapps != null, true);
-                    cell.setCheckBoxEnabled(true);
-                    continue;
                 } else {
                     id = 0;
                 }
@@ -1244,7 +1212,7 @@ public class GroupCreateActivity extends BaseFragment implements NotificationCen
                     }
                     if (isAlwaysShare || isNeverShare) {
                         if (delegate != null) {
-                            delegate.didSelectUsers(selectedPremium != null, selectedMiniapps != null, result);
+                            delegate.didSelectUsers(selectedPremium != null, result);
                         }
                         finishFragment();
                     } else {
@@ -1360,7 +1328,6 @@ public class GroupCreateActivity extends BaseFragment implements NotificationCen
         private int userTypesHeaderRow;
         private int firstSectionRow;
         private int premiumRow;
-        private int miniappsRow;
         private int usersStartRow;
         private int inviteViaLink;
         private int noContactsStubRow;
@@ -1472,7 +1439,6 @@ public class GroupCreateActivity extends BaseFragment implements NotificationCen
             userTypesHeaderRow = -1;
             firstSectionRow = -1;
             premiumRow = -1;
-            miniappsRow = -1;
             if (searching) {
                 count = searchResult.size();
                 int localServerCount = searchAdapterHelper.getLocalServerSearch().size();
@@ -1488,9 +1454,6 @@ public class GroupCreateActivity extends BaseFragment implements NotificationCen
                 if (allowPremium) {
                     userTypesHeaderRow = firstSectionRow = count++;
                     premiumRow = count++;
-                } else if (allowMiniapps) {
-                    userTypesHeaderRow = firstSectionRow = count++;
-                    miniappsRow = count++;
                 } else {
                     firstSectionRow = count;
                 }
@@ -1644,10 +1607,6 @@ public class GroupCreateActivity extends BaseFragment implements NotificationCen
                             cell.setPremium();
                             cell.setChecked(selectedPremium != null, false);
                             return;
-                        } else if (position == miniappsRow) {
-                            cell.setMiniapps();
-                            cell.setChecked(selectedMiniapps != null, false);
-                            return;
                         }
                         object = contacts.get(position - usersStartRow);
                     }
@@ -1694,7 +1653,7 @@ public class GroupCreateActivity extends BaseFragment implements NotificationCen
                 if (position == userTypesHeaderRow) {
                     return 0;
                 }
-                if (position == premiumRow || position == miniappsRow) {
+                if (position == premiumRow) {
                     return 1;
                 }
                 if (inviteViaLink != 0 && position == 0) {

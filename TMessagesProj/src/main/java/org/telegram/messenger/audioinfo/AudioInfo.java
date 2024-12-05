@@ -149,10 +149,7 @@ public abstract class AudioInfo {
 				OtherAudioInfo info = new OtherAudioInfo(file);
 				if (info.failed) return null;
 				return info;
-			} else if (file.getAbsolutePath().endsWith("mp3") || (
-				(header[0] == 'I' && header[1] == 'D' && header[2] == '3') ||
-				(header[0] == 'T' && header[1] == 'A' && header[2] == 'G')
-			)) {
+			} else if (file.getAbsolutePath().endsWith("mp3")) {
                 return new MP3Info(input, file.length());
             } else {
 				OtherAudioInfo info = new OtherAudioInfo(file);

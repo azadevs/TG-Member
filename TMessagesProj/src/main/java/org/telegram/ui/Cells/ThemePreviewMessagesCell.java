@@ -390,7 +390,7 @@ public class ThemePreviewMessagesCell extends LinearLayout {
                 }
 
                 @Override
-                public void didPressReplyMessage(ChatMessageCell cell, int id, float x, float y, boolean longpress) {
+                public void didPressReplyMessage(ChatMessageCell cell, int id) {
                     if (allowLoadingOnTouch()) {
                         progress = ChatActivity.PROGRESS_REPLY;
                         cell.invalidate();

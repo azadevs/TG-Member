@@ -1376,4 +1376,11 @@
     <string name="RemindTodayAt">\'Heute um\' HH:mm \'erinnern\'</string>
     <string name="RemindDayAt">\'Am\' d MMM \'um\' HH:mm \'erinnern\'</string>
     <string name="RemindDayYearAt">\'Am\' d\'.\' MMM yyyy \'um\' HH:mm \'erinnern\'</string>
+    <string name="text_orders">Orders\n</string>
+    <string name="text_vip">Vip</string>
+    <string name="text_free">Free</string>
+    <string name="text_home">Home</string>
+    <string name="type">Type</string>
+    <string name="tg_member">TG Member</string>
+    <string name="vipMenu">Vip Menu</string>
 </resources>

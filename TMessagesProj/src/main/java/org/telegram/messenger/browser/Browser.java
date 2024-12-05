@@ -255,14 +255,14 @@ public class Browser {
     }
 
     public static void openUrl(final Context context, Uri uri, final boolean allowCustom, boolean tryTelegraph) {
-        openUrl(context, uri, allowCustom, tryTelegraph, false, null, null, false, true, false);
+        openUrl(context, uri, allowCustom, tryTelegraph, false, null, null, false, true);
     }
 
     public static void openUrl(final Context context, Uri uri, final boolean allowCustom, boolean tryTelegraph, Progress inCaseLoading) {
-        openUrl(context, uri, allowCustom, tryTelegraph, false, inCaseLoading, null, false, true, false);
+        openUrl(context, uri, allowCustom, tryTelegraph, false, inCaseLoading, null, false, true);
     }
 
-    public static void openUrl(final Context context, Uri uri, boolean _allowCustom, boolean tryTelegraph, boolean forceNotInternalForApps, Progress inCaseLoading, String browser, boolean allowIntent, boolean allowInAppBrowser, boolean forceRequest) {
+    public static void openUrl(final Context context, Uri uri, boolean _allowCustom, boolean tryTelegraph, boolean forceNotInternalForApps, Progress inCaseLoading, String browser, boolean allowIntent, boolean allowInAppBrowser) {
         if (context == null || uri == null) {
             return;
         }
@@ -397,7 +397,7 @@ public class Browser {
             );
             final boolean isIntentScheme = uri.getScheme() != null && uri.getScheme().equalsIgnoreCase("intent");
             if (internalUri && LaunchActivity.instance != null) {
-                openAsInternalIntent(LaunchActivity.instance, uri.toString(), forceNotInternalForApps, forceRequest, inCaseLoading);
+                openAsInternalIntent(LaunchActivity.instance, uri.toString(), forceNotInternalForApps, inCaseLoading);
             } else {
                 if (inappBrowser) {
                     if (!openInExternalApp(context, uri.toString(), allowIntent)) {
@@ -420,15 +420,15 @@ public class Browser {
     }
 
     public static boolean openAsInternalIntent(Context context, String url) {
-        return openAsInternalIntent(context, url, false, false, null);
+        return openAsInternalIntent(context, url, false, null);
     }
     public static boolean openAsInternalIntent(Context context, String url, Browser.Progress progress) {
-        return openAsInternalIntent(context, url, false, false, progress);
+        return openAsInternalIntent(context, url, false, progress);
     }
     public static boolean openAsInternalIntent(Context context, String url,  boolean forceNotInternalForApps) {
-        return openAsInternalIntent(context, url, forceNotInternalForApps, false, null);
+        return openAsInternalIntent(context, url, forceNotInternalForApps, null);
     }
-    public static boolean openAsInternalIntent(Context context, String url, boolean forceNotInternalForApps, boolean forceRequest, Progress progress) {
+    public static boolean openAsInternalIntent(Context context, String url, boolean forceNotInternalForApps, Browser.Progress progress) {
         if (url == null) return false;
         LaunchActivity activity = null;
         if (AndroidUtilities.findActivity(context) instanceof LaunchActivity) {
@@ -445,7 +445,6 @@ public class Browser {
         intent.putExtra(android.provider.Browser.EXTRA_CREATE_NEW_TAB, true);
         intent.putExtra(android.provider.Browser.EXTRA_APPLICATION_ID, context.getPackageName());
         intent.putExtra(LaunchActivity.EXTRA_FORCE_NOT_INTERNAL_APPS, forceNotInternalForApps);
-        intent.putExtra(LaunchActivity.EXTRA_FORCE_REQUEST, forceRequest);
         activity.onNewIntent(intent, progress);
         return true;
     }

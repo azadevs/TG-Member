@@ -113,7 +113,6 @@ public class ReactionsLayoutInBubble {
     Theme.ResourcesProvider resourcesProvider;
     private Integer scrimViewReaction;
     private float scrimProgress;
-    private boolean scrimDirection;
 
     int availableWidth;
     private int lastDrawnWidth;
@@ -186,7 +185,6 @@ public class ReactionsLayoutInBubble {
                         }
                     }
                     ReactionButton button = new ReactionLayoutButton(old, reactionCount, isSmall, isTag);
-                    button.inGroup = messageObject.hasValidGroupId();
                     reactionButtons.add(button);
                     hasPaidReaction = hasPaidReaction || button.paid;
                     if (!isSmall && !isTag && messageObject.messageOwner.reactions.recent_reactions != null) {
@@ -241,7 +239,6 @@ public class ReactionsLayoutInBubble {
                     }
                     if (isSmall && reactionCount.count > 1 && reactionCount.chosen) {
                         ReactionButton button2 = new ReactionLayoutButton(null, reactionCount, isSmall, isTag);
-                        button2.inGroup = messageObject.hasValidGroupId();
                         reactionButtons.add(button2);
                         reactionButtons.get(0).isSelected = false;
                         reactionButtons.get(1).isSelected = true;
@@ -299,7 +296,7 @@ public class ReactionsLayoutInBubble {
                     button.width += button.counterDrawable.getCurrentWidth() + dp(8);
                 }
             } else {
-                button.width = (int) (dp(8) + dp(20) + dp(button.animatedEmojiDrawable != null ? 6 : 4));
+                button.width = (int) (dp(8) + dp(20) + dp(4));
                 if (button.avatarsDrawable != null && button.users.size() > 0) {
                     button.users.size();
                     int c1 = 1;
@@ -392,7 +389,7 @@ public class ReactionsLayoutInBubble {
                 alpha = animationProgress;
                 canvas.scale(s, s, totalX + x + reactionButton.width / 2f, totalY + y + reactionButton.height / 2f);
             }
-            reactionButton.draw(canvas, totalX + x, totalY + y, reactionButton.animationType == ANIMATION_TYPE_MOVE ? animationProgress : 1f, alpha, drawOnlyReaction != null, scrimDirection, scrimProgress);
+            reactionButton.draw(canvas, totalX + x, totalY + y, reactionButton.animationType == ANIMATION_TYPE_MOVE ? animationProgress : 1f, alpha, drawOnlyReaction != null);
             canvas.restore();
         }
 
@@ -401,7 +398,7 @@ public class ReactionsLayoutInBubble {
             float s = 0.5f + 0.5f * (1f - animationProgress);
             canvas.save();
             canvas.scale(s, s, totalX + reactionButton.x + reactionButton.width / 2f, totalY + reactionButton.y + reactionButton.height / 2f);
-            outButtons.get(i).draw(canvas, totalX + reactionButton.x, totalY + reactionButton.y, 1f, (1f - animationProgress), false, scrimDirection, scrimProgress);
+            outButtons.get(i).draw(canvas, totalX + reactionButton.x, totalY + reactionButton.y, 1f, (1f - animationProgress), false);
             canvas.restore();
         }
     }
@@ -640,11 +637,6 @@ public class ReactionsLayoutInBubble {
         this.scrimProgress = scrimProgress;
     }
 
-    public void setScrimProgress(float scrimProgress, boolean direction) {
-        this.scrimProgress = scrimProgress;
-        this.scrimDirection = direction;
-    }
-
     public class ReactionLayoutButton extends ReactionButton {
         public ReactionLayoutButton(ReactionButton reuseFrom, TLRPC.ReactionCount reactionCount, boolean isSmall, boolean isTag) {
             super(reuseFrom, currentAccount, parentView, reactionCount, isSmall, isTag, resourcesProvider);
@@ -726,8 +718,6 @@ public class ReactionsLayoutInBubble {
         int animatedEmojiDrawableColor;
         public CounterView.CounterDrawable counterDrawable;
         public AnimatedTextView.AnimatedTextDrawable textDrawable;
-        public AnimatedTextView.AnimatedTextDrawable scrimPreviewCounterDrawable;
-        private boolean lastScrimProgressDirection;
         int backgroundColor;
         int textColor;
         int serviceBackgroundColor;
@@ -738,7 +728,6 @@ public class ReactionsLayoutInBubble {
         public int lastDrawnTagDotColor;
         boolean isSelected;
 
-        public boolean inGroup;
         public boolean isTag;
         AvatarsDrawable avatarsDrawable;
         ArrayList<TLObject> users;
@@ -776,17 +765,9 @@ public class ReactionsLayoutInBubble {
                 textDrawable = new AnimatedTextView.AnimatedTextDrawable(true, true, true);
                 textDrawable.setAnimationProperties(.4f, 0, 320, CubicBezierInterpolator.EASE_OUT_QUINT);
                 textDrawable.setTextSize(dp(13));
-                textDrawable.setCallback(supercallback);
+                textDrawable.setCallback(parentView);
                 textDrawable.setTypeface(AndroidUtilities.bold());
                 textDrawable.setOverrideFullWidth(AndroidUtilities.displaySize.x);
-            }
-            if (scrimPreviewCounterDrawable == null) {
-                scrimPreviewCounterDrawable = new AnimatedTextView.AnimatedTextDrawable(false, false, false, true);
-                scrimPreviewCounterDrawable.setTextSize(dp(12));
-                scrimPreviewCounterDrawable.setCallback(supercallback);
-                scrimPreviewCounterDrawable.setTypeface(AndroidUtilities.bold());
-                scrimPreviewCounterDrawable.setOverrideFullWidth(AndroidUtilities.displaySize.x);
-                scrimPreviewCounterDrawable.setScaleProperty(.35f);
             }
             this.reactionCount = reactionCount;
             this.reaction = reactionCount.reaction;
@@ -914,7 +895,7 @@ public class ReactionsLayoutInBubble {
             canvas.restore();
         }
 
-        public void draw(Canvas canvas, float x, float y, float progress, float alpha, boolean drawOverlayScrim, boolean scrimProgressDirection, float scrimProgress) {
+        public void draw(Canvas canvas, float x, float y, float progress, float alpha, boolean drawOverlayScrim) {
             wasDrawn = true;
             ImageReceiver imageReceiver = animatedEmojiDrawable != null ? animatedEmojiDrawable.getImageReceiver() : this.imageReceiver;
             if (isSmall && imageReceiver != null) {
@@ -968,25 +949,10 @@ public class ReactionsLayoutInBubble {
                 imageReceiver.setAlpha(alpha);
             }
 
-            if (scrimProgress > 0 && lastScrimProgressDirection != scrimProgressDirection) {
-                if (scrimProgressDirection) {
-                    scrimPreviewCounterDrawable.setAnimationProperties(.6f, 0, 650, 1.6f, CubicBezierInterpolator.EASE_OUT_BACK);
-                    scrimPreviewCounterDrawable.setText(AndroidUtilities.formatWholeNumber(count, 0), false);
-                    scrimPreviewCounterDrawable.setText(LocaleController.formatNumber(count, ','), true);
-                } else {
-                    scrimPreviewCounterDrawable.setAnimationProperties(.6f, 0, 320, 1.6f, CubicBezierInterpolator.EASE_OUT_QUINT);
-                    scrimPreviewCounterDrawable.setText(AndroidUtilities.formatWholeNumber(count, 0), true);
-                }
-                lastScrimProgressDirection = scrimProgressDirection;
-            }
-
             final float bounceScale = bounce.getScale(0.1f);
             boolean restore = false;
             int w = width;
-            if (scrimProgress > 0 && !isTag && scrimPreviewCounterDrawable != null && avatarsDrawable == null) {
-                w = (int) (dp(8) + dp(20) + dp(animatedEmojiDrawable != null ? 6 : 4) + scrimPreviewCounterDrawable.getCurrentWidth() + dp(8));
-                scrimPreviewCounterDrawable.setTextColor(lastDrawnTextColor);
-            } else if (progress != 1f && animationType == ANIMATION_TYPE_MOVE) {
+            if (progress != 1f && animationType == ANIMATION_TYPE_MOVE) {
                 w = (int) (width * progress + animateFromWidth * (1f - progress));
             }
             AndroidUtilities.rectTmp.set(x, y, x + w, y + height);
@@ -1070,16 +1036,9 @@ public class ReactionsLayoutInBubble {
                 canvas.restore();
                 tx = textDrawable.getCurrentWidth() + dp(4) * textDrawable.isNotEmpty();
             }
-            if (scrimProgress > 0.0f && !isTag && scrimPreviewCounterDrawable != null && avatarsDrawable == null) {
+            if (counterDrawable != null && drawCounter()) {
                 canvas.save();
-                canvas.translate(x + dp(hasName && !drawTagDot() ? 10 : (hasName ? 9 : 8)) + dp(20) + dp(animatedEmojiDrawable != null ? 5 : 2), y - dp(1));
-                scrimPreviewCounterDrawable.setBounds(0, 0, width, height);
-                scrimPreviewCounterDrawable.draw(canvas);
-                scrimPreviewCounterDrawable.setAlpha((int) (0xFF * alpha));
-                canvas.restore();
-            } else if (counterDrawable != null && drawCounter()) {
-                canvas.save();
-                canvas.translate(x + dp(hasName && !drawTagDot() ? 10 : (hasName ? 9 : 8)) + dp(20) + dp(animatedEmojiDrawable != null ? 5 : 2) + tx + (paid ? -dp(1) : 0), y);
+                canvas.translate(x + dp(hasName && !drawTagDot() ? 10 : (hasName ? 9 : 8)) + dp(20) + dp(2) + tx + (paid ? -dp(1) : 0), y);
                 counterDrawable.draw(canvas);
                 canvas.restore();
             }
@@ -1335,58 +1294,6 @@ public class ReactionsLayoutInBubble {
                 previewAnimatedEmojiDrawable = null;
             }
         }
-
-        private final Drawable.Callback callback = new Drawable.Callback() {
-            @Override
-            public void invalidateDrawable(@NonNull Drawable who) {
-                if (parentView != null) {
-                    parentView.invalidate();
-                    if (inGroup && parentView.getParent() instanceof View) {
-                        ((View) parentView.getParent()).invalidate();
-                    }
-                }
-            }
-
-            @Override
-            public void scheduleDrawable(@NonNull Drawable who, @NonNull Runnable what, long when) {
-                if (parentView != null) {
-                    parentView.scheduleDrawable(who, what, when);
-                }
-            }
-
-            @Override
-            public void unscheduleDrawable(@NonNull Drawable who, @NonNull Runnable what) {
-                if (parentView != null) {
-                    parentView.unscheduleDrawable(who, what);
-                }
-            }
-        };
-
-        private final Drawable.Callback supercallback = new Drawable.Callback() {
-            @Override
-            public void invalidateDrawable(@NonNull Drawable who) {
-                if (parentView != null) {
-                    parentView.invalidate();
-                    if (inGroup && parentView.getParent() != null && parentView.getParent().getParent() instanceof View) {
-                        ((View) parentView.getParent().getParent()).invalidate();
-                    }
-                }
-            }
-
-            @Override
-            public void scheduleDrawable(@NonNull Drawable who, @NonNull Runnable what, long when) {
-                if (parentView != null) {
-                    parentView.scheduleDrawable(who, what, when);
-                }
-            }
-
-            @Override
-            public void unscheduleDrawable(@NonNull Drawable who, @NonNull Runnable what) {
-                if (parentView != null) {
-                    parentView.unscheduleDrawable(who, what);
-                }
-            }
-        };
     }
 
     float lastX;

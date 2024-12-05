@@ -187,7 +187,7 @@ public class ChannelMonetizationLayout extends SizeNotifierFrameLayout implement
         initLevel();
 
         titleInfo = AndroidUtilities.replaceArrows(AndroidUtilities.replaceSingleTag(formatString(R.string.MonetizationInfo, 50), -1, REPLACING_TAG_TYPE_LINK_NBSP, () -> {
-            fragment.showDialog(makeLearnSheet(context, false, resourcesProvider));
+            showLearnSheet();
         }, resourcesProvider), true);
         balanceInfo = AndroidUtilities.replaceArrows(AndroidUtilities.replaceSingleTag(getString(MessagesController.getInstance(currentAccount).channelRevenueWithdrawalEnabled ? R.string.MonetizationBalanceInfo : R.string.MonetizationBalanceInfoNotAvailable), -1, REPLACING_TAG_TYPE_LINK_NBSP, () -> {
             Browser.openUrl(getContext(), getString(R.string.MonetizationBalanceInfoLink));
@@ -525,7 +525,7 @@ public class ChannelMonetizationLayout extends SizeNotifierFrameLayout implement
             r = req;
         } else {
             TL_stats.TL_getBroadcastRevenueWithdrawalUrl req = new TL_stats.TL_getBroadcastRevenueWithdrawalUrl();
-            req.peer = MessagesController.getInstance(currentAccount).getInputPeer(dialogId);
+            req.channel = MessagesController.getInstance(currentAccount).getInputChannel(-dialogId);
             req.password = password != null ? password : new TLRPC.TL_inputCheckPasswordEmpty();
             r = req;
         }
@@ -701,7 +701,7 @@ public class ChannelMonetizationLayout extends SizeNotifierFrameLayout implement
     private void loadStarsStats() {
         if (!starsRevenueAvailable) return;
 
-        TLRPC.TL_payments_starsRevenueStats cachedStats = BotStarsController.getInstance(currentAccount).getStarsRevenueStats(dialogId);
+        TLRPC.TL_payments_starsRevenueStats cachedStats = BotStarsController.getInstance(currentAccount).getRevenueStats(dialogId);
         if (cachedStats != null) {
             AndroidUtilities.runOnUIThread(() -> {
                 applyStarsStats(cachedStats);
@@ -763,7 +763,7 @@ public class ChannelMonetizationLayout extends SizeNotifierFrameLayout implement
             } else {
                 TL_stats.TL_getBroadcastRevenueStats getBroadcastStats = new TL_stats.TL_getBroadcastRevenueStats();
                 getBroadcastStats.dark = Theme.isCurrentThemeDark();
-                getBroadcastStats.peer = MessagesController.getInstance(currentAccount).getInputPeer(dialogId);
+                getBroadcastStats.channel = MessagesController.getInstance(currentAccount).getInputChannel(-dialogId);
                 req = getBroadcastStats;
             }
             int stats_dc = -1;
@@ -880,7 +880,7 @@ public class ChannelMonetizationLayout extends SizeNotifierFrameLayout implement
 
     private void checkLearnSheet() {
         if (isAttachedToWindow() && tonRevenueAvailable && proceedsAvailable && MessagesController.getGlobalMainSettings().getBoolean("monetizationadshint", true)) {
-            fragment.showDialog(makeLearnSheet(getContext(), false, resourcesProvider));
+            showLearnSheet();
             MessagesController.getGlobalMainSettings().edit().putBoolean("monetizationadshint", false).apply();
         }
     }
@@ -1344,7 +1344,7 @@ public class ChannelMonetizationLayout extends SizeNotifierFrameLayout implement
         return result;
     }
 
-    public static void showTransactionSheet(Context context, int currentAccount, TL_stats.BroadcastRevenueTransaction transaction, long dialogId, Theme.ResourcesProvider resourcesProvider) {
+    private static void showTransactionSheet(Context context, int currentAccount, TL_stats.BroadcastRevenueTransaction transaction, long dialogId, Theme.ResourcesProvider resourcesProvider) {
         BottomSheet sheet = new BottomSheet(context, false, resourcesProvider);
         sheet.fixNavigationBar();
 
@@ -1502,49 +1502,49 @@ public class ChannelMonetizationLayout extends SizeNotifierFrameLayout implement
         sheet.show();
     }
 
-    public static BottomSheet makeLearnSheet(Context context, boolean bots, Theme.ResourcesProvider resourcesProvider) {
-        BottomSheet sheet = new BottomSheet(context, false, resourcesProvider);
+    private void showLearnSheet() {
+        BottomSheet sheet = new BottomSheet(getContext(), false, resourcesProvider);
         sheet.fixNavigationBar();
 
-        LinearLayout layout = new LinearLayout(context);
+        LinearLayout layout = new LinearLayout(getContext());
         layout.setOrientation(LinearLayout.VERTICAL);
         layout.setPadding(dp(8), 0, dp(8), 0);
 
-        RLottieImageView imageView = new RLottieImageView(context);
+        RLottieImageView imageView = new RLottieImageView(getContext());
         imageView.setScaleType(ImageView.ScaleType.CENTER);
         imageView.setImageResource(R.drawable.large_monetize);
         imageView.setColorFilter(new PorterDuffColorFilter(Color.WHITE, PorterDuff.Mode.SRC_IN));
         imageView.setBackground(Theme.createCircleDrawable(dp(80), Theme.getColor(Theme.key_featuredStickers_addButton, resourcesProvider)));
         layout.addView(imageView, LayoutHelper.createLinear(80, 80, Gravity.CENTER_HORIZONTAL, 0, 16, 0, 16));
 
-        TextView textView = new TextView(context);
+        TextView textView = new TextView(getContext());
         textView.setGravity(Gravity.CENTER);
         textView.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 20);
         textView.setTypeface(AndroidUtilities.bold());
         textView.setTextColor(Theme.getColor(Theme.key_windowBackgroundWhiteBlackText, resourcesProvider));
-        textView.setText(getString(bots ? R.string.BotMonetizationInfoTitle : R.string.MonetizationInfoTitle));
+        textView.setText(getString(R.string.MonetizationInfoTitle));
         layout.addView(textView, LayoutHelper.createLinear(LayoutHelper.MATCH_PARENT, LayoutHelper.WRAP_CONTENT, 8, 0, 8, 25));
 
         layout.addView(
-                new FeatureCell(context, R.drawable.msg_channel, getString(bots ? R.string.BotMonetizationInfoFeature1Name : R.string.MonetizationInfoFeature1Name), getString(bots ? R.string.BotMonetizationInfoFeature1Text : R.string.MonetizationInfoFeature1Text), resourcesProvider),
+                new FeatureCell(getContext(), R.drawable.msg_channel, getString(R.string.MonetizationInfoFeature1Name), getString(R.string.MonetizationInfoFeature1Text)),
                 LayoutHelper.createLinear(LayoutHelper.MATCH_PARENT, LayoutHelper.WRAP_CONTENT, Gravity.TOP | Gravity.CENTER_HORIZONTAL, 0, 0, 0, 16)
         );
 
         layout.addView(
-                new FeatureCell(context, R.drawable.menu_feature_split, getString(bots ? R.string.BotMonetizationInfoFeature2Name : R.string.MonetizationInfoFeature2Name), getString(bots ? R.string.BotMonetizationInfoFeature2Text : R.string.MonetizationInfoFeature2Text), resourcesProvider),
+                new FeatureCell(getContext(), R.drawable.menu_feature_split, getString(R.string.MonetizationInfoFeature2Name), getString(R.string.MonetizationInfoFeature2Text)),
                 LayoutHelper.createLinear(LayoutHelper.MATCH_PARENT, LayoutHelper.WRAP_CONTENT, Gravity.TOP | Gravity.CENTER_HORIZONTAL, 0, 0, 0, 16)
         );
 
         layout.addView(
-                new FeatureCell(context, R.drawable.menu_feature_withdrawals, getString(bots ? R.string.BotMonetizationInfoFeature3Name : R.string.MonetizationInfoFeature3Name), getString(bots ? R.string.BotMonetizationInfoFeature3Text : R.string.MonetizationInfoFeature3Text), resourcesProvider),
+                new FeatureCell(getContext(), R.drawable.menu_feature_withdrawals, getString(R.string.MonetizationInfoFeature3Name), getString(R.string.MonetizationInfoFeature3Text)),
                 LayoutHelper.createLinear(LayoutHelper.MATCH_PARENT, LayoutHelper.WRAP_CONTENT, Gravity.TOP | Gravity.CENTER_HORIZONTAL, 0, 0, 0, 16)
         );
 
-        View separator = new View(context);
+        View separator = new View(getContext());
         separator.setBackgroundColor(Theme.getColor(Theme.key_divider, resourcesProvider));
         layout.addView(separator, LayoutHelper.createLinear(LayoutHelper.MATCH_PARENT, 1f / AndroidUtilities.density, Gravity.TOP | Gravity.FILL_HORIZONTAL, 12, 0, 12, 0));
 
-        textView = new AnimatedEmojiSpan.TextViewEmojis(context);
+        textView = new AnimatedEmojiSpan.TextViewEmojis(getContext());
         textView.setGravity(Gravity.CENTER);
         textView.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 20);
         textView.setTypeface(AndroidUtilities.bold());
@@ -1556,18 +1556,18 @@ public class ChannelMonetizationLayout extends SizeNotifierFrameLayout implement
         span.setRelativeSize(textView.getPaint().getFontMetricsInt());
         span.spaceScaleX = .9f;
         animatedDiamond.setSpan(span, 0, animatedDiamond.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-        textView.setText(AndroidUtilities.replaceCharSequence("💎", getString(bots ? R.string.BotMonetizationInfoTONTitle : R.string.MonetizationInfoTONTitle), animatedDiamond));
+        textView.setText(AndroidUtilities.replaceCharSequence("💎", getString(R.string.MonetizationInfoTONTitle), animatedDiamond));
         layout.addView(textView, LayoutHelper.createLinear(LayoutHelper.MATCH_PARENT, LayoutHelper.WRAP_CONTENT, 8, 20, 8, 0));
 
-        textView = new LinkSpanDrawable.LinksTextView(context, resourcesProvider);
+        textView = new LinkSpanDrawable.LinksTextView(getContext(), resourcesProvider);
         textView.setGravity(Gravity.CENTER);
         textView.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 14);
         textView.setTextColor(Theme.getColor(Theme.key_windowBackgroundWhiteBlackText, resourcesProvider));
         textView.setLinkTextColor(Theme.getColor(Theme.key_chat_messageLinkIn, resourcesProvider));
-        textView.setText(AndroidUtilities.withLearnMore(AndroidUtilities.replaceTags(getString(bots ? R.string.BotMonetizationInfoTONText : R.string.MonetizationInfoTONText)), () -> Browser.openUrl(context, getString(bots ? R.string.BotMonetizationInfoTONLink : R.string.MonetizationInfoTONLink))));
+        textView.setText(AndroidUtilities.withLearnMore(AndroidUtilities.replaceTags(getString(R.string.MonetizationInfoTONText)), () -> Browser.openUrl(getContext(), getString(R.string.MonetizationInfoTONLink))));
         layout.addView(textView, LayoutHelper.createLinear(LayoutHelper.MATCH_PARENT, LayoutHelper.WRAP_CONTENT, 28, 9, 28, 0));
 
-        ButtonWithCounterView button = new ButtonWithCounterView(context, resourcesProvider);
+        ButtonWithCounterView button = new ButtonWithCounterView(getContext(), resourcesProvider);
         button.setText(getString(R.string.GotIt), false);
         button.setOnClickListener(v -> {
             sheet.dismiss();
@@ -1576,11 +1576,11 @@ public class ChannelMonetizationLayout extends SizeNotifierFrameLayout implement
 
         sheet.setCustomView(layout);
 
-        return sheet;
+        fragment.showDialog(sheet);
     }
 
-    private static class FeatureCell extends FrameLayout {
-        public FeatureCell(Context context, int icon, CharSequence header, CharSequence text, Theme.ResourcesProvider resourcesProvider) {
+    private class FeatureCell extends FrameLayout {
+        public FeatureCell(Context context, int icon, CharSequence header, CharSequence text) {
             super(context);
 
             ImageView imageView = new ImageView(context);
@@ -1779,7 +1779,7 @@ public class ChannelMonetizationLayout extends SizeNotifierFrameLayout implement
                     return;
                 loadingTransactions[type] = true;
                 TL_stats.TL_getBroadcastRevenueTransactions req = new TL_stats.TL_getBroadcastRevenueTransactions();
-                req.peer = MessagesController.getInstance(currentAccount).getInputPeer(dialogId);
+                req.channel = MessagesController.getInstance(currentAccount).getInputChannel(-dialogId);
                 req.offset = tonTransactions.size();
                 req.limit = tonTransactions.isEmpty() ? 5 : 20;
                 ConnectionsManager.getInstance(currentAccount).sendRequest(req, (res, err) -> AndroidUtilities.runOnUIThread(() -> {

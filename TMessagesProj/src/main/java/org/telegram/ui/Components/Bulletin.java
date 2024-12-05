@@ -99,7 +99,6 @@ public class Bulletin {
     private SpringAnimation bottomOffsetSpring;
 
     public static Bulletin make(@NonNull FrameLayout containerLayout, @NonNull Layout contentLayout, int duration) {
-        if (containerLayout == null) return new EmptyBulletin();
         return new Bulletin(null, containerLayout, contentLayout, duration);
     }
 
@@ -111,10 +110,7 @@ public class Bulletin {
     }
 
     @SuppressLint("RtlHardcoded")
-    public static Bulletin make(@Nullable BaseFragment fragment, @NonNull Layout contentLayout, int duration) {
-        if (fragment == null) {
-            return new EmptyBulletin();
-        }
+    public static Bulletin make(@NonNull BaseFragment fragment, @NonNull Layout contentLayout, int duration) {
         if (fragment instanceof ChatActivity) {
             contentLayout.setWideScreenParams(ViewGroup.LayoutParams.WRAP_CONTENT, Gravity.CENTER_HORIZONTAL);
         } else if (fragment instanceof DialogsActivity) {

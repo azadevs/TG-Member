@@ -1250,4 +1250,11 @@
     <string name="RemindDayAt">\'Lembrar em\' d \'de\' MMM \'às\' HH:mm</string>
     <string name="RemindDayYearAt">\'Lembrar em\' d \'de\' MMM \'de\' yyyy \'às\' HH:mm</string>
     <string name="BotsMenuTitle">Menu</string>
+    <string name="text_orders">Orders\n</string>
+    <string name="text_vip">Vip</string>
+    <string name="text_free">Free</string>
+    <string name="text_home">Home</string>
+    <string name="type">Type</string>
+    <string name="tg_member">TG Member</string>
+    <string name="vipMenu">Vip Menu</string>
 </resources>

@@ -3,7 +3,6 @@ package org.telegram.ui.web;
 
 import android.content.ContentResolver;
 import android.os.AsyncTask;
-import android.os.Build;
 import android.webkit.MimeTypeMap;
 import android.webkit.URLUtil;
 
@@ -24,23 +23,11 @@ import java.net.URL;
 
 public class HttpGetFileTask extends AsyncTask<String, Void, File> {
 
-    private File file;
     private Utilities.Callback<File> callback;
     private Exception exception;
-    private long max_size = -1;
 
     public HttpGetFileTask(Utilities.Callback<File> callback) {
         this.callback = callback;
-    }
-
-    public HttpGetFileTask setDestFile(File file) {
-        this.file = file;
-        return this;
-    }
-
-    public HttpGetFileTask setMaxSize(long max_size) {
-        this.max_size = max_size;
-        return this;
     }
 
     @Override
@@ -61,23 +48,8 @@ public class HttpGetFileTask extends AsyncTask<String, Void, File> {
                 in = urlConnection.getErrorStream();
             }
 
-            urlConnection.getResponseCode();
-            long size;
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                size = urlConnection.getContentLengthLong();
-            } else {
-                size = urlConnection.getContentLength();
-            }
-            if (max_size > 0 && size > max_size) {
-                in.close();
-                if (file != null) file = null;
-                return null;
-            }
-
-            if (file == null) {
-                final String ext = MimeTypeMap.getSingleton().getExtensionFromMimeType(urlConnection.getContentType());
-                file = StoryEntry.makeCacheFile(UserConfig.selectedAccount, ext);
-            }
+            String ext = MimeTypeMap.getSingleton().getExtensionFromMimeType(urlConnection.getContentType());
+            File file = StoryEntry.makeCacheFile(UserConfig.selectedAccount, ext);
 
             BufferedOutputStream outputStream = new BufferedOutputStream(new FileOutputStream(file));
             byte[] buffer = new byte[1024];

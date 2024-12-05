@@ -41,8 +41,6 @@ import android.webkit.WebView;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 
-import androidx.annotation.Keep;
-
 import com.google.android.exoplayer2.C;
 import com.google.android.exoplayer2.ExoPlayer;
 import com.google.android.exoplayer2.ui.AspectRatioFrameLayout;
@@ -437,7 +435,6 @@ public class WebPlayerView extends ViewGroup implements VideoPlayer.VideoPlayerD
             callJavaResultInterface = callJavaResult;
         }
 
-        @Keep
         @JavascriptInterface
         public void returnResultToJava(String value) {
             callJavaResultInterface.jsCallFinished(value);

@@ -34,7 +34,6 @@ import android.webkit.WebView;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 
-import androidx.annotation.NonNull;
 import androidx.core.math.MathUtils;
 import androidx.dynamicanimation.animation.DynamicAnimation;
 import androidx.dynamicanimation.animation.FloatPropertyCompat;
@@ -109,7 +108,6 @@ public class PipVideoOverlay {
     private boolean isVisible;
 
     private VideoForwardDrawable videoForwardDrawable = new VideoForwardDrawable(false);
-    private SeekSpeedDrawable seekSpeedDrawable;
     private int mVideoWidth, mVideoHeight;
     private EmbedBottomSheet parentSheet;
     private PhotoViewer photoViewer;
@@ -147,7 +145,7 @@ public class PipVideoOverlay {
 
     private boolean postedDismissControls;
     private Runnable dismissControlsCallback = () -> {
-        if (photoViewer != null && photoViewer.getVideoPlayerRewinder().rewinding) {
+        if (photoViewer != null && photoViewer.getVideoPlayerRewinder().rewindCount > 0) {
             AndroidUtilities.runOnUIThread(this.dismissControlsCallback, 1500);
             return;
         }
@@ -248,9 +246,9 @@ public class PipVideoOverlay {
         }
 
         if (photoViewerWebView != null) {
-            photoViewer.getVideoPlayerRewinder().startRewind(photoViewerWebView, forward, longClickStartPoint[0], photoViewer.getCurrentVideoSpeed(), seekSpeedDrawable);
+            photoViewer.getVideoPlayerRewinder().startRewind(photoViewerWebView, forward, photoViewer.getCurrentVideoSpeed());
         } else {
-            photoViewer.getVideoPlayerRewinder().startRewind(videoPlayer, forward, longClickStartPoint[0], photoViewer.getCurrentVideoSpeed(), seekSpeedDrawable);
+            photoViewer.getVideoPlayerRewinder().startRewind(videoPlayer, forward, photoViewer.getCurrentVideoSpeed());
         }
 
         if (!isShowingControls) {
@@ -417,9 +415,13 @@ public class PipVideoOverlay {
     }
 
     private void cancelRewind() {
-        if (photoViewer == null) return;
-        if (photoViewer.getVideoPlayerRewinder() == null) return;
-        photoViewer.getVideoPlayerRewinder().cancelRewind();
+        if (photoViewer == null) {
+            return;
+        }
+
+        if (photoViewer.getVideoPlayerRewinder().rewindCount > 0) {
+            photoViewer.getVideoPlayerRewinder().cancelRewind();
+        }
     }
 
     public static void updatePlayButton() {
@@ -874,8 +876,6 @@ public class PipVideoOverlay {
                     canLongClick = false;
                     cancelRewind();
                     AndroidUtilities.cancelRunOnUIThread(longClickCallback);
-                } else if (action == MotionEvent.ACTION_MOVE && photoViewer != null && photoViewer.getVideoPlayerRewinder() != null && photoViewer.getVideoPlayerRewinder().rewinding) {
-                    photoViewer.getVideoPlayerRewinder().setX(ev.getX());
                 }
 
                 if (consumingChild != null) {
@@ -1022,24 +1022,8 @@ public class PipVideoOverlay {
                     videoForwardDrawable.setBounds(getLeft(), getTop(), getRight(), getBottom());
                     videoForwardDrawable.draw(canvas);
                 }
-                if (photoViewer != null && photoViewer.framesRewinder != null) {
-                    canvas.save();
-                    canvas.translate(getLeft(), getTop());
-                    photoViewer.framesRewinder.draw(canvas, getRight() - getLeft(), getBottom() - getTop());
-                    canvas.restore();
-                }
-            }
-
-            @Override
-            protected void dispatchDraw(@NonNull Canvas canvas) {
-                super.dispatchDraw(canvas);
-                if (seekSpeedDrawable != null && seekSpeedDrawable.isShown()) {
-                    seekSpeedDrawable.setBounds(getLeft(), getTop(), getRight(), getBottom());
-                    seekSpeedDrawable.draw(canvas);
-                }
             }
         };
-        seekSpeedDrawable = new SeekSpeedDrawable(controlsView::invalidate, true, false);
         controlsView.setWillNotDraw(false);
         controlsView.setAlpha(0f);
         View scrim = new View(context);
