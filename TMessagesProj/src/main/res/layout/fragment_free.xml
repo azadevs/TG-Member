@@ -50,13 +50,13 @@
             android:layout_marginEnd="2dp"
             android:layout_weight="1"
             android:background="@drawable/cut_corners_background"
+            android:drawableLeft="@drawable/ic_lightning"
             android:drawablePadding="6dp"
             android:fontFamily="@font/poppins_medium"
             android:paddingHorizontal="11dp"
             android:paddingVertical="7dp"
             android:text="@string/auto_join"
-            android:textSize="16sp"
-            app:drawableLeftCompat="@drawable/ic_lightning" />
+            android:textSize="16sp" />
     </LinearLayout>
 
 
