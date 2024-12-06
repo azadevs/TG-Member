@@ -48,8 +48,37 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginTop="8dp"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@id/cardSpinner"
         tools:listitem="@layout/item_order" />
+
+    <LinearLayout
+        android:id="@+id/empty_case_ll"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="8dp"
+        android:gravity="center"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/cardSpinner">
+
+        <ImageView
+            android:id="@+id/empty_case_iv"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:contentDescription="Empty Box Image"
+            android:src="@drawable/ic_empty_box" />
+
+        <TextView
+            android:id="@+id/empty_case_tv"
+            android:layout_marginTop="4dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/poppins_bold"
+            android:textColor="@color/widget_text"
+            android:textSize="18sp" />
+
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

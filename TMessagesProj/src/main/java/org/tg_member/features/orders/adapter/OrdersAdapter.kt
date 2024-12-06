@@ -2,9 +2,8 @@ package org.tg_member.features.orders.adapter
 
 import android.content.Context
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.BaseAdapter
+import androidx.recyclerview.widget.RecyclerView
 import org.telegram.messenger.databinding.ItemOrderBinding
 
 /**
@@ -15,24 +14,28 @@ import org.telegram.messenger.databinding.ItemOrderBinding
 class OrdersAdapter(
     val context: Context,
     val items: List<String>
-) : BaseAdapter() {
-    override fun getCount(): Int = items.size
+) : RecyclerView.Adapter<OrdersAdapter.OrdersViewHolder>() {
+    override fun onCreateViewHolder(
+        parent: ViewGroup,
+        viewType: Int
+    ): OrdersViewHolder {
+        val binding = ItemOrderBinding.inflate(LayoutInflater.from(context), parent, false)
+        return OrdersViewHolder(binding)
+    }
 
-    override fun getItem(position: Int): Any? = items[position]
+    override fun onBindViewHolder(
+        holder: OrdersViewHolder,
+        position: Int
+    ) {
+        holder.onBind(items[position])
+    }
 
-    override fun getItemId(position: Int): Long = position.toLong()
+    override fun getItemCount(): Int = items.size
 
-    override fun getView(
-        position: Int,
-        convertView: View?,
-        parent: ViewGroup?
-    ): View? {
-        val binding: ItemOrderBinding = if (convertView == null) {
-            ItemOrderBinding.inflate(LayoutInflater.from(context), null, false)
-        } else {
-            ItemOrderBinding.bind(convertView)
+    inner class OrdersViewHolder(val binding: ItemOrderBinding) :
+        RecyclerView.ViewHolder(binding.root) {
+        fun onBind(order: String) {
+            binding.orderStatusTv.text = order
         }
-
-        return binding.root
     }
 }

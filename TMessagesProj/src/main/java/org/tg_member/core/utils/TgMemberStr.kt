@@ -13,6 +13,7 @@ object TgMemberStr {
         titlesLanguages.add(TitleLanguages(1, "Buy", "Sotib olish", "Купить"))
         titlesLanguages.add(TitleLanguages(2, "Transfer", "Ko'chirish", "Передача"))
         titlesLanguages.add(TitleLanguages(3, "Gift", "Sovg'a", "Подарок"))
+        titlesLanguages.add(TitleLanguages(4, "There is no orders", "Buyurtmalar yo'q", "Нет заказов"))
     }
 
     fun getStr(code: Int): String {

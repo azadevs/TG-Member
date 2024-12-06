@@ -8189,6 +8189,7 @@
     <string name="auto_join">Auto Join</string>
 
     <string-array name="types">
+        <item>All types</item>
         <item>Premium</item>
         <item>Member</item>
         <item>View</item>
@@ -8196,7 +8197,7 @@
     </string-array>
 
     <string-array name="status">
-        <item>All statuses</item>
+        <item>All Status</item>
         <item>In progress</item>
         <item>Failed</item>
         <item>Completed</item>

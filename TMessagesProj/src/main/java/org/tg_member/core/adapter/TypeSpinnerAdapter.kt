@@ -16,7 +16,7 @@ import org.tg_member.core.utils.getTypes
  */
 class TypeSpinnerAdapter(
     val context: Context,
-    val list:List<SpinnerTypeData>
+    val list: List<SpinnerTypeData>
 ) : BaseAdapter() {
 
     override fun getCount(): Int = list.size
