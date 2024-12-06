@@ -14,14 +14,6 @@ class HomeFragment(
 ) {
 
     fun createView() {
-
-//        for (i in 0..UserConfig.MAX_ACCOUNT_COUNT){
-//            if (UserConfig.isValidAccount(i)) {
-//                UserConfig.getInstance(i).currentUser.phone
-//                Log.d("TTTTT", "createView: ${UserConfig.getInstance(i).currentUser.phone} ")
-//            }
-//        }
-
         binding.tvType.setTextColor(
             Theme.getColor(
                 Theme.key_chats_menuItemText
