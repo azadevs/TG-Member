@@ -18,7 +18,8 @@ import org.tg_member.features.vip.VipFragment
 
 class DashboardAdapter(
     val items: List<DashboardItem>,
-    val barColor:Int
+    val barColor: Int,
+    val navigationBarColor: Int
 ) : RecyclerView.Adapter<ViewHolder>() {
 
     inner class HomeViewHolder(private val homeBinding: FragmentHomeBinding) :
@@ -31,7 +32,7 @@ class DashboardAdapter(
     inner class FreeViewHolder(private val freeBinding: FragmentFreeBinding) :
         ViewHolder(freeBinding.root) {
         fun onBind() {
-            FreeFragment(freeBinding).createView()
+            FreeFragment(freeBinding, navigationBarColor = navigationBarColor).createView()
         }
     }
 

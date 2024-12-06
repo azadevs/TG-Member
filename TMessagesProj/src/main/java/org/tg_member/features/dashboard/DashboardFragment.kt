@@ -38,7 +38,8 @@ class DashboardFragment : BaseFragment() {
                 DashboardItem.VipItem,
                 DashboardItem.ProfileItem
             ),
-            actionBar.backgroundColor
+            actionBar.backgroundColor,
+            navigationBarColor
         )
         binding.viewpager.adapter = adapter
         binding.viewpager.isUserInputEnabled = false
