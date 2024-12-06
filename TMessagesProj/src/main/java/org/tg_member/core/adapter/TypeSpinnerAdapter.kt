@@ -6,6 +6,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
 import org.telegram.messenger.databinding.ItemTypeSpinnerBinding
+import org.telegram.ui.ActionBar.Theme
+import org.tg_member.core.model.SpinnerTypeData
 import org.tg_member.core.utils.getTypes
 
 /**
@@ -13,14 +15,13 @@ import org.tg_member.core.utils.getTypes
  * 03/12/24
  */
 class TypeSpinnerAdapter(
-    val context: Context
+    val context: Context,
+    val list:List<SpinnerTypeData>
 ) : BaseAdapter() {
 
-    val types = getTypes()
+    override fun getCount(): Int = list.size
 
-    override fun getCount(): Int = types.size
-
-    override fun getItem(position: Int): Any = types[position]
+    override fun getItem(position: Int): Any = list[position]
 
     override fun getItemId(position: Int): Long = position.toLong()
 
@@ -30,9 +31,10 @@ class TypeSpinnerAdapter(
         } else {
             ItemTypeSpinnerBinding.bind(convertView)
         }
-        binding.tvTypeName.text = types[position].type
+        binding.tvTypeName.text = list[position].type
+        binding.tvTypeName.setTextColor(Theme.getColor(Theme.key_chats_menuItemText))
         binding.ivTypeImage.setImageResource(
-            types[position].icon
+            list[position].icon
         )
         return binding.root
     }

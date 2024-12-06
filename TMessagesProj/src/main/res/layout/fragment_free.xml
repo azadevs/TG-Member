@@ -34,9 +34,9 @@
             android:layout_weight="1"
             android:background="@drawable/cut_corners_background"
             android:entries="@array/types"
-            android:paddingVertical="12dp" />
+            android:paddingVertical="8dp" />
 
-        <androidx.appcompat.widget.AppCompatButton
+        <TextView
             android:id="@+id/autoJoinBtn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -44,7 +44,13 @@
             android:layout_marginEnd="4dp"
             android:layout_weight="1"
             android:background="@drawable/cut_corners_background"
-            android:text="@string/auto_join" />
+            android:fontFamily="@font/poppins_medium"
+            android:paddingHorizontal="11dp"
+            android:drawablePadding="6dp"
+            android:drawableLeft="@drawable/ic_ab_back"
+            android:paddingVertical="6dp"
+            android:text="@string/auto_join"
+            android:textSize="16sp" />
     </LinearLayout>
 
 

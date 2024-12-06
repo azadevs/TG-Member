@@ -1,7 +1,7 @@
 package org.tg_member.core.utils
 
 import org.telegram.messenger.R
-import org.tg_member.core.model.AccountType
+import org.tg_member.core.model.SpinnerTypeData
 
 /**
  * Created by : Azamat Kalmurzaev
@@ -14,21 +14,22 @@ enum class Types {
     Reaction
 }
 
-fun getTypes(): List<AccountType> {
+
+fun getTypes(): List<SpinnerTypeData> {
     return listOf(
-        AccountType(
+        SpinnerTypeData(
             Types.Premium.name,
             R.drawable.vip_svgrepo_com
         ),
-        AccountType(
+        SpinnerTypeData(
             Types.Member.name,
             R.drawable.ic_person_member
         ),
-        AccountType(
+        SpinnerTypeData(
             Types.View.name,
             R.drawable.msg_views
         ),
-        AccountType(
+        SpinnerTypeData(
             Types.Reaction.name,
             R.drawable.msg_reactions
         )
