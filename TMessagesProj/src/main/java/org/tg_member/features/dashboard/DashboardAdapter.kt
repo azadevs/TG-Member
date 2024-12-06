@@ -30,7 +30,7 @@ class DashboardAdapter(
     inner class FreeViewHolder(private val freeBinding: FragmentFreeBinding) :
         ViewHolder(freeBinding.root) {
         fun onBind() {
-            FreeFragment().createView(freeBinding)
+            FreeFragment(freeBinding).createView()
         }
     }
 

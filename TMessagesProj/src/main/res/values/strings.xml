@@ -8186,11 +8186,12 @@
     <string name="type">Type</string>
     <string name="tg_member">TG Member</string>
     <string name="vipMenu">Vip Menu</string>
+    <string name="auto_join">Auto Join</string>
 
     <string-array name="types">
         <item>Premium</item>
         <item>Member</item>
-        <item>Comment</item>
+        <item>View</item>
         <item>Reaction</item>
     </string-array>
 

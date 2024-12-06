@@ -1,60 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:paddingTop="16dp">
 
-    <androidx.appcompat.widget.AppCompatButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Hello world"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <androidx.cardview.widget.CardView
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvAccount"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@id/containerBottomViews"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:listitem="@layout/item_account" />
+
+    <LinearLayout
+        android:id="@+id/containerBottomViews"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:paddingHorizontal="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHeight_percent="0.13">
+        app:layout_constraintHeight_percent="0.12"
+        tools:layout_editor_absoluteX="0dp">
 
-        <LinearLayout
-            android:paddingHorizontal="8dp"
+        <Spinner
+            android:id="@+id/spinnerType"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center">
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:layout_marginEnd="6dp"
+            android:layout_weight="1"
+            android:background="@drawable/cut_corners_background"
+            android:entries="@array/types"
+            android:paddingVertical="12dp" />
 
-            <androidx.cardview.widget.CardView
-                android:id="@+id/cardSpinner"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="4dp"
-                android:layout_weight="1"
-                app:cardCornerRadius="14dp"
-                android:layout_marginStart="4dp"
-                android:layout_marginLeft="4dp"
-                app:cardElevation="2dp"
-                app:layout_constraintWidth_percent="0.4">
-
-                <Spinner
-                    android:id="@+id/spinnerType"
-                    android:paddingVertical="12dp"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:entries="@array/types"  />
-            </androidx.cardview.widget.CardView>
-
-            <Button
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="4dp"
-                android:layout_marginLeft="4dp"
-                android:background="@drawable/cut_corners_background"
-                android:layout_weight="1"
-                android:text="Auto Join" />
-        </LinearLayout>
-
-    </androidx.cardview.widget.CardView>
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/autoJoinBtn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="6dp"
+            android:layout_marginEnd="4dp"
+            android:layout_weight="1"
+            android:background="@drawable/cut_corners_background"
+            android:text="@string/auto_join" />
+    </LinearLayout>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
