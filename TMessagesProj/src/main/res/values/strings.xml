@@ -8193,4 +8193,12 @@
         <item>Comment</item>
         <item>Reaction</item>
     </string-array>
+
+    <string-array name="status">
+        <item>All statuses</item>
+        <item>In progress</item>
+        <item>Failed</item>
+        <item>Completed</item>
+    </string-array>
+
 </resources>

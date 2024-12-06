@@ -1,10 +1,7 @@
 package org.tg_member.features.orders
 
-import android.content.Context
-import android.view.LayoutInflater
-import android.view.View
 import org.telegram.messenger.databinding.FragmentOrdersBinding
-import org.telegram.ui.ActionBar.BaseFragment
+import org.tg_member.core.adapter.TypeSpinnerAdapter
 
 /**
  * Created by : Azamat Kalmurzaev
@@ -13,8 +10,12 @@ import org.telegram.ui.ActionBar.BaseFragment
 class OrdersFragment {
 
     fun createView(binding: FragmentOrdersBinding) {
-
+        configureTypesSpinner(binding)
     }
 
+    private fun configureTypesSpinner(binding: FragmentOrdersBinding) {
+        val adapter = TypeSpinnerAdapter(binding.root.context)
+        binding.spinnerType.adapter = adapter
+    }
 
 }
