@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:tools="http://schemas.android.com/tools"
     android:paddingHorizontal="16dp">
 
     <TextView
@@ -18,12 +18,13 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@id/cardSpinner" />
 
-    <androidx.cardview.widget.CardView
+    <FrameLayout
         android:id="@+id/cardSpinner"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="4dp"
+        android:background="@drawable/cut_corners_background"
         app:cardCornerRadius="10dp"
         app:cardElevation="2dp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -36,7 +37,7 @@
             android:layout_height="match_parent"
             android:entries="@array/types"
             android:padding="12dp" />
-    </androidx.cardview.widget.CardView>
+    </FrameLayout>
 
     <ImageView
         android:id="@+id/divider"
@@ -53,10 +54,10 @@
         android:id="@+id/rvVips"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        tools:listitem="@layout/item_vip_price"
         android:layout_marginTop="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/divider" />
+        app:layout_constraintTop_toBottomOf="@id/divider"
+        tools:listitem="@layout/item_vip_price" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
