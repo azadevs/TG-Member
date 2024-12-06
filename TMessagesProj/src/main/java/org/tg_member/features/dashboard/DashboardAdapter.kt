@@ -17,7 +17,8 @@ import org.tg_member.features.profile.ProfileFragment
 import org.tg_member.features.vip.VipFragment
 
 class DashboardAdapter(
-    val items: List<DashboardItem>
+    val items: List<DashboardItem>,
+    val barColor:Int
 ) : RecyclerView.Adapter<ViewHolder>() {
 
     inner class HomeViewHolder(private val homeBinding: FragmentHomeBinding) :
@@ -37,7 +38,7 @@ class DashboardAdapter(
     inner class VipViewHolder(private val vipBinding: FragmentVipBinding) :
         ViewHolder(vipBinding.root) {
         fun onBind() {
-            VipFragment().createView(vipBinding)
+            VipFragment(vipBinding, barColor).createView()
         }
     }
 

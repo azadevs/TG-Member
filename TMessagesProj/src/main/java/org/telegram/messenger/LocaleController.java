@@ -29,6 +29,7 @@ import org.telegram.tgnet.ConnectionsManager;
 import org.telegram.tgnet.TLObject;
 import org.telegram.tgnet.TLRPC;
 import org.telegram.ui.RestrictedLanguagesSelectActivity;
+import org.tg_member.core.utils.TgMemberStr;
 import org.xmlpull.v1.XmlPullParser;
 
 import java.io.BufferedWriter;
@@ -959,7 +960,7 @@ public class LocaleController {
 
             String languageName = stringMap.get("LanguageName");
             String languageNameInEnglish = stringMap.get("LanguageNameInEnglish");
-            String languageCode = stringMap.get("LanguageCode");
+            String languageCode = stringMap.get("TgMemberStr");
 
             if (languageName != null && languageName.length() > 0 &&
                     languageNameInEnglish != null && languageNameInEnglish.length() > 0 &&
@@ -1205,6 +1206,7 @@ public class LocaleController {
     }
 
     public int applyLanguage(final LocaleInfo localeInfo, boolean override, boolean init, boolean fromFile, boolean force, final int currentAccount, Runnable onDone) {
+        TgMemberStr.INSTANCE.setLanguageCode(localeInfo.getLangCode());
         if (localeInfo == null) {
             return 0;
         }

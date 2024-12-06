@@ -1,4 +1,4 @@
-package org.tg_member.core.util
+package org.tg_member.core.utils
 
 import org.telegram.messenger.R
 import org.tg_member.core.model.AccountType

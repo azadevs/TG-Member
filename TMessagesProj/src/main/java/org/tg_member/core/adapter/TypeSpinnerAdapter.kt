@@ -6,7 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
 import org.telegram.messenger.databinding.ItemTypeSpinnerBinding
-import org.tg_member.core.util.getTypes
+import org.tg_member.core.utils.getTypes
 
 /**
  * Created by : Azamat Kalmurzaev
