@@ -1,4 +1,4 @@
-package org.tg_member.core.adapter
+package org.tg_member.features.orders.adapter
 
 import android.content.Context
 import android.view.LayoutInflater

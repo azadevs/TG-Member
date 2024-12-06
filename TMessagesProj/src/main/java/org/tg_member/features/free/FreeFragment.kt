@@ -3,6 +3,7 @@ package org.tg_member.features.free
 import org.telegram.messenger.databinding.FragmentFreeBinding
 import org.telegram.ui.ActionBar.Theme
 import org.tg_member.core.adapter.TypeSpinnerAdapter
+import org.tg_member.core.utils.getTypes
 
 /**
  * Created by : Azamat Kalmurzaev
@@ -18,7 +19,7 @@ class FreeFragment(private val binding: FragmentFreeBinding) {
     }
 
     private fun configureTypesSpinner() {
-        val adapter = TypeSpinnerAdapter(binding.root.context)
+        val adapter = TypeSpinnerAdapter(binding.root.context, getTypes())
         binding.spinnerType.adapter = adapter
     }
 
