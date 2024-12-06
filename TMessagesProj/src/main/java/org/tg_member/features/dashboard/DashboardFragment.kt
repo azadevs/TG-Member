@@ -6,6 +6,7 @@ import android.view.View
 import org.telegram.messenger.R
 import org.telegram.messenger.databinding.FragmentDashboardBinding
 import org.telegram.ui.ActionBar.BaseFragment
+import org.tg_member.features.dashboard.adapter.DashboardAdapter
 import org.tg_member.features.dashboard.model.DashboardItem
 
 /**

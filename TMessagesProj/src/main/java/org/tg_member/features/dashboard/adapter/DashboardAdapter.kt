@@ -1,4 +1,4 @@
-package org.tg_member.features.dashboard
+package org.tg_member.features.dashboard.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
