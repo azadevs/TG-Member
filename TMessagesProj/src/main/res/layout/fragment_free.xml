@@ -25,32 +25,38 @@
         app:layout_constraintHeight_percent="0.12"
         tools:layout_editor_absoluteX="0dp">
 
-        <Spinner
-            android:id="@+id/spinnerType"
+        <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="4dp"
+            android:layout_marginStart="2dp"
             android:layout_marginEnd="6dp"
             android:layout_weight="1"
-            android:background="@drawable/cut_corners_background"
-            android:entries="@array/types"
-            android:paddingVertical="8dp" />
+            android:background="@drawable/cut_corners_background">
+
+            <Spinner
+                android:id="@+id/spinnerType"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:entries="@array/types"
+                android:paddingVertical="4dp" />
+
+        </FrameLayout>
 
         <TextView
             android:id="@+id/autoJoinBtn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="6dp"
-            android:layout_marginEnd="4dp"
+            android:layout_marginEnd="2dp"
             android:layout_weight="1"
             android:background="@drawable/cut_corners_background"
+            android:drawablePadding="6dp"
             android:fontFamily="@font/poppins_medium"
             android:paddingHorizontal="11dp"
-            android:drawablePadding="6dp"
-            android:drawableLeft="@drawable/ic_ab_back"
-            android:paddingVertical="6dp"
+            android:paddingVertical="7dp"
             android:text="@string/auto_join"
-            android:textSize="16sp" />
+            android:textSize="16sp"
+            app:drawableLeftCompat="@drawable/ic_lightning" />
     </LinearLayout>
 
 

@@ -35,8 +35,10 @@
             android:id="@+id/spinnerType"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:entries="@array/types"
-            android:padding="12dp" />
+            android:dropDownSelector="@color/divider"
+            android:paddingHorizontal="8dp"
+            android:paddingVertical="4dp"
+            android:entries="@array/types" />
     </FrameLayout>
 
     <ImageView
@@ -46,6 +48,7 @@
         android:layout_marginTop="16dp"
         android:alpha="0.5"
         android:background="@color/widget_action_text"
+        android:importantForAccessibility="no"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/cardSpinner" />

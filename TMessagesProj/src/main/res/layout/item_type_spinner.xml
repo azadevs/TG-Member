@@ -5,7 +5,7 @@
     android:layout_height="wrap_content"
     android:gravity="center_vertical"
     android:paddingHorizontal="10dp"
-    >
+    android:paddingVertical="4dp">
 
     <ImageView
         android:id="@+id/ivTypeImage"
@@ -14,15 +14,17 @@
         android:importantForAccessibility="no"
         android:scaleType="centerCrop"
         android:src="@drawable/vip_svgrepo_com"
-        app:tint="?colorOnBackground" />
+        app:tint="@color/widget_name" />
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/tvTypeName"
         android:layout_width="wrap_content"
-        android:includeFontPadding="false"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
+        android:ellipsize="end"
         android:fontFamily="@font/poppins_medium"
+        android:includeFontPadding="false"
+        android:maxLines="1"
         android:text=""
         android:textSize="16sp" />
 
