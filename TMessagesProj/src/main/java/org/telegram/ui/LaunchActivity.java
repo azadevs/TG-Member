@@ -201,7 +201,7 @@ import org.telegram.ui.Stories.recorder.StoryRecorder;
 import org.telegram.ui.bots.BotWebViewAttachedSheet;
 import org.telegram.ui.bots.BotWebViewSheet;
 import org.telegram.ui.bots.WebViewRequestProps;
-import org.tg_member.features.dashboard.DashboardFragment;
+import org.tg_member.features.login.LoginFragment;
 import org.webrtc.voiceengine.WebRtcAudioTrack;
 
 import java.io.BufferedReader;
@@ -666,7 +666,7 @@ public class LaunchActivity extends BasePermissionsActivity implements INavigati
                     presentFragment(new MediaActivity(args, null));
                 } else if(id == 1001){
                     drawerLayoutContainer.closeDrawer(true);
-                    presentFragment(new DashboardFragment());
+                    presentFragment(new LoginFragment());
                 }
             }
         });

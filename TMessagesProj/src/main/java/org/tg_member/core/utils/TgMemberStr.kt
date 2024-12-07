@@ -21,6 +21,10 @@ object TgMemberStr {
         titlesLanguages.add(TitleLanguages(9, "Transfer history", "Ko'chirishlar tarixi", "История переводов"))
         titlesLanguages.add(TitleLanguages(10, "Enter gift code", "Sovg'a kodini kiriting", "Введите подарочный код"))
         titlesLanguages.add(TitleLanguages(11, "Confirmation", "Tasdiqlash", "Подтверждение"))
+        titlesLanguages.add(TitleLanguages(12, "Type", "Turi", "Тип"))
+        titlesLanguages.add(TitleLanguages(13, "Automatic Operation", "Avtomatik Ishlash", "Автоматическая работа"))
+        titlesLanguages.add(TitleLanguages(14, "Registration", "Roʻyxatdan oʻtish", "Регистрация"))
+        titlesLanguages.add(TitleLanguages(14, "Registration", "", "Регистрация"))
     }
 
     fun getStr(code: Int): String {

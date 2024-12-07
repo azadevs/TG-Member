@@ -5,6 +5,7 @@ import org.telegram.messenger.UserConfig
 import org.telegram.messenger.databinding.FragmentFreeBinding
 import org.telegram.ui.ActionBar.Theme
 import org.tg_member.core.adapter.TypeSpinnerAdapter
+import org.tg_member.core.utils.TgMemberStr
 import org.tg_member.core.utils.getTypes
 import org.tg_member.features.free.adapter.FreeAdapter
 import org.tg_member.features.free.model.AccountData
@@ -33,13 +34,14 @@ class FreeFragment(private val binding: FragmentFreeBinding, val navigationBarCo
 
     private fun configureUi() {
         binding.autoJoinBtn.setTextColor(Theme.getColor(Theme.key_chats_menuItemText))
+        binding.autoJoinBtn.text = TgMemberStr.getStr(13)
         binding.containerBottomViews.setBackgroundColor(navigationBarColor)
     }
 
     private fun configureAccountAdapter() {
-        adapter = FreeAdapter({ id ->
+        adapter = FreeAdapter { id ->
 
-        })
+        }
         binding.rvAccount.layoutManager =
             LinearLayoutManager(binding.root.context, LinearLayoutManager.VERTICAL, false)
         binding.rvAccount.adapter = adapter
