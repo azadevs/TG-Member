@@ -13,19 +13,16 @@
         android:layout_marginStart="4dp"
         android:textColor="@color/widget_name"
         android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="@id/cardSpinner"
+        app:layout_constraintBottom_toBottomOf="@id/containerTypeSpinner"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@id/cardSpinner" />
+        app:layout_constraintTop_toTopOf="@id/containerTypeSpinner" />
 
     <FrameLayout
-        android:id="@+id/cardSpinner"
+        android:id="@+id/containerTypeSpinner"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="4dp"
-        android:background="@drawable/cut_corners_background"
-        app:cardCornerRadius="10dp"
-        app:cardElevation="2dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintWidth_percent="0.6">
@@ -34,23 +31,21 @@
             android:id="@+id/spinnerType"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:dropDownSelector="@color/divider"
+            android:entries="@array/types"
             android:paddingHorizontal="8dp"
-            android:paddingVertical="4dp"
-            android:entries="@array/types" />
+            android:paddingVertical="4dp" />
     </FrameLayout>
 
-    <ImageView
+    <View
         android:id="@+id/divider"
         android:layout_width="0dp"
-        android:layout_height="1dp"
+        android:layout_height="0.2dp"
         android:layout_marginTop="16dp"
-        android:alpha="0.5"
         android:background="@color/widget_action_text"
         android:importantForAccessibility="no"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/cardSpinner" />
+        app:layout_constraintTop_toBottomOf="@id/containerTypeSpinner" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvVips"

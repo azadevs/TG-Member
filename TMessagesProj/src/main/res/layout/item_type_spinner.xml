@@ -16,7 +16,7 @@
         android:src="@drawable/vip_svgrepo_com"
         app:tint="@color/widget_name" />
 
-    <com.google.android.material.textview.MaterialTextView
+    <TextView
         android:id="@+id/tvTypeName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -25,7 +25,6 @@
         android:fontFamily="@font/poppins_medium"
         android:includeFontPadding="false"
         android:maxLines="1"
-        android:text=""
-        android:textSize="16sp" />
+        android:textSize="15sp" />
 
 </LinearLayout>

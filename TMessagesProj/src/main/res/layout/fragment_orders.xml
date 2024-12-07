@@ -8,12 +8,11 @@
     android:paddingTop="12dp">
 
     <FrameLayout
-        android:id="@+id/cardTypes"
+        android:id="@+id/containerTypeSpinner"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="6dp"
-        android:background="@drawable/cut_corners_background"
-        app:layout_constraintEnd_toStartOf="@id/cardStatus"
+        app:layout_constraintEnd_toStartOf="@id/containerStatusSpinner"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
@@ -26,15 +25,15 @@
     </FrameLayout>
 
     <FrameLayout
-        android:id="@+id/cardStatus"
+        android:id="@+id/containerStatusSpinner"
         android:layout_width="0dp"
         android:layout_marginStart="6dp"
         android:layout_height="wrap_content"
         android:background="@drawable/cut_corners_background"
-        app:layout_constraintBottom_toBottomOf="@id/cardTypes"
+        app:layout_constraintBottom_toBottomOf="@id/containerTypeSpinner"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/cardTypes"
-        app:layout_constraintTop_toTopOf="@id/cardTypes">
+        app:layout_constraintStart_toEndOf="@id/containerTypeSpinner"
+        app:layout_constraintTop_toTopOf="@id/containerTypeSpinner">
 
         <Spinner
             android:id="@+id/spinnerStatus"
@@ -51,7 +50,7 @@
         android:layout_marginTop="8dp"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/cardTypes"
+        app:layout_constraintTop_toBottomOf="@id/containerTypeSpinner"
         tools:listitem="@layout/item_order" />
 
     <LinearLayout
@@ -62,7 +61,7 @@
         android:gravity="center"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/cardTypes"
+        app:layout_constraintTop_toBottomOf="@id/containerTypeSpinner"
         tools:ignore="UseCompoundDrawables">
 
         <ImageView

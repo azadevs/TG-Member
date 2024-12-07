@@ -10,6 +10,7 @@ import org.telegram.messenger.databinding.FragmentFreeBinding
 import org.telegram.ui.ActionBar.Theme
 import org.tg_member.core.adapter.TypeSpinnerAdapter
 import org.tg_member.core.utils.TgMemberStr
+import org.tg_member.core.utils.getDrawableStateList
 import org.tg_member.core.utils.getTypes
 import org.tg_member.features.free.adapter.FreeAdapter
 import org.tg_member.features.free.model.AccountData
@@ -33,19 +34,31 @@ class FreeFragment(private val binding: FragmentFreeBinding, val navigationBarCo
 
     private fun configureTypesSpinner() {
         val adapter = TypeSpinnerAdapter(binding.root.context, getTypes())
-        //bu yerni ko'rib chiqing
-        val stateListDrawable = ContextCompat.getDrawable(binding.root.context, R.drawable.cut_corners_background) as StateListDrawable
-        val gradientDrawable = stateListDrawable.current as GradientDrawable
-        gradientDrawable.setColor(Theme.getColor(Theme.key_dialogBackground))
-        binding.spinnerContainer.background = stateListDrawable
-        binding.spinnerType.setPopupBackgroundDrawable(stateListDrawable)
         binding.spinnerType.adapter = adapter
+        binding.spinnerContainer.background = getDrawableStateList(
+            R.drawable.cut_corners_background,
+            binding.root.context,
+            Theme.key_dialogBackground
+        )
+        binding.spinnerType.setPopupBackgroundDrawable(
+            getDrawableStateList(
+                R.drawable.cut_corners_background,
+                binding.root.context,
+                Theme.key_dialogBackground
+            )
+        )
+
     }
 
     private fun configureUi() {
         binding.autoJoinBtn.setTextColor(Theme.getColor(Theme.key_chats_menuItemText))
         binding.autoJoinBtn.text = TgMemberStr.getStr(13)
         binding.containerBottomViews.setBackgroundColor(navigationBarColor)
+        binding.autoJoinBtn.background = getDrawableStateList(
+            R.drawable.cut_corners_background,
+            binding.root.context,
+            Theme.key_dialogBackground
+        )
     }
 
     private fun configureAccountAdapter() {

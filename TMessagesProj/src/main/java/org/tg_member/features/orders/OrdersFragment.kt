@@ -3,11 +3,14 @@ package org.tg_member.features.orders
 import android.view.View
 import android.widget.AdapterView
 import androidx.recyclerview.widget.LinearLayoutManager
+import org.telegram.messenger.R
 import org.telegram.messenger.databinding.FragmentOrdersBinding
+import org.telegram.ui.ActionBar.Theme
 import org.tg_member.core.adapter.TypeSpinnerAdapter
 import org.tg_member.core.utils.Status
 import org.tg_member.core.utils.TgMemberStr
 import org.tg_member.core.utils.Types
+import org.tg_member.core.utils.getDrawableStateList
 import org.tg_member.core.utils.getStatus
 import org.tg_member.core.utils.getTypes
 import org.tg_member.features.orders.adapter.OrdersAdapter
@@ -35,15 +38,11 @@ class OrdersFragment {
 
         configureOrderAdapter(binding)
 
-        configureSpinnerListeners(binding)
     }
 
-    private fun configureSpinnerListeners(binding: FragmentOrdersBinding) {
-
-    }
 
     private fun initializeList() {
-        list = listOf<Order>(
+        list = listOf(
             Order(type = Types.View, status = Status.Pending, count = "100"),
             Order(type = Types.Reaction, status = Status.Completed, count = "200"),
             Order(type = Types.Member, status = Status.Failed, count = "590"),
@@ -77,9 +76,33 @@ class OrdersFragment {
     private fun configureSpinners(binding: FragmentOrdersBinding) {
         val typeAdapter = TypeSpinnerAdapter(binding.root.context, getTypes())
         binding.spinnerType.adapter = typeAdapter
+        binding.containerTypeSpinner.background = getDrawableStateList(
+            R.drawable.cut_corners_background,
+            binding.root.context,
+            Theme.key_dialogBackground
+        )
+        binding.spinnerType.setPopupBackgroundDrawable(
+            getDrawableStateList(
+                R.drawable.cut_corners_background,
+                binding.root.context,
+                Theme.key_dialogBackground
+            )
+        )
 
         val statusAdapter = TypeSpinnerAdapter(binding.root.context, getStatus())
         binding.spinnerStatus.adapter = statusAdapter
+        binding.containerStatusSpinner.background = getDrawableStateList(
+            R.drawable.cut_corners_background,
+            binding.root.context,
+            Theme.key_dialogBackground
+        )
+        binding.spinnerStatus.setPopupBackgroundDrawable(
+            getDrawableStateList(
+                R.drawable.cut_corners_background,
+                binding.root.context,
+                Theme.key_dialogBackground
+            )
+        )
 
         binding.spinnerType.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(
@@ -99,7 +122,7 @@ class OrdersFragment {
                     }
 
                 }
-                var currList = getOrdersByStatusAndType(lastStatus.name, lastType.name)
+                val currList = getOrdersByStatusAndType(lastStatus.name, lastType.name)
                 when (position) {
                     0 -> {
                         adapter.submitList(currList)
@@ -128,10 +151,7 @@ class OrdersFragment {
                 }
             }
 
-            override fun onNothingSelected(parent: AdapterView<*>?) {
-
-            }
-
+            override fun onNothingSelected(parent: AdapterView<*>?) {}
 
         }
 
@@ -176,11 +196,7 @@ class OrdersFragment {
                 }
             }
 
-            override fun onNothingSelected(parent: AdapterView<*>?) {
-
-            }
-
-
+            override fun onNothingSelected(parent: AdapterView<*>?) {}
         }
 
     }
