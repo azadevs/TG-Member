@@ -25,7 +25,10 @@ object TgMemberStr {
         titlesLanguages.add(TitleLanguages(12, "Type", "Turi", "Тип"))
         titlesLanguages.add(TitleLanguages(13, "Automatic Operation", "Avtomatik Ishlash", "Автоматическая работа"))
         titlesLanguages.add(TitleLanguages(14, "Registration", "Roʻyxatdan oʻtish", "Регистрация"))
-        titlesLanguages.add(TitleLanguages(14, "Registration", "", "Регистрация"))
+        titlesLanguages.add(TitleLanguages(15, "Send verification code", "Tasdiqlash kodini yuborish", "Отправить код подтверждения"))
+        titlesLanguages.add(TitleLanguages(16, "Enter your email address", "E-mail addressinginzni kiriting", "Введите свой адрес электронной почты"))
+        titlesLanguages.add(TitleLanguages(17, "Enter verification code", "Tasdiqlash kodini kiriting", "Введите код подтверждения"))
+        titlesLanguages.add(TitleLanguages(18, "Enter your email address then click on a button below then you will receive a verification code to your email account. Then you need to enter verification code. Then you will be successfully registered", "Elektron pochta manzilingizni kiriting, so'ng quyidagi tugmani bosing, keyin siz elektron pochta hisobingizga tasdiqlash kodini olasiz. Keyin tasdiqlash kodini kiritishingiz kerak. Keyin siz muvaffaqiyatli ro'yxatdan o'tasiz", "Введите свой адрес электронной почты, затем нажмите на кнопку ниже, после чего вы получите проверочный код на свой адрес электронной почты. Затем вам нужно ввести проверочный код. После этого вы будете успешно зарегистрированы."))
     }
 
     fun getStr(code: Int): String {

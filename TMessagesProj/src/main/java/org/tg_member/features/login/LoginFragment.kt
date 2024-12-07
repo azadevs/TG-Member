@@ -32,18 +32,18 @@ class LoginFragment : BaseFragment() {
     }
 
     private fun configureUi() {
-        binding.loginInfo.text = TgMemberStr.getStr(5)
+        binding.loginInfo.text = TgMemberStr.getStr(18)
         binding.loginInfo.setTextColor(Theme.getColor(Theme.key_chats_menuItemText))
 
-        binding.gmailEt.hint = TgMemberStr.getStr(6)
+        binding.gmailEt.hint = TgMemberStr.getStr(16)
         binding.gmailEt.setTextColor(Theme.getColor(Theme.key_chats_menuItemText))
         binding.gmailEt.setHintTextColor(Theme.getColor(Theme.key_chats_menuItemText))
 
-        binding.codeEt.hint = TgMemberStr.getStr(7)
+        binding.codeEt.hint = TgMemberStr.getStr(17)
         binding.codeEt.setTextColor(Theme.getColor(Theme.key_chats_menuItemText))
         binding.codeEt.setHintTextColor(Theme.getColor(Theme.key_chats_menuItemText))
 
-        binding.loginBtn.text = TgMemberStr.getStr(9)
+        binding.loginBtn.text = TgMemberStr.getStr(15)
         binding.loginBtn.setTextColor(Theme.getColor(Theme.key_chats_menuItemText))
     }
 
