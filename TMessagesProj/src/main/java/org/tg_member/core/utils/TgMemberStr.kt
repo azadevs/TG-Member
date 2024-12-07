@@ -10,6 +10,7 @@ object TgMemberStr {
     var titlesLanguages = ArrayList<TitleLanguages>()
 
     init {
+        titlesLanguages.add(TitleLanguages(0, "Contact us", "Biz bilan bog'lanish", "Связаться с нами"))
         titlesLanguages.add(TitleLanguages(1, "Buy", "Sotib olish", "Купить"))
         titlesLanguages.add(TitleLanguages(2, "Transfer", "Ko'chirish", "Передача"))
         titlesLanguages.add(TitleLanguages(3, "Gift", "Sovg'a", "Подарок"))

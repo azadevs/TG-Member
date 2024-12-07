@@ -53,7 +53,7 @@ class DashboardAdapter(
     inner class ProfileViewHolder(private val profile: FragmentProfileBinding) :
         ViewHolder(profile.root) {
         fun onBind() {
-            ProfileFragment().createView(profile)
+            ProfileFragment(profile).createView()
         }
     }
 
