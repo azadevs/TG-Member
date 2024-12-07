@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingTop="16dp">
+    android:paddingTop="8dp">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvAccount"
@@ -48,13 +48,15 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="6dp"
             android:layout_marginEnd="2dp"
+            android:gravity="center"
             android:layout_weight="1"
+            android:textAlignment="center"
             android:background="@drawable/cut_corners_background"
             android:drawableLeft="@drawable/ic_lightning"
-            android:drawablePadding="6dp"
             android:fontFamily="@font/poppins_medium"
-            android:paddingHorizontal="11dp"
             android:paddingVertical="7dp"
+            android:paddingStart="12dp"
+            android:paddingEnd="24dp"
             android:text="@string/auto_join"
             android:textSize="16sp" />
     </LinearLayout>
