@@ -10,4 +10,8 @@
         <item name="cornerFamily">rounded</item>
         <item name="cornerSize">10%</item>
     </style>
+
+    <style name="FreeCheckStyle" parent="Widget.AppCompat.CompoundButton.CheckBox">
+        <item name="buttonTint">#65818181</item>
+    </style>
 </resources>

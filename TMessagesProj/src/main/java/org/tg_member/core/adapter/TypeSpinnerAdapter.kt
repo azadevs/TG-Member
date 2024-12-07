@@ -8,7 +8,6 @@ import android.widget.BaseAdapter
 import org.telegram.messenger.databinding.ItemTypeSpinnerBinding
 import org.telegram.ui.ActionBar.Theme
 import org.tg_member.core.model.SpinnerTypeData
-import org.tg_member.core.utils.getTypes
 
 /**
  * Created by : Azamat Kalmurzaev
@@ -33,9 +32,8 @@ class TypeSpinnerAdapter(
         }
         binding.tvTypeName.text = list[position].type
         binding.tvTypeName.setTextColor(Theme.getColor(Theme.key_chats_menuItemText))
-        binding.ivTypeImage.setImageResource(
-            list[position].icon
-        )
+        binding.ivTypeImage.setColorFilter(Theme.getColor(Theme.key_chats_menuItemText))
+        binding.ivTypeImage.setImageResource(list[position].icon)
         return binding.root
     }
 }

@@ -1,6 +1,10 @@
 package org.tg_member.features.free
 
+import android.graphics.drawable.GradientDrawable
+import android.graphics.drawable.StateListDrawable
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
+import org.telegram.messenger.R
 import org.telegram.messenger.UserConfig
 import org.telegram.messenger.databinding.FragmentFreeBinding
 import org.telegram.ui.ActionBar.Theme
@@ -29,6 +33,12 @@ class FreeFragment(private val binding: FragmentFreeBinding, val navigationBarCo
 
     private fun configureTypesSpinner() {
         val adapter = TypeSpinnerAdapter(binding.root.context, getTypes())
+        //bu yerni ko'rib chiqing
+        val stateListDrawable = ContextCompat.getDrawable(binding.root.context, R.drawable.cut_corners_background) as StateListDrawable
+        val gradientDrawable = stateListDrawable.current as GradientDrawable
+        gradientDrawable.setColor(Theme.getColor(Theme.key_dialogBackground))
+        binding.spinnerContainer.background = stateListDrawable
+        binding.spinnerType.setPopupBackgroundDrawable(stateListDrawable)
         binding.spinnerType.adapter = adapter
     }
 

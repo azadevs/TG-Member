@@ -25,39 +25,37 @@
         app:layout_constraintHeight_percent="0.12"
         tools:layout_editor_absoluteX="0dp">
 
-        <FrameLayout
+        <LinearLayout
+            android:id="@+id/spinner_container"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="2dp"
             android:layout_marginEnd="6dp"
-            android:layout_weight="1"
-            android:background="@drawable/cut_corners_background">
+            android:layout_weight="1">
 
             <Spinner
                 android:id="@+id/spinnerType"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:entries="@array/types"
-                android:paddingVertical="4dp" />
+                android:layout_height="54dp"
+                android:entries="@array/types" />
+        </LinearLayout>
 
-        </FrameLayout>
-
-        <TextView
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/autoJoinBtn"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="54dp"
             android:layout_marginStart="6dp"
             android:layout_marginEnd="2dp"
-            android:gravity="center"
             android:layout_weight="1"
-            android:textAlignment="center"
             android:background="@drawable/cut_corners_background"
             android:drawableLeft="@drawable/ic_lightning"
             android:fontFamily="@font/poppins_medium"
+            android:gravity="center"
             android:paddingVertical="7dp"
             android:paddingStart="12dp"
             android:paddingEnd="24dp"
             android:text="@string/auto_join"
+            android:textAlignment="center"
             android:textSize="16sp" />
     </LinearLayout>
 

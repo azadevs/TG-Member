@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import org.telegram.messenger.databinding.ItemOrderBinding
+import org.telegram.ui.ActionBar.Theme
 import org.tg_member.core.utils.Types
 import org.tg_member.features.orders.model.Order
 
@@ -23,6 +24,10 @@ class OrdersAdapter(
         viewType: Int
     ): OrdersViewHolder {
         val binding = ItemOrderBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        binding.orderIconIv.setColorFilter(Theme.getColor(Theme.key_chat_fieldOverlayText))
+        binding.orderCountTv.setTextColor(Theme.getColor(Theme.key_chats_menuItemText))
+        binding.orderStatusTv.setTextColor(Theme.getColor(Theme.key_chats_menuItemText))
+        binding.root.setCardBackgroundColor(Theme.getColor(Theme.key_dialogBackground))
         return OrdersViewHolder(binding)
     }
 

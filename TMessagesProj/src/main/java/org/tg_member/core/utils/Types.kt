@@ -30,7 +30,7 @@ fun getTypes(): List<SpinnerTypeData> {
         ),
         SpinnerTypeData(
             Types.Premium.name,
-            R.drawable.vip_svgrepo_com
+            R.drawable.vip_ic
         ),
         SpinnerTypeData(
             Types.Member.name,
