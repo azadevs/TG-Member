@@ -25,7 +25,7 @@ enum class Status {
 fun getTypes(): List<SpinnerTypeData> {
     return listOf(
         SpinnerTypeData(
-            Types.AllTypes.name,
+            "All types",
             R.drawable.ic_list
         ),
         SpinnerTypeData(
@@ -50,7 +50,7 @@ fun getTypes(): List<SpinnerTypeData> {
 fun getStatus(): List<SpinnerTypeData> {
     return listOf(
         SpinnerTypeData(
-            Status.AllStatus.name,
+            "All Status",
             R.drawable.ic_list
         ),
         SpinnerTypeData(

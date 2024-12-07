@@ -22,6 +22,9 @@ class OrdersFragment {
     private lateinit var list: List<Order>
     private lateinit var adapter: OrdersAdapter
 
+    private var lastStatus: Status = Status.AllStatus
+    private var lastType: Types = Types.AllTypes
+
     fun createView(binding: FragmentOrdersBinding) {
 
         initializeList()
@@ -41,6 +44,21 @@ class OrdersFragment {
 
     private fun initializeList() {
         list = listOf<Order>(
+            Order(type = Types.View, status = Status.Pending, count = "100"),
+            Order(type = Types.Reaction, status = Status.Completed, count = "200"),
+            Order(type = Types.Member, status = Status.Failed, count = "590"),
+            Order(type = Types.Premium, status = Status.Failed, count = "10"),
+            Order(type = Types.Reaction, status = Status.Pending, count = "7"),
+            Order(type = Types.View, status = Status.Pending, count = "100"),
+            Order(type = Types.Reaction, status = Status.Completed, count = "200"),
+            Order(type = Types.Member, status = Status.Failed, count = "590"),
+            Order(type = Types.Premium, status = Status.Failed, count = "10"),
+            Order(type = Types.Reaction, status = Status.Pending, count = "7"),
+            Order(type = Types.View, status = Status.Pending, count = "100"),
+            Order(type = Types.Reaction, status = Status.Completed, count = "200"),
+            Order(type = Types.Member, status = Status.Failed, count = "590"),
+            Order(type = Types.Premium, status = Status.Failed, count = "10"),
+            Order(type = Types.Reaction, status = Status.Pending, count = "7"),
             Order(type = Types.View, status = Status.Pending, count = "100"),
             Order(type = Types.Reaction, status = Status.Completed, count = "200"),
             Order(type = Types.Member, status = Status.Failed, count = "590"),
@@ -70,15 +88,43 @@ class OrdersFragment {
                 position: Int,
                 id: Long
             ) {
-                when (position) {
-                    0 -> {
-                        adapter.submitList(list)
+                lastType = when (position) {
+                    0 -> Types.AllTypes
+                    1 -> Types.Premium
+                    2 -> Types.Member
+                    3 -> Types.View
+                    4 -> Types.Reaction
+                    else -> {
+                        Types.AllTypes
                     }
 
-                    1 -> adapter.submitList(getOrdersByType(Types.Premium.name))
-                    2 -> adapter.submitList(getOrdersByType(Types.Member.name))
-                    3 -> adapter.submitList(getOrdersByType(Types.View.name))
-                    4 -> adapter.submitList(getOrdersByType(Types.Reaction.name))
+                }
+                var currList = getOrdersByStatusAndType(lastStatus.name, lastType.name)
+                when (position) {
+                    0 -> {
+                        adapter.submitList(currList)
+                        invisibleBoxIfEmpty(binding, currList)
+                    }
+
+                    1 -> {
+                        adapter.submitList(getOrdersByStatusAndType(lastStatus.name, lastType.name))
+                        invisibleBoxIfEmpty(binding, currList)
+                    }
+
+                    2 -> {
+                        adapter.submitList(getOrdersByStatusAndType(lastStatus.name, lastType.name))
+                        invisibleBoxIfEmpty(binding, currList)
+                    }
+
+                    3 -> {
+                        adapter.submitList(getOrdersByStatusAndType(lastStatus.name, lastType.name))
+                        invisibleBoxIfEmpty(binding, currList)
+                    }
+
+                    4 -> {
+                        adapter.submitList(getOrdersByStatusAndType(lastStatus.name, lastType.name))
+                        invisibleBoxIfEmpty(binding, currList)
+                    }
                 }
             }
 
@@ -96,14 +142,37 @@ class OrdersFragment {
                 position: Int,
                 id: Long
             ) {
+                lastStatus = when (position) {
+                    0 -> Status.AllStatus
+                    1 -> Status.Pending
+                    2 -> Status.Completed
+                    3 -> Status.Failed
+                    else -> {
+                        Status.AllStatus
+                    }
+                }
+
+                var currList = getOrdersByStatusAndType(lastStatus.name, lastType.name)
                 when (position) {
                     0 -> {
-                        adapter.submitList(list)
+                        adapter.submitList(currList)
+                        invisibleBoxIfEmpty(binding, currList)
                     }
 
-                    1 -> adapter.submitList(getOrdersByStatus(Status.Pending.name))
-                    2 -> adapter.submitList(getOrdersByStatus(Status.Completed.name))
-                    3 -> adapter.submitList(getOrdersByStatus(Status.Failed.name))
+                    1 -> {
+                        adapter.submitList(getOrdersByStatusAndType(lastStatus.name, lastType.name))
+                        invisibleBoxIfEmpty(binding, currList)
+                    }
+
+                    2 -> {
+                        adapter.submitList(getOrdersByStatusAndType(lastStatus.name, lastType.name))
+                        invisibleBoxIfEmpty(binding, currList)
+                    }
+
+                    3 -> {
+                        adapter.submitList(getOrdersByStatusAndType(lastStatus.name, lastType.name))
+                        invisibleBoxIfEmpty(binding, currList)
+                    }
                 }
             }
 
@@ -120,13 +189,7 @@ class OrdersFragment {
         binding.spinnerStatus.setSelection(0)
         binding.spinnerType.setSelection(0)
 
-        if (list == null || list.isEmpty()) {
-            binding.rvOrders.visibility = View.GONE
-            binding.emptyCaseLl.visibility = View.VISIBLE
-        } else {
-            binding.rvOrders.visibility = View.VISIBLE
-            binding.emptyCaseLl.visibility = View.GONE
-        }
+        invisibleBoxIfEmpty(binding, list)
 
         binding.emptyCaseTv.text = TgMemberStr.getStr(4)
     }
@@ -139,5 +202,26 @@ class OrdersFragment {
         return list.filter { it.status?.name == status }
     }
 
+    private fun getOrdersByStatusAndType(status: String, type: String): List<Order> {
+        return if (status == Status.AllStatus.name && type == Types.AllTypes.name) {
+            list
+        } else if (status == Status.AllStatus.name) {
+            getOrdersByType(type)
+        } else if (type == Types.AllTypes.name) {
+            getOrdersByStatus(status)
+        } else {
+            list.filter { it.status?.name == status && it.type?.name == type }
+        }
+    }
+
+    fun invisibleBoxIfEmpty(binding: FragmentOrdersBinding, currList: List<Order>) {
+        if (currList.isEmpty()) {
+            binding.rvOrders.visibility = View.GONE
+            binding.emptyCaseLl.visibility = View.VISIBLE
+        } else {
+            binding.rvOrders.visibility = View.VISIBLE
+            binding.emptyCaseLl.visibility = View.GONE
+        }
+    }
 
 }
