@@ -14,6 +14,13 @@ object TgMemberStr {
         titlesLanguages.add(TitleLanguages(2, "Transfer", "Ko'chirish", "Передача"))
         titlesLanguages.add(TitleLanguages(3, "Gift", "Sovg'a", "Подарок"))
         titlesLanguages.add(TitleLanguages(4, "There is no orders", "Buyurtmalar yo'q", "Нет заказов"))
+        titlesLanguages.add(TitleLanguages(5, "Enter email and VIP number for transfer", "Ko'chirish uchun electron pochta va VIP lar sonini kiriting", "Введите адрес электронной почты и количество VIP-персон для переноса."))
+        titlesLanguages.add(TitleLanguages(6, "Enter email", "Electron pochta kiriting", "Введите адрес электронной почты"))
+        titlesLanguages.add(TitleLanguages(7, "Enter VIP number", "VIP lar sonini kiriting", "Введите количество VIP-персон"))
+        titlesLanguages.add(TitleLanguages(8, "Transfer", "Ko'chirish", "Передача"))
+        titlesLanguages.add(TitleLanguages(9, "Transfer history", "Ko'chirishlar tarixi", "История переводов"))
+        titlesLanguages.add(TitleLanguages(10, "Enter gift code", "Sovg'a kodini kiriting", "Введите подарочный код"))
+        titlesLanguages.add(TitleLanguages(11, "Confirmation", "Tasdiqlash", "Подтверждение"))
     }
 
     fun getStr(code: Int): String {
