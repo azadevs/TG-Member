@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp">
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/ivChannelImage"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:importantForAccessibility="no"
+        android:scaleType="centerCrop"
+        android:src="@drawable/left_status_profile"
+        android:tint="@color/widget_time"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.05"
+        app:shapeAppearance="@style/CircleShapeableImageView" />
+
+    <TextView
+        android:id="@+id/tvChannelName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:fontFamily="@font/poppins_medium"
+        android:gravity="center"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="@id/ivChannelImage"
+        app:layout_constraintStart_toStartOf="@id/ivChannelImage"
+        app:layout_constraintTop_toBottomOf="@id/ivChannelImage"
+        tools:text="Hello World" />
+
+    <TextView
+        android:id="@+id/tvChannelLink"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/poppins_medium"
+        android:gravity="center"
+        app:layout_constraintEnd_toEndOf="@id/ivChannelImage"
+        app:layout_constraintStart_toStartOf="@id/ivChannelImage"
+        app:layout_constraintTop_toBottomOf="@id/tvChannelName"
+        tools:text="Hello world" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnJoin"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/cut_corners_background"
+        android:text="Join + 🔷"
+        android:textSize="16sp"
+        android:fontFamily="@font/poppins_semibold"
+        android:textAllCaps="false"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@id/tvChannelLink"
+        app:layout_constraintStart_toStartOf="@id/tvChannelLink"
+        app:layout_constraintTop_toBottomOf="@id/tvChannelLink"
+        app:layout_constraintVertical_bias="0.05"
+        app:layout_constraintWidth_percent="0.8" />
+
+    <FrameLayout
+        android:id="@+id/containerSpinner"
+        android:layout_width="0dp"
+        android:layout_height="35dp"
+        android:layout_marginStart="2dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="6dp"
+        android:background="@drawable/cut_corners_background"
+        app:layout_constraintEnd_toStartOf="@id/btnNext"
+        app:layout_constraintStart_toStartOf="@id/btnJoin"
+        app:layout_constraintTop_toBottomOf="@id/btnJoin">
+
+        <Spinner
+            android:id="@+id/spinnerType"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:entries="@array/types"
+            android:paddingVertical="4dp" />
+    </FrameLayout>
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnNext"
+        android:layout_width="wrap_content"
+        android:layout_height="35dp"
+        android:textAllCaps="false"
+        android:paddingHorizontal="8dp"
+        android:layout_marginStart="6dp"
+        android:background="@drawable/cut_corners_background"
+        android:text="Next"
+        app:layout_constraintBottom_toBottomOf="@id/containerSpinner"
+        app:layout_constraintEnd_toEndOf="@id/btnJoin"
+        app:layout_constraintStart_toEndOf="@id/containerSpinner"
+        app:layout_constraintTop_toTopOf="@id/containerSpinner" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

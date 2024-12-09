@@ -1,17 +1,16 @@
 package org.tg_member.features.free
 
-import android.graphics.drawable.GradientDrawable
-import android.graphics.drawable.StateListDrawable
-import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import org.telegram.messenger.R
 import org.telegram.messenger.UserConfig
 import org.telegram.messenger.databinding.FragmentFreeBinding
 import org.telegram.ui.ActionBar.Theme
+import org.telegram.ui.LaunchActivity
 import org.tg_member.core.adapter.TypeSpinnerAdapter
 import org.tg_member.core.utils.TgMemberStr
 import org.tg_member.core.utils.getDrawableStateList
 import org.tg_member.core.utils.getTypes
+import org.tg_member.features.details.AccountDetailsFragment
 import org.tg_member.features.free.adapter.FreeAdapter
 import org.tg_member.features.free.model.AccountData
 
@@ -63,7 +62,7 @@ class FreeFragment(private val binding: FragmentFreeBinding, val navigationBarCo
 
     private fun configureAccountAdapter() {
         adapter = FreeAdapter { id ->
-
+            LaunchActivity.instance.presentFragment(AccountDetailsFragment())
         }
         binding.rvAccount.layoutManager =
             LinearLayoutManager(binding.root.context, LinearLayoutManager.VERTICAL, false)

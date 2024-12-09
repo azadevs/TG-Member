@@ -8,7 +8,7 @@ import org.telegram.ui.ActionBar.Theme
 import org.tg_member.features.free.model.AccountData
 
 class FreeAdapter(
-    onItemClick: (Int) -> Unit
+    private val onItemClick: (Long) -> Unit
 ) : RecyclerView.Adapter<FreeAdapter.FreeViewHolder>() {
 
     private val accounts = mutableListOf<AccountData>()
@@ -21,7 +21,11 @@ class FreeAdapter(
                 tvUserPhone.text = accountData.number
                 binding.tvUserPhone.setTextColor(Theme.getColor(Theme.key_chats_menuItemText))
                 binding.tvUserName.setTextColor(Theme.getColor(Theme.key_chats_menuItemText))
+
                 cardAccount.setCardBackgroundColor(Theme.getColor(Theme.key_dialogBackground))
+                cardAccount.setOnClickListener {
+                    onItemClick.invoke(accountData.id)
+                }
             }
         }
     }
