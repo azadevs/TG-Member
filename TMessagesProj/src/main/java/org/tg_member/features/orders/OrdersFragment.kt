@@ -30,7 +30,7 @@ class OrdersFragment {
 
     fun createView(binding: FragmentOrdersBinding) {
 
-        initializeList()
+        list = ArrayList()
 
         configureUi(binding)
 
@@ -41,30 +41,6 @@ class OrdersFragment {
     }
 
 
-    private fun initializeList() {
-        list = listOf(
-            Order(type = Types.View, status = Status.Pending, count = "100"),
-            Order(type = Types.Reaction, status = Status.Completed, count = "200"),
-            Order(type = Types.Member, status = Status.Failed, count = "590"),
-            Order(type = Types.Premium, status = Status.Failed, count = "10"),
-            Order(type = Types.Reaction, status = Status.Pending, count = "7"),
-            Order(type = Types.View, status = Status.Pending, count = "100"),
-            Order(type = Types.Reaction, status = Status.Completed, count = "200"),
-            Order(type = Types.Member, status = Status.Failed, count = "590"),
-            Order(type = Types.Premium, status = Status.Failed, count = "10"),
-            Order(type = Types.Reaction, status = Status.Pending, count = "7"),
-            Order(type = Types.View, status = Status.Pending, count = "100"),
-            Order(type = Types.Reaction, status = Status.Completed, count = "200"),
-            Order(type = Types.Member, status = Status.Failed, count = "590"),
-            Order(type = Types.Premium, status = Status.Failed, count = "10"),
-            Order(type = Types.Reaction, status = Status.Pending, count = "7"),
-            Order(type = Types.View, status = Status.Pending, count = "100"),
-            Order(type = Types.Reaction, status = Status.Completed, count = "200"),
-            Order(type = Types.Member, status = Status.Failed, count = "590"),
-            Order(type = Types.Premium, status = Status.Failed, count = "10"),
-            Order(type = Types.Reaction, status = Status.Pending, count = "7")
-        )
-    }
 
     private fun configureOrderAdapter(binding: FragmentOrdersBinding) {
         adapter = OrdersAdapter()
