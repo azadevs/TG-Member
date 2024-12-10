@@ -28,7 +28,14 @@ class LoginFragment : BaseFragment() {
             presentFragment(DashboardFragment())
         }
 
-        return binding.root
+        fragmentView = binding.root
+
+        return fragmentView
+    }
+
+    override fun onFragmentDestroy() {
+        _binding = null
+        super.onFragmentDestroy()
     }
 
     private fun configureUi() {

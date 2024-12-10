@@ -23,30 +23,10 @@ class FreeFragment(private val binding: FragmentFreeBinding, val navigationBarCo
     private lateinit var adapter: FreeAdapter
 
     fun createView() {
-
-        configureTypesSpinner()
-
+        
         configureUi()
 
         configureAccountAdapter()
-    }
-
-    private fun configureTypesSpinner() {
-        val adapter = TypeSpinnerAdapter(binding.root.context, getTypes())
-        binding.spinnerType.adapter = adapter
-        binding.spinnerContainer.background = getDrawableStateList(
-            R.drawable.cut_corners_background,
-            binding.root.context,
-            Theme.key_dialogBackground
-        )
-        binding.spinnerType.setPopupBackgroundDrawable(
-            getDrawableStateList(
-                R.drawable.cut_corners_background,
-                binding.root.context,
-                Theme.key_dialogBackground
-            )
-        )
-
     }
 
     private fun configureUi() {

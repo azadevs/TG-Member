@@ -26,7 +26,14 @@ class DashboardFragment : BaseFragment() {
 
         configureViewPager()
 
-        return binding.root
+        fragmentView = binding.root
+
+        return fragmentView
+    }
+
+    override fun onFragmentDestroy() {
+        _binding = null
+        super.onFragmentDestroy()
     }
 
     private fun configureViewPager() {

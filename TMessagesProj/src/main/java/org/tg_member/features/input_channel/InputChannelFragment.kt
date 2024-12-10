@@ -34,7 +34,14 @@ class InputChannelFragment(private val orderMemberToMoney: OrderMemberToMoney) :
             checkChannelLink()
         }
 
-        return binding.root
+        fragmentView = binding.root
+
+        return fragmentView
+    }
+
+    override fun onFragmentDestroy() {
+        _binding = null
+        super.onFragmentDestroy()
     }
 
     private fun configureAdapter() {

@@ -25,28 +25,12 @@
         app:layout_constraintHeight_percent="0.13"
         tools:layout_editor_absoluteX="0dp">
 
-        <FrameLayout
-            android:id="@+id/spinner_container"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="2dp"
-            android:layout_marginEnd="6dp"
-            android:layout_weight="1">
-
-            <Spinner
-                android:id="@+id/spinnerType"
-                android:layout_width="match_parent"
-                android:layout_height="54dp"
-                android:entries="@array/types" />
-        </FrameLayout>
-
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/autoJoinBtn"
             android:layout_width="match_parent"
             android:layout_height="54dp"
             android:layout_marginStart="6dp"
             android:layout_marginEnd="2dp"
-            android:layout_weight="1"
             android:drawableLeft="@drawable/ic_lightning"
             android:fontFamily="@font/poppins_medium"
             android:paddingVertical="7dp"

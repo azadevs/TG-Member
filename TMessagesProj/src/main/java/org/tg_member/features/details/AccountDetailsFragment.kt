@@ -23,14 +23,19 @@ class AccountDetailsFragment : BaseFragment() {
 
         configureActionBar()
 
-        configureTypesSpinner()
-
         configureUi()
 
         joinChannel()
 
-        return binding.root
+        fragmentView = binding.root
 
+        return fragmentView
+
+    }
+
+    override fun onFragmentDestroy() {
+        _binding = null
+        super.onFragmentDestroy()
     }
 
     private fun configureActionBar() {
@@ -50,18 +55,14 @@ class AccountDetailsFragment : BaseFragment() {
         binding.btnNext.setTextColor(Theme.getColor(Theme.key_chats_menuItemText))
         binding.btnNext.text = TgMemberStr.getStr(19)
         binding.btnJoin.text = TgMemberStr.getStr(20)
+        binding.autoJoin.setTextColor(Theme.getColor(Theme.key_chats_menuItemText))
+        binding.autoJoin.text = TgMemberStr.getStr(21)
     }
 
     private fun joinChannel() {
         binding.btnJoin.setOnClickListener {
             JoinChannels.join(UserConfig.selectedAccount, -1001766948, "kunuzofficial")
         }
-    }
-
-
-    private fun configureTypesSpinner() {
-        val adapter = TypeSpinnerAdapter(binding.root.context, getTypes())
-        binding.spinnerType.adapter = adapter
     }
 
     override fun clearViews() {

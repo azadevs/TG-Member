@@ -138,4 +138,9 @@ class DashboardAdapter(
     override fun getItemCount(): Int {
         return items.size
     }
+
+    override fun onDetachedFromRecyclerView(recyclerView: RecyclerView) {
+        super.onDetachedFromRecyclerView(recyclerView)
+        recyclerView.clearOnChildAttachStateChangeListeners()
+    }
 }
