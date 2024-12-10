@@ -66,6 +66,9 @@ dependencies {
     }
 
     coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:1.1.5'
+
+//    send email code
+    implementation 'com.sun.mail:javax.mail:1.6.2'
 }
 
 def isWindows = String.valueOf(DefaultNativePlatform.currentOperatingSystem.toFamilyName() == OperatingSystemFamily.WINDOWS)

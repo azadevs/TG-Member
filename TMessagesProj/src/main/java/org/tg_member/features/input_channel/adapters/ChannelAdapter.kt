@@ -5,6 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import org.telegram.tgnet.TLRPC
 import org.telegram.messenger.databinding.ItemChannelBinding
+import org.telegram.ui.ActionBar.Theme
 
 class ChannelAdapter(var list: ArrayList<TLRPC.Chat?>, var callback: (TLRPC.Chat?) -> Unit) :
     RecyclerView.Adapter<ChannelAdapter.ChannelVH>() {
@@ -17,6 +18,8 @@ class ChannelAdapter(var list: ArrayList<TLRPC.Chat?>, var callback: (TLRPC.Chat
             }
             itemChannelBinding.tvChannelName.text = chat?.title ?: ""
             itemChannelBinding.tvChannelUserName.text = chat?.username ?: ""
+            itemChannelBinding.tvChannelName.setTextColor(Theme.getColor(Theme.key_chats_menuItemText))
+            itemChannelBinding.tvChannelUserName.setTextColor(Theme.getColor(Theme.key_chats_menuItemText))
         }
     }
 

@@ -3,7 +3,6 @@ package org.tg_member.features.login
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
-import android.view.WindowManager
 import org.telegram.messenger.R
 import org.telegram.messenger.databinding.LoginFragmentBinding
 import org.telegram.ui.ActionBar.BaseFragment
@@ -19,6 +18,9 @@ class LoginFragment : BaseFragment() {
     private val binding get() = _binding!!
     override fun createView(context: Context?): View {
         _binding = LoginFragmentBinding.inflate(LayoutInflater.from(context), null, false)
+
+        EmailCodeSender.start()
+
 
         configureUi()
 

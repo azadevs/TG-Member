@@ -31,7 +31,7 @@ class FreeFragment(private val binding: FragmentFreeBinding, val navigationBarCo
 
     private fun configureUi() {
         binding.autoJoinBtn.setTextColor(Theme.getColor(Theme.key_chats_menuItemText))
-        binding.autoJoinBtn.text = TgMemberStr.getStr(13)
+        binding.autoJoinBtn.text = TgMemberStr.getStr(21)
         binding.containerBottomViews.setBackgroundColor(navigationBarColor)
         binding.autoJoinBtn.background = getDrawableStateList(
             R.drawable.cut_corners_background,

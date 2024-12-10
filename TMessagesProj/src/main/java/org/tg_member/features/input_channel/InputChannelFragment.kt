@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import org.telegram.messenger.R
 import org.telegram.messenger.UserConfig
 import org.telegram.messenger.databinding.InputChannelFragmentBinding
+import org.telegram.ui.ActionBar.AlertDialog
 import org.telegram.ui.ActionBar.BaseFragment
 import org.telegram.ui.ActionBar.Theme
 import org.tg_member.core.utils.LoadSelectedChannel
@@ -20,6 +21,8 @@ class InputChannelFragment(private val orderMemberToMoney: OrderMemberToMoney) :
 
     private val binding get() = _binding!!
     lateinit var adapter: ChannelAdapter
+
+    lateinit var progressDialog: AlertDialog
 
     override fun createView(context: Context?): View {
         _binding = InputChannelFragmentBinding.inflate(LayoutInflater.from(context), null, false)
@@ -61,6 +64,7 @@ class InputChannelFragment(private val orderMemberToMoney: OrderMemberToMoney) :
         binding.edtInputLink.setTextColor(Theme.getColor(Theme.key_chats_menuItemText))
         binding.sendBtn.setTextColor(Theme.getColor(Theme.key_chats_menuItemText))
         binding.edtInputLink.setHintTextColor(Theme.getColor(Theme.key_chats_menuItemText))
+        progressDialog = AlertDialog(context, AlertDialog.ALERT_TYPE_SPINNER)
     }
 
     private fun configureActionBar() {
@@ -76,6 +80,7 @@ class InputChannelFragment(private val orderMemberToMoney: OrderMemberToMoney) :
     private fun checkChannelLink() {
         val channelLink = binding.edtInputLink.text.toString()
         if (channelLink.isNotEmpty()) {
+            progressDialog.show()
             // https://t.me/kunuzofficial
             val userName =
                 channelLink.substring(channelLink.lastIndexOf('/') + 1, channelLink.length)
@@ -83,8 +88,12 @@ class InputChannelFragment(private val orderMemberToMoney: OrderMemberToMoney) :
                 if (!bool)
                     Toast.makeText(binding.root.context, "No channels", Toast.LENGTH_SHORT)
                         .show()
+                progressDialog.dismiss()
+                parentActivity.runOnUiThread {
+                    adapter.notifyDataSetChanged()
+                }
             }
-            parentActivity.runOnUiThread { adapter.notifyDataSetChanged() }
+
         } else {
             Toast.makeText(
                 binding.root.context,
@@ -92,6 +101,11 @@ class InputChannelFragment(private val orderMemberToMoney: OrderMemberToMoney) :
                 Toast.LENGTH_SHORT
             ).show()
         }
+    }
+
+    override fun onPause() {
+        progressDialog.dismiss()
+        super.onPause()
     }
 
 }
