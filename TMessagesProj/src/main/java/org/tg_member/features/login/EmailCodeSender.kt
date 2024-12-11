@@ -1,6 +1,7 @@
 package org.tg_member.features.login
 
 import java.util.Properties
+import kotlin.random.Random
 import javax.mail.Authenticator
 import javax.mail.Message
 import javax.mail.MessagingException
@@ -12,12 +13,15 @@ import javax.mail.internet.InternetAddress
 import javax.mail.internet.MimeMessage
 
 object EmailCodeSender {
-    fun sendEmail() {
+
+    var code:Int = 0
+
+    fun sendEmail(email:String) {
         try {
 
-            val stringSenderEmail = "from account"
-            val stringReceiverEmail = "to account"
-            val stringPasswordSenderEmail = "16X code"
+            val stringSenderEmail = "tgmemberpro@gmail.com"
+            val stringReceiverEmail = email
+            val stringPasswordSenderEmail = "liba ptjc knss fnjo"
 
             val stringHost = "smtp.gmail.com"
 
@@ -44,10 +48,12 @@ object EmailCodeSender {
                 }
             })
 
+            code = Random.nextInt(10000, 99999)
+
             val mimeMessage = MimeMessage(session)
             mimeMessage.addRecipients(Message.RecipientType.TO, InternetAddress.parse(stringReceiverEmail))
-            mimeMessage.subject = "Subject: Android App email"
-            mimeMessage.setText("Hello Programmer, \n\nProgrammer World has sent you this 2nd email. \n\n Cheers!\nProgrammer World")
+            mimeMessage.subject = "Tg Member verification code"
+            mimeMessage.setText("Bu kod dasturga kirishingiz uchun kerak: $code")
 
             val thread = Thread {
                 try {
@@ -62,5 +68,9 @@ object EmailCodeSender {
         } catch (e: MessagingException) {
             e.printStackTrace()
         }
+    }
+
+    fun checkCode(password:Int):Boolean {
+        return code == password
     }
 }

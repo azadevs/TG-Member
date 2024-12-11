@@ -3,6 +3,7 @@ package org.tg_member.features.login
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
+import android.widget.Toast
 import org.telegram.messenger.R
 import org.telegram.messenger.databinding.LoginFragmentBinding
 import org.telegram.ui.ActionBar.BaseFragment
@@ -25,8 +26,29 @@ class LoginFragment : BaseFragment() {
         configureActionBar()
 
         binding.loginBtn.setOnClickListener {
-//            presentFragment(DashboardFragment())
-            EmailCodeSender.sendEmail()
+//            if (binding.codeEt.visibility == View.VISIBLE){
+//                var password = 0
+//                try {
+//                    password = binding.codeEt.text.toString().toInt()
+//                }catch (e:Exception){}
+//                if (password != 0) {
+//                    if (EmailCodeSender.checkCode(password)){
+//                        presentFragment(DashboardFragment())
+//                    }else{
+//                        Toast.makeText(context, "Pasrol xato", Toast.LENGTH_SHORT).show()
+//                    }
+//                }else{
+//                    Toast.makeText(context, "parolni kiriting", Toast.LENGTH_SHORT).show()
+//                }
+//            }else{
+//                val email = binding.gmailEt.text.toString()
+//                if (email != "") {
+//                    EmailCodeSender.sendEmail(email)
+//                }
+//                binding.codeEt.visibility = View.VISIBLE
+//                binding.loginBtn.text = "Verify"
+//            }
+            presentFragment(DashboardFragment())
         }
 
         fragmentView = binding.root
