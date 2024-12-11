@@ -19,15 +19,14 @@ class LoginFragment : BaseFragment() {
     override fun createView(context: Context?): View {
         _binding = LoginFragmentBinding.inflate(LayoutInflater.from(context), null, false)
 
-        EmailCodeSender.start()
-
 
         configureUi()
 
         configureActionBar()
 
         binding.loginBtn.setOnClickListener {
-            presentFragment(DashboardFragment())
+//            presentFragment(DashboardFragment())
+            EmailCodeSender.start()
         }
 
         fragmentView = binding.root

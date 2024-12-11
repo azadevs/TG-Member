@@ -1,6 +1,5 @@
 package org.tg_member.features.login
 
-import android.util.Log
 import java.util.Properties
 import javax.mail.Authenticator
 import javax.mail.Message
@@ -14,44 +13,49 @@ object EmailCodeSender {
 
     val host = "smtp.gmail.com"
     val port = "465"
-    val fromEmail = "promessengertg@gmail.com" // Your email
-    val toEmail = "helloworld282003@gmail.com" // Recipient email
-    val password = "Promessenger200" // Your email password or App password if 2FA is enabled
+    val fromEmail = "fromGmail" // Your email
+    val toEmail = "toGmail" // Recipient email
+    val password = "password"
+    val props = Properties()
+    var session:Session
 
-    val properties = Properties().apply {
-        put("mail.smtp.auth", "true")
-        put("mail.smtp.starttls.enable", "true")
-        put("mail.smtp.host", host)
-        put("mail.smtp.port", port)
-        setProperty("mail.transport.protocol", "smtp")
-        setProperty("mail.host", host)
-        put("mail.smtp.socketFactory.port", "465")
-        put("mail.smtp.socketFactory.class",
-            "javax.net.ssl.SSLSocketFactory")
-        put("mail.smtp.socketFactory.fallback", "false")
+    init {
+        props["mail.smtp.host"] = "smtp.gmail.com"
+        props["mail.smtp.socketFactory.port"] = "465"
+        props["mail.smtp.socketFactory.class"] = "javax.net.ssl.SSLSocketFactory"
+        props["mail.smtp.auth"] = "true"
+        props["mail.smtp.port"] = "465"
+        props["mail.transport.protocol"] = "SMTP"
 
+        session = Session.getDefaultInstance(props,
+            object : Authenticator() {
+                override fun getPasswordAuthentication(): PasswordAuthentication {
+                    return PasswordAuthentication(fromEmail, password)
+                }
+            })
     }
 
-    val session = Session.getInstance(properties, object : Authenticator() {
-        override fun getPasswordAuthentication(): PasswordAuthentication {
-            return PasswordAuthentication(fromEmail, password) 
-        }
-    })
+    fun start() {
+        Thread {
+            try {
+                val message = MimeMessage(session)
+                message.setFrom(InternetAddress(fromEmail))
+                message.setRecipients(
+                    Message.RecipientType.TO,
+                    InternetAddress.parse(toEmail)
+                )
+                message.subject = "Davronov Doston"
+                message.setText(
+                    "My name is Doston" +
+                            "\nMy last name Davronov" +
+                            "\nI am 20 years old"
+                )
+                Transport.send(message)
+                println("Send message!!!")
 
-    fun start(){
-        try {
-            val message = MimeMessage(session).apply {
-                setFrom(InternetAddress(fromEmail))
-                setRecipients(Message.RecipientType.TO, InternetAddress.parse(toEmail))
-                subject = "Test Email from Kotlin"
-                setText("This is a test email sent from Kotlin.")
+            } catch (e: Exception) {
+                e.printStackTrace()
             }
-
-            Transport.send(message)
-            println("Email sent successfully.")
-        } catch (e: Exception) {
-            e.printStackTrace()
-        }
+        }.start()
     }
-
 }
