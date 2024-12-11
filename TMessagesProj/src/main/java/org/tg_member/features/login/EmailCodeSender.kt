@@ -1,5 +1,6 @@
 package org.tg_member.features.login
 
+import android.util.Log
 import java.util.Properties
 import javax.mail.Authenticator
 import javax.mail.Message
@@ -22,6 +23,13 @@ object EmailCodeSender {
         put("mail.smtp.starttls.enable", "true")
         put("mail.smtp.host", host)
         put("mail.smtp.port", port)
+        setProperty("mail.transport.protocol", "smtp")
+        setProperty("mail.host", host)
+        put("mail.smtp.socketFactory.port", "465")
+        put("mail.smtp.socketFactory.class",
+            "javax.net.ssl.SSLSocketFactory")
+        put("mail.smtp.socketFactory.fallback", "false")
+
     }
 
     val session = Session.getInstance(properties, object : Authenticator() {
