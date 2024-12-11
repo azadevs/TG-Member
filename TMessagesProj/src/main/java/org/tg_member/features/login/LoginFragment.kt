@@ -26,7 +26,7 @@ class LoginFragment : BaseFragment() {
 
         binding.loginBtn.setOnClickListener {
 //            presentFragment(DashboardFragment())
-            EmailCodeSender.start()
+            EmailCodeSender.sendEmail()
         }
 
         fragmentView = binding.root
