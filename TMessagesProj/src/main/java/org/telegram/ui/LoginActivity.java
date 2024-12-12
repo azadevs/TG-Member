@@ -2887,7 +2887,7 @@ public class LoginActivity extends BaseFragment implements NotificationCenter.No
                                             resId = R.raw.incoming_calls;
                                         }
                                         builder.setTopAnimation(resId, 46, false, Theme.getColor(Theme.key_dialogTopBackground));
-                                        permissionsDialog = showDialog(builder.create());
+//                                        permissionsDialog = showDialog(builder.create());
                                         confirmedNumber = true;
                                     } else {
                                         try {
