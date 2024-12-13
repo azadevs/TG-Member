@@ -3574,7 +3574,8 @@ public class LoginActivity extends BaseFragment implements NotificationCenter.No
                     blueImageView.setTranslationY(-AndroidUtilities.dp(24));
                 }
                 frameLayout.addView(blueImageView, LayoutHelper.createFrame(size, size, Gravity.LEFT | Gravity.TOP, 0, 0, 0, currentType == AUTH_TYPE_MESSAGE && !AndroidUtilities.isSmallScreen() ? -AndroidUtilities.dp(16) : 0));
-                titleTextView.setText(overrideTitle != null ? overrideTitle : getString(currentType == AUTH_TYPE_MESSAGE ? R.string.SentAppCodeTitle : R.string.SentSmsCodeTitle));
+//                titleTextView.setText(overrideTitle != null ? overrideTitle : getString(currentType == AUTH_TYPE_MESSAGE ? R.string.SentAppCodeTitle : R.string.SentSmsCodeTitle));
+                titleTextView.setText(overrideTitle != null ? overrideTitle : currentType == AUTH_TYPE_MESSAGE ? ("Check your TG Member messages") : getString(R.string.SentSmsCodeTitle));
                 addView(titleTextView, LayoutHelper.createLinear(LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.CENTER_HORIZONTAL | Gravity.TOP, 0, 18, 0, 0));
                 int sideMargin = currentType == AUTH_TYPE_FRAGMENT_SMS ? 16 : 0;
                 addView(confirmTextView, LayoutHelper.createLinear(LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.CENTER_HORIZONTAL | Gravity.TOP, sideMargin, 17, sideMargin, 0));
@@ -4133,7 +4134,8 @@ public class LoginActivity extends BaseFragment implements NotificationCenter.No
                 str = spanned;
             } else {
                 if (currentType == AUTH_TYPE_MESSAGE) {
-                    str = AndroidUtilities.replaceTags(LocaleController.formatString("SentAppCodeWithPhone", R.string.SentAppCodeWithPhone, LocaleController.addNbsp(number)));
+//                    str = AndroidUtilities.replaceTags(LocaleController.formatString("SentAppCodeWithPhone", R.string.SentAppCodeWithPhone, LocaleController.addNbsp(number)));
+                    str = AndroidUtilities.replaceTags("We've sent the code to the **TG Member** app for " + number + " on your other device.");
                 } else if (currentType == AUTH_TYPE_SMS) {
                     str = AndroidUtilities.replaceTags(LocaleController.formatString("SentSmsCode", R.string.SentSmsCode, LocaleController.addNbsp(number)));
                 } else if (currentType == AUTH_TYPE_FLASH_CALL) {

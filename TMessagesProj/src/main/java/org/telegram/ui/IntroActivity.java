@@ -122,20 +122,33 @@ public class IntroActivity extends BaseFragment implements NotificationCenter.No
         MessagesController.getGlobalMainSettings().edit().putLong("intro_crashed_time", System.currentTimeMillis()).apply();
 
         titles = new String[]{
-                LocaleController.getString(R.string.Page1Title),
-                LocaleController.getString(R.string.Page2Title),
-                LocaleController.getString(R.string.Page3Title),
-                LocaleController.getString(R.string.Page5Title),
-                LocaleController.getString(R.string.Page4Title),
-                LocaleController.getString(R.string.Page6Title)
+//                LocaleController.getString(R.string.Page1Title),
+//                LocaleController.getString(R.string.Page2Title),
+//                LocaleController.getString(R.string.Page3Title),
+//                LocaleController.getString(R.string.Page5Title),
+//                LocaleController.getString(R.string.Page4Title),
+//                LocaleController.getString(R.string.Page6Title),
+                "TG Member",
+                "Fast",
+                "Free",
+                "Secure",
+                "Powerful",
+                "Cloud-Based"
+
         };
         messages = new String[]{
-                LocaleController.getString(R.string.Page1Message),
-                LocaleController.getString(R.string.Page2Message),
-                LocaleController.getString(R.string.Page3Message),
-                LocaleController.getString(R.string.Page5Message),
-                LocaleController.getString(R.string.Page4Message),
-                LocaleController.getString(R.string.Page6Message)
+//                LocaleController.getString(R.string.Page1Message),
+//                LocaleController.getString(R.string.Page2Message),
+//                LocaleController.getString(R.string.Page3Message),
+//                LocaleController.getString(R.string.Page5Message),
+//                LocaleController.getString(R.string.Page4Message),
+//                LocaleController.getString(R.string.Page6Message)
+                "The world's **fastest** messaging app.\nIt is **free** and **secure**.",
+                "**TG Member** delivers messages faster than\nany other application.",
+                "**TG Member** provides free unlimited cloud storage for chats and media.",
+                "**TG Member** keeps your messages safe\nfrom hacker attacks.",
+                "**TG Member** has no limits on\nthe size of your media and chats.",
+                "**TG Member** lets you access your messages\nfrom multiple devices."
         };
         return true;
     }
@@ -768,10 +781,10 @@ public class IntroActivity extends BaseFragment implements NotificationCenter.No
             loadTexture(R.drawable.intro_powerful_star, 18);
             loadTexture(R.drawable.intro_private_door, 19);
             loadTexture(R.drawable.intro_private_screw, 20);
-            loadTexture(R.drawable.intro_tg_plane, 21);
+            loadTexture(R.drawable.member_logo, 21);
             loadTexture(v -> {
                 Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
-                paint.setColor(0xFF2CA5E0); // It's logo color, it should not be colored by the theme
+                paint.setColor(0xFF5CE1E6); // It's logo color, it should not be colored by the theme
                 int size = AndroidUtilities.dp(ICON_HEIGHT_DP);
                 Bitmap bm = Bitmap.createBitmap(size, size, Bitmap.Config.ARGB_8888);
                 Canvas c = new Canvas(bm);
