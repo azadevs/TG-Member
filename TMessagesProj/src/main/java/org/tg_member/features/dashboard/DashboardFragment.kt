@@ -6,7 +6,7 @@ import android.view.View
 import org.telegram.messenger.R
 import org.telegram.messenger.databinding.FragmentDashboardBinding
 import org.telegram.ui.ActionBar.BaseFragment
-import org.tg_member.features.dashboard.adapter.DashboardAdapter
+import org.tg_member.features.dashboard.adapter.DashboardPagerAdapter
 import org.tg_member.features.dashboard.model.DashboardItem
 
 /**
@@ -37,7 +37,7 @@ class DashboardFragment : BaseFragment() {
     }
 
     private fun configureViewPager() {
-        val adapter = DashboardAdapter(
+        val adapter = DashboardPagerAdapter(
             arrayListOf(
                 DashboardItem.HomeItem,
                 DashboardItem.FreeItem,
@@ -45,11 +45,10 @@ class DashboardFragment : BaseFragment() {
                 DashboardItem.VipItem,
                 DashboardItem.ProfileItem
             ),
-            actionBar.backgroundColor,
-            navigationBarColor
+            navigationBarColor,
+            actionBar.backgroundColor
         )
         binding.viewpager.adapter = adapter
-        binding.viewpager.isUserInputEnabled = false
     }
 
     private fun configureActionBar() {
