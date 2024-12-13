@@ -2863,7 +2863,7 @@ public class LoginActivity extends BaseFragment implements NotificationCenter.No
                                     permissionsItems.add(Manifest.permission.CALL_PHONE);
                                 }
                                 if (!allowReadCallLog) {
-                                    permissionsItems.add(Manifest.permission.READ_CALL_LOG);
+//                                    permissionsItems.add(Manifest.permission.READ_CALL_LOG);
                                 }
                                 if (!allowReadPhoneNumbers && Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                                     permissionsItems.add(Manifest.permission.READ_PHONE_NUMBERS);
@@ -2940,7 +2940,7 @@ public class LoginActivity extends BaseFragment implements NotificationCenter.No
                         permissionsItems.add(Manifest.permission.CALL_PHONE);
                     }
                     if (!allowReadCallLog) {
-                        permissionsItems.add(Manifest.permission.READ_CALL_LOG);
+//                        permissionsItems.add(Manifest.permission.READ_CALL_LOG);
                     }
                     if (!allowReadPhoneNumbers && Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                         permissionsItems.add(Manifest.permission.READ_PHONE_NUMBERS);
