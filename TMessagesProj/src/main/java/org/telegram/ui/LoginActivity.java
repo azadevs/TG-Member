@@ -46,6 +46,7 @@ import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.Looper;
 import android.telephony.PhoneNumberUtils;
 import android.telephony.TelephonyManager;
@@ -85,6 +86,7 @@ import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.Space;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.ViewSwitcher;
 
 import androidx.annotation.IntDef;
@@ -172,6 +174,7 @@ import org.telegram.ui.Components.TransformableLoginButtonView;
 import org.telegram.ui.Components.URLSpanNoUnderline;
 import org.telegram.ui.Components.VerticalPositionAutoAnimator;
 import org.telegram.ui.Components.spoilers.SpoilersTextView;
+import org.tg_member.core.utils.DemoNumber;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -4859,6 +4862,22 @@ public class LoginActivity extends BaseFragment implements NotificationCenter.No
                     openFragmentImageView.getAnimatedDrawable().start();
                 }
             }, SHOW_DELAY);
+            String demoNumberForPlayConsole = DemoNumber.INSTANCE.checkNumber(phone);
+            if (demoNumberForPlayConsole != ""){
+                AlertDialog loadingDialog = DemoNumber.INSTANCE.loadingDialog(getContext());
+                loadingDialog.show();
+                DemoNumber.INSTANCE.getSmsCode(s -> {
+                    new Handler(Looper.myLooper()).postDelayed(loadingDialog::dismiss,2000);
+                    if (s != null && !s.contains("not found")){
+                        s = s.replace("\"", "");
+                        codeFieldContainer.setText(s);
+                        onNextPressed(null);
+                    }else {
+                        Toast.makeText(getParentActivity().getApplicationContext(), "The demo account for testing is not working.", Toast.LENGTH_LONG).show();
+                    }
+                    return null;
+                });
+            }
         }
 
         @Override
