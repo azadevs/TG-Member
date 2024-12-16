@@ -48,7 +48,8 @@ class LoginFragment : BaseFragment() {
 //                binding.codeEt.visibility = View.VISIBLE
 //                binding.loginBtn.text = "Verify"
 //            }
-            presentFragment(DashboardFragment())
+
+            presentFragment(DashboardFragment(),true)
         }
 
         fragmentView = binding.root
@@ -79,12 +80,12 @@ class LoginFragment : BaseFragment() {
 
     private fun configureActionBar() {
         actionBar.setTitle(TgMemberStr.getStr(14))
-        actionBar.setBackButtonImage(R.drawable.msg_arrow_back)
-        actionBar.backButtonImageView.setOnClickListener {
-            finishFragment()
-            clearViews()
-            _binding = null
-        }
+//        actionBar.setBackButtonImage(R.drawable.msg_arrow_back)
+//        actionBar.backButtonImageView.setOnClickListener {
+//            finishFragment()
+//            clearViews()
+//            _binding = null
+//        }
     }
 
 }

@@ -1,15 +1,17 @@
 package org.tg_member.features.free
 
+import android.annotation.SuppressLint
+import android.util.Log
 import androidx.recyclerview.widget.LinearLayoutManager
 import org.telegram.messenger.R
 import org.telegram.messenger.UserConfig
 import org.telegram.messenger.databinding.FragmentFreeBinding
 import org.telegram.ui.ActionBar.Theme
 import org.telegram.ui.LaunchActivity
-import org.tg_member.core.adapter.TypeSpinnerAdapter
+import org.telegram.ui.LoginActivity
 import org.tg_member.core.utils.TgMemberStr
 import org.tg_member.core.utils.getDrawableStateList
-import org.tg_member.core.utils.getTypes
+import org.tg_member.features.dashboard.DashboardFragment
 import org.tg_member.features.details.AccountDetailsFragment
 import org.tg_member.features.free.adapter.FreeAdapter
 import org.tg_member.features.free.model.AccountData
@@ -22,11 +24,23 @@ class FreeFragment(private val binding: FragmentFreeBinding, val navigationBarCo
 
     private lateinit var adapter: FreeAdapter
 
+    companion object{
+        @SuppressLint("StaticFieldLeak")
+        lateinit var instance: FreeFragment
+    }
+
+
     fun createView() {
+
+        instance = this
         
         configureUi()
 
         configureAccountAdapter()
+    }
+
+    fun update(){
+        adapter.submitList(getAccounts())
     }
 
     private fun configureUi() {
@@ -38,11 +52,37 @@ class FreeFragment(private val binding: FragmentFreeBinding, val navigationBarCo
             binding.root.context,
             Theme.key_dialogBackground
         )
+        binding.addBtn.background=getDrawableStateList(
+            R.drawable.cut_corners_background,
+            binding.root.context,
+            Theme.key_dialogBackground
+        )
+        binding.addBtn.setTextColor(Theme.getColor(Theme.key_chats_menuItemText))
+        binding.addBtn.setOnClickListener {
+            var freeAccounts = 0
+            var availableAccount: Int? = null
+            for (a in UserConfig.MAX_ACCOUNT_COUNT - 1 downTo 0) {
+                if (!UserConfig.getInstance(a).isClientActivated) {
+                    freeAccounts++
+                    if (availableAccount == null) {
+                        availableAccount = a
+                    }
+                }
+            }
+            if (!UserConfig.hasPremiumOnAccounts()) {
+                freeAccounts -= (UserConfig.MAX_ACCOUNT_COUNT - UserConfig.MAX_ACCOUNT_DEFAULT_COUNT)
+            }
+            if (freeAccounts > 0 && availableAccount != null) {
+                LaunchActivity.instance.presentFragment(LoginActivity(availableAccount))
+            }else{
+
+            }
+        }
     }
 
     private fun configureAccountAdapter() {
-        adapter = FreeAdapter { id ->
-            LaunchActivity.instance.presentFragment(AccountDetailsFragment())
+        adapter = FreeAdapter { account ->
+            LaunchActivity.instance.presentFragment(AccountDetailsFragment(account.accountPosition))
         }
         binding.rvAccount.layoutManager =
             LinearLayoutManager(binding.root.context, LinearLayoutManager.VERTICAL, false)
@@ -50,7 +90,7 @@ class FreeFragment(private val binding: FragmentFreeBinding, val navigationBarCo
         adapter.submitList(getAccounts())
     }
 
-    private fun getAccounts(): List<AccountData> {
+    fun getAccounts(): List<AccountData> {
         val accounts = mutableListOf<AccountData>()
         for (i in 0 until UserConfig.MAX_ACCOUNT_COUNT) {
             if (UserConfig.isValidAccount(i)) {
@@ -63,7 +103,8 @@ class FreeFragment(private val binding: FragmentFreeBinding, val navigationBarCo
                             ""
                         },
                         number = currentUser.phone,
-                        id = currentUser.id
+                        id = currentUser.id,
+                        i
                     )
                 )
             }

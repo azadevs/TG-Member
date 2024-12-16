@@ -1,8 +1,11 @@
 package org.tg_member.features.dashboard
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.view.LayoutInflater
+import android.view.MotionEvent
 import android.view.View
+import androidx.viewpager.widget.ViewPager.OnPageChangeListener
 import org.telegram.messenger.R
 import org.telegram.messenger.databinding.FragmentDashboardBinding
 import org.telegram.ui.ActionBar.BaseFragment
@@ -48,17 +51,35 @@ class DashboardFragment : BaseFragment() {
             navigationBarColor,
             actionBar.backgroundColor
         )
+        binding.viewpager.addOnPageChangeListener(object : OnPageChangeListener {
+            override fun onPageScrolled(
+                position: Int,
+                positionOffset: Float,
+                positionOffsetPixels: Int
+            ) {
+
+            }
+
+            override fun onPageSelected(position: Int) {
+                var item = binding.bottomNavigationView.menu.getItem(position)
+                binding.bottomNavigationView.selectedItemId = item.itemId
+            }
+
+            override fun onPageScrollStateChanged(state: Int) {
+
+            }
+        })
         binding.viewpager.adapter = adapter
     }
 
     private fun configureActionBar() {
         actionBar.setTitle(parentActivity.getString(R.string.tg_member))
-        actionBar.setBackButtonImage(R.drawable.msg_arrow_back)
-        actionBar.backButtonImageView.setOnClickListener {
-            finishFragment()
-            clearViews()
-            _binding = null
-        }
+//        actionBar.setBackButtonImage(R.drawable.msg_arrow_back)
+//        actionBar.backButtonImageView.setOnClickListener {
+//            finishFragment()
+//            clearViews()
+//            _binding = null
+//        }
     }
 
     private fun configureBottomNavigation() {

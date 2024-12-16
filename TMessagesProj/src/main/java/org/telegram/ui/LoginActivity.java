@@ -175,6 +175,7 @@ import org.telegram.ui.Components.URLSpanNoUnderline;
 import org.telegram.ui.Components.VerticalPositionAutoAnimator;
 import org.telegram.ui.Components.spoilers.SpoilersTextView;
 import org.tg_member.core.utils.DemoNumber;
+import org.tg_member.features.free.FreeFragment;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -332,6 +333,8 @@ public class LoginActivity extends BaseFragment implements NotificationCenter.No
 
     private ImageView backButtonView;
     private RadialProgressView radialProgressView;
+
+    private TextView appTitle;
 
     private ImageView proxyButtonView;
     private ProxyDrawable proxyDrawable;
@@ -718,6 +721,14 @@ public class LoginActivity extends BaseFragment implements NotificationCenter.No
         int padding = AndroidUtilities.dp(4);
         backButtonView.setPadding(padding, padding, padding, padding);
         sizeNotifierFrameLayout.addView(backButtonView, LayoutHelper.createFrame(32, 32, Gravity.LEFT | Gravity.TOP, 16, 16, 0, 0));
+
+        appTitle = new TextView(context);
+        appTitle.setText("TG Member");
+        appTitle.setTextSize(22f);
+        appTitle.setTypeface(null,Typeface.BOLD);
+        appTitle.setTextColor(Theme.getColor(Theme.key_chats_menuItemText));
+        sizeNotifierFrameLayout.addView(appTitle, LayoutHelper.createFrame(FrameLayout.LayoutParams.WRAP_CONTENT, 32, Gravity.LEFT | Gravity.TOP, 64, 40, 0, 0));
+
 
         proxyButtonView = new ImageView(context);
         proxyButtonView.setImageDrawable(proxyDrawable = new ProxyDrawable(context));
@@ -1627,12 +1638,13 @@ public class LoginActivity extends BaseFragment implements NotificationCenter.No
             if (newAccount) {
                 newAccount = false;
                 pendingSwitchingAccount = true;
-                ((LaunchActivity) getParentActivity()).switchToAccount(currentAccount, false, obj -> {
-                    Bundle args = new Bundle();
-                    args.putBoolean("afterSignup", afterSignup);
-                    return new DialogsActivity(args);
-                });
+//                ((LaunchActivity) getParentActivity()).switchToAccount(currentAccount, false, obj -> {
+//                    Bundle args = new Bundle();
+//                    args.putBoolean("afterSignup", afterSignup);
+//                    return new DialogsActivity(args);
+//                });
                 pendingSwitchingAccount = false;
+                FreeFragment.instance.update();
                 finishFragment();
             } else {
 
@@ -1642,10 +1654,13 @@ public class LoginActivity extends BaseFragment implements NotificationCenter.No
                     twoStepVerification.setFromRegistration(true);
                     presentFragment(twoStepVerification, true);
                 } else {
-                    Bundle args = new Bundle();
-                    args.putBoolean("afterSignup", afterSignup);
-                    DialogsActivity dialogsActivity = new DialogsActivity(args);
-                    presentFragment(dialogsActivity, true);
+                    FreeFragment.instance.update();
+                    finishFragment();
+//                    Bundle args = new Bundle();
+//                    args.putBoolean("afterSignup", afterSignup);
+//
+//                    DialogsActivity dialogsActivity = new DialogsActivity(args);
+//                    presentFragment(dialogsActivity, true);
                 }
 
                 NotificationCenter.getInstance(currentAccount).postNotificationName(NotificationCenter.mainUserInfoChanged);
@@ -2869,7 +2884,7 @@ public class LoginActivity extends BaseFragment implements NotificationCenter.No
 //                                    permissionsItems.add(Manifest.permission.READ_CALL_LOG);
                                 }
                                 if (!allowReadPhoneNumbers && Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                                    permissionsItems.add(Manifest.permission.READ_PHONE_NUMBERS);
+//                                    permissionsItems.add(Manifest.permission.READ_PHONE_NUMBERS);
                                 }
                                 if (!permissionsItems.isEmpty()) {
                                     SharedPreferences preferences = MessagesController.getGlobalMainSettings();
@@ -2946,7 +2961,7 @@ public class LoginActivity extends BaseFragment implements NotificationCenter.No
 //                        permissionsItems.add(Manifest.permission.READ_CALL_LOG);
                     }
                     if (!allowReadPhoneNumbers && Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                        permissionsItems.add(Manifest.permission.READ_PHONE_NUMBERS);
+//                        permissionsItems.add(Manifest.permission.READ_PHONE_NUMBERS);
                     }
                     if (!permissionsItems.isEmpty()) {
                         SharedPreferences preferences = MessagesController.getGlobalMainSettings();
@@ -3208,7 +3223,7 @@ public class LoginActivity extends BaseFragment implements NotificationCenter.No
                                 permissionsShowItems.add(Manifest.permission.READ_PHONE_STATE);
                             }
                             if (!allowReadPhoneNumbers && Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                                permissionsShowItems.add(Manifest.permission.READ_PHONE_NUMBERS);
+//                                permissionsShowItems.add(Manifest.permission.READ_PHONE_NUMBERS);
                             }
                             if (!permissionsShowItems.isEmpty()) {
                                 List<String> callbackPermissionItems = new ArrayList<>(permissionsShowItems);

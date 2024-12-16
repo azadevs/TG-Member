@@ -26,9 +26,23 @@
         tools:layout_editor_absoluteX="0dp">
 
         <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/autoJoinBtn"
-            android:layout_width="match_parent"
+            android:id="@+id/addBtn"
+            android:layout_weight="1"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginStart="6dp"
+            android:layout_marginEnd="2dp"
+            android:fontFamily="@font/poppins_medium"
+            android:paddingEnd="24dp"
+            android:text="@string/AddAccount"
+            android:textAllCaps="false"
+            android:textSize="15sp" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/autoJoinBtn"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:layout_marginStart="6dp"
             android:layout_marginEnd="2dp"
             android:drawableLeft="@drawable/ic_lightning"

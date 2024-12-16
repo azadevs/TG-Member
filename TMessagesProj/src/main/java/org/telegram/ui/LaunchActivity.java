@@ -664,10 +664,11 @@ public class LaunchActivity extends BasePermissionsActivity implements INavigati
                     args.putLong("dialog_id", UserConfig.getInstance(currentAccount).getClientUserId());
                     args.putInt("type", MediaActivity.TYPE_STORIES);
                     presentFragment(new MediaActivity(args, null));
-                } else if(id == 1001){
-                    drawerLayoutContainer.closeDrawer(true);
-                    presentFragment(new LoginFragment());
                 }
+//                else if(id == 1001){
+//                    drawerLayoutContainer.closeDrawer(true);
+//                    presentFragment(new LoginFragment());
+//                }
             }
         });
         final ItemTouchHelper sideMenuTouchHelper = new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(ItemTouchHelper.UP | ItemTouchHelper.DOWN, 0) {
@@ -1205,7 +1206,7 @@ public class LaunchActivity extends BasePermissionsActivity implements INavigati
         if (LoginActivity.loadCurrentState(false, currentAccount).getInt("currentViewNum", 0) != 0) {
             return new LoginActivity();
         }
-        return new IntroActivity();
+        return new LoginFragment();
     }
 
     public void showSelectStatusDialog() {
@@ -1474,7 +1475,8 @@ public class LaunchActivity extends BasePermissionsActivity implements INavigati
                 layersActionBarLayout.rebuildLogout();
                 rightActionBarLayout.rebuildLogout();
             }
-            presentFragment(new IntroActivity().setOnLogout());
+//            presentFragment(new IntroActivity().setOnLogout());
+            presentFragment(new LoginFragment());
         }
     }
 

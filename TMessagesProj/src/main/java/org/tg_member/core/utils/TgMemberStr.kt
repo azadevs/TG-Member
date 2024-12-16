@@ -33,6 +33,7 @@ object TgMemberStr {
         titlesLanguages.add(TitleLanguages(20,"Join + \uD83D\uDD37","Qo'shish + \uD83D\uDD37", "Присоединяйтесь + \uD83D\uDD37"))
         titlesLanguages.add(TitleLanguages(21,"Auto Join","Avtomatik qo'shilish", "Автоматическое присоединение"))
         titlesLanguages.add(TitleLanguages(22,"Email Copied","Elektron pochtadan nusxa olindi","Электронная почта скопирована"))
+        titlesLanguages.add(TitleLanguages(23,"Log Out","Hisobdan chiqish","Выход"))
     }
 
     fun getStr(code: Int): String {
