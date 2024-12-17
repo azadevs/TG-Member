@@ -57,6 +57,7 @@ class FreeFragment(private val binding: FragmentFreeBinding, val navigationBarCo
             binding.root.context,
             Theme.key_dialogBackground
         )
+        binding.addBtn.text = TgMemberStr.getStr(26)
         binding.addBtn.setTextColor(Theme.getColor(Theme.key_chats_menuItemText))
         binding.addBtn.setOnClickListener {
             var freeAccounts = 0

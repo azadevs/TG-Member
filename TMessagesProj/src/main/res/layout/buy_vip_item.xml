@@ -6,11 +6,11 @@
     android:layout_height="wrap_content"
     android:padding="10dp">
 
-    <TextView
+    <ImageView
         android:id="@+id/vip"
         android:layout_width="24dp"
         android:layout_height="24dp"
-        android:text="VIP"
+        android:src="@drawable/vip_svgrepo_com"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@id/vip_price"
         app:layout_constraintStart_toStartOf="parent"

@@ -13,7 +13,7 @@ class BuyAdapter(var vipPriceList: ArrayList<VipPriceModule>) :
     inner class BuyVH(var buyVipItemBinding: BuyVipItemBinding) :
         RecyclerView.ViewHolder(buyVipItemBinding.root) {
         fun onBind(vipPriceModule: VipPriceModule) {
-            buyVipItemBinding.vip.setTextColor(Theme.getColor(Theme.key_chats_menuItemText))
+            buyVipItemBinding.vip.setColorFilter(Theme.getColor(Theme.key_chats_menuItemText))
             buyVipItemBinding.vipCount.apply {
                 text = vipPriceModule.vipCount
                 setTextColor(Theme.getColor(Theme.key_chats_menuItemText))

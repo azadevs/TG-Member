@@ -25,6 +25,10 @@ class ProfileFragment(var binding: FragmentProfileBinding) {
             Toast.makeText(binding.root.context, TgMemberStr.getStr(22), Toast.LENGTH_SHORT).show()
         }
 
+        binding.languageCard.setOnClickListener {
+            TgMemberStr.changeLanguageDialog(binding.root.context)
+        }
+
     }
 
     private fun configureUi() {
@@ -33,7 +37,11 @@ class ProfileFragment(var binding: FragmentProfileBinding) {
         binding.contactUs.text = TgMemberStr.getStr(0)
         binding.contactUs.setTextColor(Theme.getColor(Theme.key_chats_menuItemText))
         binding.cardEmail.setCardBackgroundColor(Theme.getColor(Theme.key_dialogBackground))
-//        binding.cardSupport.setCardBackgroundColor(Theme.getColor(Theme.key_dialogBackground))
+        binding.languageId.setColorFilter(Theme.getColor(Theme.key_chats_menuItemText))
+        binding.languageTv.setTextColor(Theme.getColor(Theme.key_chats_menuItemText))
+        binding.languageTv.text = TgMemberStr.getStr(24)
+        binding.ivCopyEmail.setColorFilter(Theme.getColor(Theme.key_chats_menuItemText))
+        binding.ivSupport.setColorFilter(Theme.getColor(Theme.key_chats_menuItemText))
     }
 
 

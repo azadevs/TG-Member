@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:gravity="center_vertical"
-    android:paddingHorizontal="10dp"
+    android:paddingHorizontal="8dp"
     android:paddingVertical="4dp">
 
     <ImageView
@@ -18,9 +18,10 @@
 
     <TextView
         android:id="@+id/tvTypeName"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginRight="20dp"
         android:ellipsize="end"
         android:fontFamily="@font/poppins_medium"
         android:includeFontPadding="false"

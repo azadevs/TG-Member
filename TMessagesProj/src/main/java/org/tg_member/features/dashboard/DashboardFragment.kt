@@ -9,6 +9,7 @@ import androidx.viewpager.widget.ViewPager.OnPageChangeListener
 import org.telegram.messenger.R
 import org.telegram.messenger.databinding.FragmentDashboardBinding
 import org.telegram.ui.ActionBar.BaseFragment
+import org.tg_member.core.utils.TgMemberStr
 import org.tg_member.features.dashboard.adapter.DashboardPagerAdapter
 import org.tg_member.features.dashboard.model.DashboardItem
 
@@ -20,8 +21,15 @@ class DashboardFragment : BaseFragment() {
     private var _binding: FragmentDashboardBinding? = null
     private val binding get() = _binding!!
 
+    companion object {
+        @SuppressLint("StaticFieldLeak")
+        lateinit var instance: DashboardFragment
+    }
+
     override fun createView(context: Context?): View {
         _binding = FragmentDashboardBinding.inflate(LayoutInflater.from(context), null, false)
+
+        instance = this
 
         configureBottomNavigation()
 
@@ -32,6 +40,28 @@ class DashboardFragment : BaseFragment() {
         fragmentView = binding.root
 
         return fragmentView
+    }
+
+    fun recreate(uiPosition: Int) {
+        configureBottomNavigation()
+
+        configureActionBar()
+
+        configureViewPager()
+
+        val item = binding.bottomNavigationView.menu.getItem(uiPosition)
+        binding.bottomNavigationView.selectedItemId = item.itemId
+    }
+
+    override fun onBackPressed(): Boolean {
+        val item = binding.bottomNavigationView.menu.getItem(0)
+
+        if (binding.bottomNavigationView.selectedItemId == item.itemId) {
+            finishFragment()
+        } else {
+            binding.bottomNavigationView.selectedItemId = item.itemId
+        }
+        return false
     }
 
     override fun onFragmentDestroy() {
@@ -73,13 +103,7 @@ class DashboardFragment : BaseFragment() {
     }
 
     private fun configureActionBar() {
-        actionBar.setTitle(parentActivity.getString(R.string.tg_member))
-//        actionBar.setBackButtonImage(R.drawable.msg_arrow_back)
-//        actionBar.backButtonImageView.setOnClickListener {
-//            finishFragment()
-//            clearViews()
-//            _binding = null
-//        }
+        actionBar.setTitle(TgMemberStr.getStr(27))
     }
 
     private fun configureBottomNavigation() {
@@ -88,26 +112,39 @@ class DashboardFragment : BaseFragment() {
             when (it.itemId) {
                 R.id.home -> {
                     binding.viewpager.currentItem = 0
+                    actionBar.setTitle(TgMemberStr.getStr(27))
                 }
 
                 R.id.free -> {
                     binding.viewpager.currentItem = 1
+                    actionBar.setTitle(TgMemberStr.getStr(28))
                 }
 
                 R.id.orders -> {
                     binding.viewpager.currentItem = 2
+                    actionBar.setTitle(TgMemberStr.getStr(29))
                 }
 
                 R.id.vip -> {
                     binding.viewpager.currentItem = 3
+                    actionBar.setTitle(TgMemberStr.getStr(30))
                 }
 
-                R.id.Profile -> {
+                R.id.profile -> {
                     binding.viewpager.currentItem = 4
+                    actionBar.setTitle(TgMemberStr.getStr(31))
                 }
             }
             true
         }
+
+        val menu = binding.bottomNavigationView.menu
+
+        menu.findItem(R.id.home).title = TgMemberStr.getStr(27)
+        menu.findItem(R.id.free).title = TgMemberStr.getStr(28)
+        menu.findItem(R.id.orders).title = TgMemberStr.getStr(29)
+        menu.findItem(R.id.vip).title = TgMemberStr.getStr(30)
+        menu.findItem(R.id.profile).title = TgMemberStr.getStr(31)
 
     }
 

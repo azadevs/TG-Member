@@ -25,23 +25,23 @@ enum class Status {
 fun getTypes(): List<SpinnerTypeData> {
     return listOf(
         SpinnerTypeData(
-            "All types",
+            TgMemberStr.getStr(32),
             R.drawable.ic_list
         ),
         SpinnerTypeData(
-            Types.Premium.name,
+            TgMemberStr.getStr(33),
             R.drawable.vip_ic
         ),
         SpinnerTypeData(
-            Types.Member.name,
+            TgMemberStr.getStr(34),
             R.drawable.ic_person
         ),
         SpinnerTypeData(
-            Types.View.name,
+            TgMemberStr.getStr(35),
             R.drawable.ic_view
         ),
         SpinnerTypeData(
-            Types.Reaction.name,
+            TgMemberStr.getStr(36),
             R.drawable.ic_reaction
         )
     )
@@ -50,19 +50,19 @@ fun getTypes(): List<SpinnerTypeData> {
 fun getStatus(): List<SpinnerTypeData> {
     return listOf(
         SpinnerTypeData(
-            "All Status",
+            TgMemberStr.getStr(37),
             R.drawable.ic_list
         ),
         SpinnerTypeData(
-            Status.Pending.name,
+            TgMemberStr.getStr(38),
             R.drawable.ic_pending
         ),
         SpinnerTypeData(
-            Status.Completed.name,
+            TgMemberStr.getStr(39),
             R.drawable.ic_completed
         ),
         SpinnerTypeData(
-            Status.Failed.name,
+            TgMemberStr.getStr(40),
             R.drawable.ic_failed
         )
     )
