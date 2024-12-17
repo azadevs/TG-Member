@@ -727,7 +727,8 @@ public class LoginActivity extends BaseFragment implements NotificationCenter.No
         appTitle.setTextSize(22f);
         appTitle.setTypeface(null,Typeface.BOLD);
         appTitle.setTextColor(Theme.getColor(Theme.key_chats_menuItemText));
-        sizeNotifierFrameLayout.addView(appTitle, LayoutHelper.createFrame(FrameLayout.LayoutParams.WRAP_CONTENT, 32, Gravity.LEFT | Gravity.TOP, 64, 40, 0, 0));
+        appTitle.setPadding(padding, padding, padding, padding);
+        sizeNotifierFrameLayout.addView(appTitle, LayoutHelper.createFrame(FrameLayout.LayoutParams.WRAP_CONTENT, 32, Gravity.CENTER | Gravity.TOP, 0, 16, 0, 0));
 
 
         proxyButtonView = new ImageView(context);
@@ -1612,7 +1613,8 @@ public class LoginActivity extends BaseFragment implements NotificationCenter.No
         try {
             Bundle bundle = new Bundle();
             bundle.putInt("currentViewNum", currentViewNum);
-            bundle.putInt("syncContacts", syncContacts ? 1 : 0);
+//            bundle.putInt("syncContacts", syncContacts ? 1 : 0);
+            bundle.putInt("syncContacts", 0);
             for (int a = 0; a <= currentViewNum; a++) {
                 SlideView v = views[a];
                 if (v != null) {
@@ -1689,7 +1691,8 @@ public class LoginActivity extends BaseFragment implements NotificationCenter.No
         ConnectionsManager.getInstance(currentAccount).setUserId(res.user.id);
         UserConfig.getInstance(currentAccount).clearConfig();
         MessagesController.getInstance(currentAccount).cleanup();
-        UserConfig.getInstance(currentAccount).syncContacts = syncContacts;
+//        UserConfig.getInstance(currentAccount).syncContacts = syncContacts;
+        UserConfig.getInstance(currentAccount).syncContacts = false;
         UserConfig.getInstance(currentAccount).setCurrentUser(res.user);
         UserConfig.getInstance(currentAccount).saveConfig(true);
         MessagesStorage.getInstance(currentAccount).cleanup(true);
@@ -2424,8 +2427,9 @@ public class LoginActivity extends BaseFragment implements NotificationCenter.No
             int bottomMargin = 72;
             if (newAccount && activityMode == MODE_LOGIN) {
                 syncContactsBox = new CheckBoxCell(context, 2);
+                syncContactsBox.setChecked(false,false);
                 syncContactsBox.setText(getString("SyncContacts", R.string.SyncContacts), "", syncContacts, false);
-                addView(syncContactsBox, LayoutHelper.createLinear(LayoutHelper.WRAP_CONTENT, LayoutHelper.MATCH_PARENT, Gravity.LEFT | Gravity.TOP, 16, 0, 16 + (LocaleController.isRTL && AndroidUtilities.isSmallScreen() ? Build.VERSION.SDK_INT >= 21 ? 56 : 60 : 0), 0));
+//                addView(syncContactsBox, LayoutHelper.createLinear(LayoutHelper.WRAP_CONTENT, LayoutHelper.MATCH_PARENT, Gravity.LEFT | Gravity.TOP, 16, 0, 16 + (LocaleController.isRTL && AndroidUtilities.isSmallScreen() ? Build.VERSION.SDK_INT >= 21 ? 56 : 60 : 0), 0));
                 bottomMargin -= 24;
                 syncContactsBox.setOnClickListener(v -> {
                     if (getParentActivity() == null) {

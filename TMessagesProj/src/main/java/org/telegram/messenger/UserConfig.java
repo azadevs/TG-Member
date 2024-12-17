@@ -62,8 +62,8 @@ public class UserConfig extends BaseController {
 
     public boolean notificationsSettingsLoaded;
     public boolean notificationsSignUpSettingsLoaded;
-    public boolean syncContacts = true;
-    public boolean suggestContacts = true;
+    public boolean syncContacts = false;
+    public boolean suggestContacts = false;
     public boolean hasSecureData;
     public int loginTime;
     public TLRPC.TL_help_termsOfService unacceptedTermsOfService;
@@ -308,8 +308,8 @@ public class UserConfig extends BaseController {
             botRatingLoadTime = preferences.getInt("botRatingLoadTime", 0);
             webappRatingLoadTime = preferences.getInt("webappRatingLoadTime", 0);
             loginTime = preferences.getInt("loginTime", currentAccount);
-            syncContacts = preferences.getBoolean("syncContacts", true);
-            suggestContacts = preferences.getBoolean("suggestContacts", true);
+            syncContacts = preferences.getBoolean("syncContacts", false);
+            suggestContacts = preferences.getBoolean("suggestContacts", false);
             hasSecureData = preferences.getBoolean("hasSecureData", false);
             notificationsSettingsLoaded = preferences.getBoolean("notificationsSettingsLoaded4", false);
             notificationsSignUpSettingsLoaded = preferences.getBoolean("notificationsSignUpSettingsLoaded", false);
