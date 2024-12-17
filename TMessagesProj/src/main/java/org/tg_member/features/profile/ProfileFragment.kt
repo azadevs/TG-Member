@@ -37,6 +37,7 @@ class ProfileFragment(var binding: FragmentProfileBinding) {
         binding.contactUs.text = TgMemberStr.getStr(0)
         binding.contactUs.setTextColor(Theme.getColor(Theme.key_chats_menuItemText))
         binding.cardEmail.setCardBackgroundColor(Theme.getColor(Theme.key_dialogBackground))
+        binding.languageCard.setCardBackgroundColor(Theme.getColor(Theme.key_dialogBackground))
         binding.languageId.setColorFilter(Theme.getColor(Theme.key_chats_menuItemText))
         binding.languageTv.setTextColor(Theme.getColor(Theme.key_chats_menuItemText))
         binding.languageTv.text = TgMemberStr.getStr(24)
