@@ -728,7 +728,7 @@ public class LoginActivity extends BaseFragment implements NotificationCenter.No
         appTitle.setTypeface(null,Typeface.BOLD);
         appTitle.setTextColor(Theme.getColor(Theme.key_chats_menuItemText));
         appTitle.setPadding(padding, padding, padding, padding);
-        sizeNotifierFrameLayout.addView(appTitle, LayoutHelper.createFrame(FrameLayout.LayoutParams.WRAP_CONTENT, 32, Gravity.CENTER | Gravity.TOP, 0, 16, 0, 0));
+        sizeNotifierFrameLayout.addView(appTitle, LayoutHelper.createFrame(FrameLayout.LayoutParams.WRAP_CONTENT, 32, Gravity.CENTER | Gravity.TOP, 0, 34, 0, 0));
 
 
         proxyButtonView = new ImageView(context);
