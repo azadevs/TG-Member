@@ -31,9 +31,9 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="6dp"
+            android:background="@drawable/transfer_btn"
             android:layout_marginEnd="2dp"
             android:fontFamily="@font/poppins_medium"
-            android:paddingEnd="24dp"
             android:text="@string/AddAccount"
             android:textAllCaps="false"
             android:textSize="15sp" />
@@ -45,9 +45,8 @@
             android:layout_weight="1"
             android:layout_marginStart="6dp"
             android:layout_marginEnd="2dp"
-            android:drawableLeft="@drawable/ic_lightning"
+            android:background="@drawable/transfer_btn"
             android:fontFamily="@font/poppins_medium"
-            android:paddingEnd="24dp"
             android:text="@string/auto_join"
             android:textAllCaps="false"
             android:textSize="15sp" />

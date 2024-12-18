@@ -1,5 +1,6 @@
 package org.tg_member.features.gift
 
+import android.graphics.Color
 import org.telegram.messenger.databinding.GiftFragmentBinding
 import org.telegram.ui.ActionBar.Theme
 import org.tg_member.core.utils.TgMemberStr
@@ -18,6 +19,6 @@ class GiftFragment(var giftFragmentBinding: GiftFragmentBinding) {
         giftFragmentBinding.giftCode.setHintTextColor(Theme.getColor(Theme.key_chats_menuItemText))
 
         giftFragmentBinding.enter.text = TgMemberStr.getStr(11)
-        giftFragmentBinding.enter.setTextColor(Theme.getColor(Theme.key_chats_menuItemText))
+        giftFragmentBinding.enter.setTextColor(Color.WHITE)
     }
 }

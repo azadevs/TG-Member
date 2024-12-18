@@ -3,12 +3,12 @@ package org.tg_member.features.dashboard
 import android.annotation.SuppressLint
 import android.content.Context
 import android.view.LayoutInflater
-import android.view.MotionEvent
 import android.view.View
 import androidx.viewpager.widget.ViewPager.OnPageChangeListener
 import org.telegram.messenger.R
 import org.telegram.messenger.databinding.FragmentDashboardBinding
 import org.telegram.ui.ActionBar.BaseFragment
+import org.telegram.ui.ActionBar.Theme
 import org.tg_member.core.utils.TgMemberStr
 import org.tg_member.features.dashboard.adapter.DashboardPagerAdapter
 import org.tg_member.features.dashboard.model.DashboardItem
@@ -104,6 +104,8 @@ class DashboardFragment : BaseFragment() {
 
     private fun configureActionBar() {
         actionBar.setTitle(TgMemberStr.getStr(27))
+        actionBar.backgroundColor=Theme.getColor(Theme.key_myColor)
+
     }
 
     private fun configureBottomNavigation() {

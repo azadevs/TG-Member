@@ -1,6 +1,7 @@
 package org.tg_member.features.input_channel
 
 import android.content.Context
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.Toast
@@ -62,7 +63,7 @@ class InputChannelFragment(private val orderMemberToMoney: OrderMemberToMoney) :
     private fun configureUi() {
         binding.tvRule.setTextColor(Theme.getColor(Theme.key_chats_menuItemText))
         binding.edtInputLink.setTextColor(Theme.getColor(Theme.key_chats_menuItemText))
-        binding.sendBtn.setTextColor(Theme.getColor(Theme.key_chats_menuItemText))
+        binding.sendBtn.setTextColor(Color.WHITE)
         binding.edtInputLink.setHintTextColor(Theme.getColor(Theme.key_chats_menuItemText))
         progressDialog = AlertDialog(context, AlertDialog.ALERT_TYPE_SPINNER)
     }
@@ -70,6 +71,7 @@ class InputChannelFragment(private val orderMemberToMoney: OrderMemberToMoney) :
     private fun configureActionBar() {
         actionBar.setTitle("Order")
         actionBar.setBackButtonImage(R.drawable.msg_arrow_back)
+        actionBar.backgroundColor=Theme.getColor(Theme.key_myColor)
         actionBar.backButtonImageView.setOnClickListener {
             finishFragment()
             clearViews()

@@ -1,6 +1,7 @@
 package org.tg_member.features.free
 
 import android.annotation.SuppressLint
+import android.graphics.Color
 import android.util.Log
 import androidx.recyclerview.widget.LinearLayoutManager
 import org.telegram.messenger.R
@@ -44,21 +45,21 @@ class FreeFragment(private val binding: FragmentFreeBinding, val navigationBarCo
     }
 
     private fun configureUi() {
-        binding.autoJoinBtn.setTextColor(Theme.getColor(Theme.key_chats_menuItemText))
+        binding.autoJoinBtn.setTextColor(Color.WHITE)
         binding.autoJoinBtn.text = TgMemberStr.getStr(21)
         binding.containerBottomViews.setBackgroundColor(navigationBarColor)
-        binding.autoJoinBtn.background = getDrawableStateList(
-            R.drawable.cut_corners_background,
-            binding.root.context,
-            Theme.key_dialogBackground
-        )
-        binding.addBtn.background=getDrawableStateList(
-            R.drawable.cut_corners_background,
-            binding.root.context,
-            Theme.key_dialogBackground
-        )
+//        binding.autoJoinBtn.background = getDrawableStateList(
+//            R.drawable.cut_corners_background,
+//            binding.root.context,
+//            Theme.key_dialogBackground
+//        )
+//        binding.addBtn.background=getDrawableStateList(
+//            R.drawable.cut_corners_background,
+//            binding.root.context,
+//            Theme.key_dialogBackground
+//        )
         binding.addBtn.text = TgMemberStr.getStr(26)
-        binding.addBtn.setTextColor(Theme.getColor(Theme.key_chats_menuItemText))
+        binding.addBtn.setTextColor(Color.WHITE)
         binding.addBtn.setOnClickListener {
             var freeAccounts = 0
             var availableAccount: Int? = null

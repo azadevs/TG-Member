@@ -45,6 +45,7 @@ class AccountDetailsFragment(var selectedAccount: Int) : BaseFragment() {
     private fun configureActionBar() {
         actionBar.setTitle("Join")
         actionBar.setBackButtonImage(R.drawable.msg_arrow_back)
+        actionBar.backgroundColor=Theme.getColor(Theme.key_myColor)
         actionBar.backButtonImageView.setOnClickListener {
             finishFragment()
             clearViews()

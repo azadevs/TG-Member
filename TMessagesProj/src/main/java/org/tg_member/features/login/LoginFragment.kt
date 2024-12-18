@@ -1,6 +1,7 @@
 package org.tg_member.features.login
 
 import android.content.Context
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.Toast
@@ -75,11 +76,12 @@ class LoginFragment : BaseFragment() {
         binding.codeEt.setHintTextColor(Theme.getColor(Theme.key_chats_menuItemText))
 
         binding.loginBtn.text = TgMemberStr.getStr(15)
-        binding.loginBtn.setTextColor(Theme.getColor(Theme.key_chats_menuItemText))
+        binding.loginBtn.setTextColor(Color.WHITE)
     }
 
     private fun configureActionBar() {
         actionBar.setTitle(TgMemberStr.getStr(14))
+        actionBar.backgroundColor=Theme.getColor(Theme.key_myColor)
 //        actionBar.setBackButtonImage(R.drawable.msg_arrow_back)
 //        actionBar.backButtonImageView.setOnClickListener {
 //            finishFragment()

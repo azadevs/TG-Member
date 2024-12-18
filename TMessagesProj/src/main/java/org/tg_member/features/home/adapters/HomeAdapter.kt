@@ -29,9 +29,9 @@ class HomeAdapter(var list: ArrayList<OrderMemberToMoney>, var homeClick:HomeCli
                 }
                 price.apply {
                     text = "${orderMemberToMoney.price} USD"
-                    setTextColor(Theme.getColor(Theme.key_chat_fieldOverlayText))
+                    setTextColor(Theme.getColor(Theme.key_myColor))
                 }
-                ivPerson.setColorFilter(Theme.getColor(Theme.key_chat_fieldOverlayText))
+                ivPerson.setColorFilter(Theme.getColor(Theme.key_myColor))
             }
         }
     }

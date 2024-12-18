@@ -97,6 +97,7 @@ public class ThemeColors {
         defaultColors[key_windowBackgroundWhiteGrayText8] = 0xff6d6d72;
         defaultColors[key_windowBackgroundWhiteBlackText] = 0xff222222;
         defaultColors[key_windowBackgroundWhiteHintText] = 0xffa8a8a8;
+        defaultColors[key_myColor] = 0xFF29AB87;
         defaultColors[key_windowBackgroundWhiteValueText] = 0xff3a95d5;
         defaultColors[key_windowBackgroundWhiteLinkText] = 0xff2678b6;
         defaultColors[key_windowBackgroundWhiteLinkSelection] = 0x3362a9e3;

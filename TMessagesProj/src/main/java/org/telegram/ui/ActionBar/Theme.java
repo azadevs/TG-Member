@@ -3438,6 +3438,7 @@ public class Theme {
     public static final int key_windowBackgroundWhiteGrayText8 = colorsCount++;
     public static final int key_windowBackgroundWhiteBlackText = colorsCount++;
     public static final int key_windowBackgroundWhiteHintText = colorsCount++;
+    public static final int key_myColor = colorsCount++;
     public static final int key_windowBackgroundWhiteValueText = colorsCount++;
     public static final int key_windowBackgroundWhiteLinkText = colorsCount++;
     public static final int key_windowBackgroundWhiteLinkSelection = colorsCount++;
@@ -4975,9 +4976,10 @@ public class Theme {
 
         int switchToTheme = needSwitchToTheme();
         if (switchToTheme == 2) {
-            applyingTheme = currentNightTheme;
+            applyingTheme = currentDayTheme;
         }
-        applyTheme(applyingTheme, false, false, switchToTheme == 2);
+//        applyTheme(applyingTheme, false, false, switchToTheme == 2);
+        applyTheme(applyingTheme, false, false, false);
         AndroidUtilities.runOnUIThread(Theme::checkAutoNightThemeConditions);
     }
 
@@ -6109,7 +6111,8 @@ public class Theme {
         }
         hasPreviousTheme = false;
         if (isInNigthMode && currentNightTheme != null) {
-            applyTheme(currentNightTheme, true, false, true);
+//            applyTheme(currentNightTheme, true, false, true);
+            applyTheme(currentNightTheme, true, false, false);
         } else if (!isApplyingAccent) {
             applyTheme(previousTheme, true, false, false);
         }
@@ -7191,7 +7194,9 @@ public class Theme {
             return;
         }
 
-        if (night) {
+        // changed false because we don't need dark theme yet...
+
+        if (false) {
             if (currentTheme != currentNightTheme && (currentTheme == null || currentNightTheme != null &&  currentTheme.isDark() != currentNightTheme.isDark())) {
                 isInNigthMode = true;
                 lastThemeSwitchTime = SystemClock.elapsedRealtime();

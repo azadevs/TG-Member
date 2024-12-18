@@ -20,7 +20,7 @@ class BuyAdapter(var vipPriceList: ArrayList<VipPriceModule>) :
             }
             buyVipItemBinding.vipPrice.apply {
                 text = vipPriceModule.price
-                setTextColor(Theme.getColor(Theme.key_chat_fieldOverlayText))
+                setTextColor(Theme.getColor(Theme.key_myColor))
             }
             buyVipItemBinding.discount.apply {
                 text = vipPriceModule.discount

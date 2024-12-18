@@ -1,5 +1,6 @@
 package org.tg_member.features.transfer
 
+import android.graphics.Color
 import org.telegram.messenger.databinding.TransferFragmentBinding
 import org.telegram.ui.ActionBar.Theme
 import org.tg_member.core.utils.TgMemberStr
@@ -24,9 +25,9 @@ class TransferFragment(var transferFragmentBinding: TransferFragmentBinding) {
         transferFragmentBinding.vipCountEt.setHintTextColor(Theme.getColor(Theme.key_chats_menuItemText))
 
         transferFragmentBinding.transferBtn.text = TgMemberStr.getStr(8)
-        transferFragmentBinding.transferBtn.setTextColor(Theme.getColor(Theme.key_chats_menuItemText))
+        transferFragmentBinding.transferBtn.setTextColor(Color.WHITE)
 
         transferFragmentBinding.transfersHistoryBtn.text = TgMemberStr.getStr(9)
-        transferFragmentBinding.transfersHistoryBtn.setTextColor(Theme.getColor(Theme.key_chats_menuItemText))
+        transferFragmentBinding.transfersHistoryBtn.setTextColor(Color.WHITE)
     }
 }
