@@ -48,16 +48,6 @@ class FreeFragment(private val binding: FragmentFreeBinding, val navigationBarCo
         binding.autoJoinBtn.setTextColor(Color.WHITE)
         binding.autoJoinBtn.text = TgMemberStr.getStr(21)
         binding.containerBottomViews.setBackgroundColor(navigationBarColor)
-//        binding.autoJoinBtn.background = getDrawableStateList(
-//            R.drawable.cut_corners_background,
-//            binding.root.context,
-//            Theme.key_dialogBackground
-//        )
-//        binding.addBtn.background=getDrawableStateList(
-//            R.drawable.cut_corners_background,
-//            binding.root.context,
-//            Theme.key_dialogBackground
-//        )
         binding.addBtn.text = TgMemberStr.getStr(26)
         binding.addBtn.setTextColor(Color.WHITE)
         binding.addBtn.setOnClickListener {

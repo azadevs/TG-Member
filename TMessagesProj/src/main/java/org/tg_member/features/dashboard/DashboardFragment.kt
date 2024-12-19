@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
+import android.view.Window
 import androidx.viewpager.widget.ViewPager.OnPageChangeListener
 import org.telegram.messenger.R
 import org.telegram.messenger.databinding.FragmentDashboardBinding
@@ -47,8 +48,6 @@ class DashboardFragment : BaseFragment() {
 
     fun recreate(uiPosition: Int) {
         configureBottomNavigation()
-
-        configureActionBar()
 
         configureViewPager()
 
@@ -153,6 +152,16 @@ class DashboardFragment : BaseFragment() {
         menu.findItem(R.id.vip).title = TgMemberStr.getStr(30)
         menu.findItem(R.id.profile).title = TgMemberStr.getStr(31)
 
+    }
+
+    private fun changeAppLanguage(){
+        val menu = binding.bottomNavigationView.menu
+
+        menu.findItem(R.id.home).title = TgMemberStr.getStr(27)
+        menu.findItem(R.id.free).title = TgMemberStr.getStr(28)
+        menu.findItem(R.id.orders).title = TgMemberStr.getStr(29)
+        menu.findItem(R.id.vip).title = TgMemberStr.getStr(30)
+        menu.findItem(R.id.profile).title = TgMemberStr.getStr(31)
     }
 
 }

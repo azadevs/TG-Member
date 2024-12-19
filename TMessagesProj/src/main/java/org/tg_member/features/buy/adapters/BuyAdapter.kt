@@ -1,30 +1,39 @@
 package org.tg_member.features.buy.adapters
 
+import android.annotation.SuppressLint
+import android.graphics.Color
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import org.telegram.messenger.databinding.BuyVipItemBinding
 import org.telegram.ui.ActionBar.Theme
-import org.tg_member.features.vip.model.VipPriceModule
+import org.tg_member.features.vip.model.VipDisplayData
 
-class BuyAdapter(var vipPriceList: ArrayList<VipPriceModule>) :
+class BuyAdapter(private var vipPriceList: ArrayList<VipDisplayData>) :
     RecyclerView.Adapter<BuyAdapter.BuyVH>() {
 
-    inner class BuyVH(var buyVipItemBinding: BuyVipItemBinding) :
+    inner class BuyVH(private var buyVipItemBinding: BuyVipItemBinding) :
         RecyclerView.ViewHolder(buyVipItemBinding.root) {
-        fun onBind(vipPriceModule: VipPriceModule) {
-            buyVipItemBinding.vip.setColorFilter(Theme.getColor(Theme.key_chats_menuItemText))
-            buyVipItemBinding.vipCount.apply {
-                text = vipPriceModule.vipCount
-                setTextColor(Theme.getColor(Theme.key_chats_menuItemText))
-            }
-            buyVipItemBinding.vipPrice.apply {
-                text = vipPriceModule.price
-                setTextColor(Theme.getColor(Theme.key_myColor))
-            }
-            buyVipItemBinding.discount.apply {
-                text = vipPriceModule.discount
-                setTextColor(Theme.getColor(Theme.key_chats_menuItemText))
+        @SuppressLint("SetTextI18n")
+        fun onBind(vipDisplayData: VipDisplayData) {
+            buyVipItemBinding.apply {
+                vip.setColorFilter(Theme.getColor(Theme.key_myColor))
+                vipCount.apply {
+                    text = vipDisplayData.vipCount.toString()
+                    setTextColor(Theme.getColor(Theme.key_chats_menuItemText))
+                }
+                vipPrice.apply {
+                    text = "${vipDisplayData.price} USD"
+                    setTextColor(Theme.getColor(Theme.key_myColor))
+                }
+                discount.apply {
+                    if (vipDisplayData.discount != 0) {
+                        discount.visibility = View.VISIBLE
+                        text = "${vipDisplayData.discount} %"
+                        setTextColor(Color.WHITE)
+                    }
+                }
             }
         }
     }

@@ -32,7 +32,7 @@ class TypeSpinnerAdapter(
         }
         binding.tvTypeName.text = list[position].type
         binding.tvTypeName.setTextColor(Theme.getColor(Theme.key_chats_menuItemText))
-        binding.ivTypeImage.setColorFilter(Theme.getColor(Theme.key_chats_menuItemText))
+        binding.ivTypeImage.setColorFilter(Theme.getColor(Theme.key_myColor))
         binding.ivTypeImage.setImageResource(list[position].icon)
         return binding.root
     }

@@ -14,10 +14,10 @@ import org.telegram.ui.ActionBar.BaseFragment
 import org.telegram.ui.ActionBar.Theme
 import org.tg_member.core.utils.LoadSelectedChannel
 import org.tg_member.core.utils.TgMemberStr
-import org.tg_member.features.home.model.OrderMemberToMoney
+import org.tg_member.features.home.model.OrderDisplayData
 import org.tg_member.features.input_channel.adapters.ChannelAdapter
 
-class InputChannelFragment(private val orderMemberToMoney: OrderMemberToMoney) : BaseFragment() {
+class InputChannelFragment(private val orderDisplayData: OrderDisplayData) : BaseFragment() {
 
     private var _binding: InputChannelFragmentBinding? = null
 
@@ -53,7 +53,7 @@ class InputChannelFragment(private val orderMemberToMoney: OrderMemberToMoney) :
         adapter = ChannelAdapter(LoadSelectedChannel.channels) {
             Toast.makeText(
                 context,
-                "${it?.username ?: ""} + ${orderMemberToMoney.memberCount}",
+                "${it?.username ?: ""} + ${orderDisplayData.count}",
                 Toast.LENGTH_SHORT
             ).show()
         }
@@ -84,18 +84,21 @@ class InputChannelFragment(private val orderMemberToMoney: OrderMemberToMoney) :
 
     private fun checkChannelLink() {
         val channelLink = binding.edtInputLink.text.toString()
+        progressDialog.setCancelDialog(true)
         if (channelLink.isNotEmpty()) {
             progressDialog.show()
             // https://t.me/kunuzofficial
             val userName =
                 channelLink.substring(channelLink.lastIndexOf('/') + 1, channelLink.length)
-            LoadSelectedChannel.loadChannel(userName, UserConfig.selectedAccount) { bool ->
-                if (!bool)
+            LoadSelectedChannel.loadChannel(userName, 0) { bool ->
+                if (!bool){
                     Toast.makeText(binding.root.context, TgMemberStr.getStr(42), Toast.LENGTH_SHORT)
-                        .show()
-                progressDialog.dismiss()
-                parentActivity.runOnUiThread {
-                    adapter.notifyDataSetChanged()
+                        .show()}
+                else {
+                    progressDialog.dismiss()
+                    parentActivity.runOnUiThread {
+                        adapter.notifyDataSetChanged()
+                    }
                 }
             }
 

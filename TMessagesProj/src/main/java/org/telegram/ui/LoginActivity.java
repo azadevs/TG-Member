@@ -556,6 +556,9 @@ public class LoginActivity extends BaseFragment implements NotificationCenter.No
                 marginLayoutParams = (MarginLayoutParams) proxyButtonView.getLayoutParams();
                 marginLayoutParams.topMargin = AndroidUtilities.dp(16) + statusBarHeight;
 
+                marginLayoutParams = (MarginLayoutParams) appTitle.getLayoutParams();
+                marginLayoutParams.topMargin = AndroidUtilities.dp(16) + statusBarHeight;
+
                 marginLayoutParams = (MarginLayoutParams) radialProgressView.getLayoutParams();
                 marginLayoutParams.topMargin = AndroidUtilities.dp(16) + statusBarHeight;
 
@@ -724,11 +727,11 @@ public class LoginActivity extends BaseFragment implements NotificationCenter.No
 
         appTitle = new TextView(context);
         appTitle.setText("TG Member");
-        appTitle.setTextSize(22f);
+        appTitle.setTextSize(20f);
         appTitle.setTypeface(null,Typeface.BOLD);
         appTitle.setTextColor(Theme.getColor(Theme.key_chats_menuItemText));
         appTitle.setPadding(padding, padding, padding, padding);
-        sizeNotifierFrameLayout.addView(appTitle, LayoutHelper.createFrame(FrameLayout.LayoutParams.WRAP_CONTENT, 32, Gravity.CENTER | Gravity.TOP, 0, 34, 0, 0));
+        sizeNotifierFrameLayout.addView(appTitle, LayoutHelper.createFrame(FrameLayout.LayoutParams.WRAP_CONTENT, 32, Gravity.LEFT | Gravity.TOP, 64, 16, 0, 0));
 
 
         proxyButtonView = new ImageView(context);

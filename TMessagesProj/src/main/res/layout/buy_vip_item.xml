@@ -4,14 +4,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="10dp">
+    android:padding="12dp">
 
     <ImageView
         android:id="@+id/vip"
-        android:layout_width="24dp"
-        android:layout_height="24dp"
+        android:layout_width="22dp"
+        android:layout_height="22dp"
         android:src="@drawable/vip_svgrepo_com"
-        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@id/vip_price"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@id/vip_price" />
@@ -20,11 +19,11 @@
         android:id="@+id/vip_count"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:fontFamily="@font/poppins_semibold"
+        android:layout_marginStart="16dp"
+        android:fontFamily="@font/poppins_medium"
         android:includeFontPadding="false"
         android:text="0"
-        android:textSize="18sp"
+        android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="@id/vip_price"
         app:layout_constraintStart_toEndOf="@id/vip"
         app:layout_constraintTop_toTopOf="@id/vip_price" />
@@ -34,7 +33,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginRight="15dp"
-        android:textSize="18sp"
+        android:background="@drawable/transfer_btn"
+        android:fontFamily="@font/poppins_medium"
+        android:gravity="center"
+        android:includeFontPadding="false"
+        android:minWidth="60dp"
+        android:paddingHorizontal="16dp"
+        android:text="18%"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="@id/vip_price"
         app:layout_constraintRight_toLeftOf="@id/vip_price"
         app:layout_constraintTop_toTopOf="@id/vip_price" />
@@ -44,7 +50,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@drawable/cut_corners_background"
-        android:fontFamily="@font/poppins_semibold"
+        android:fontFamily="@font/poppins_medium"
+        android:gravity="center"
         android:includeFontPadding="false"
         android:minWidth="80dp"
         android:paddingHorizontal="16dp"

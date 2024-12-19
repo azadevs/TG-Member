@@ -1,37 +1,43 @@
 package org.tg_member.features.home.adapters
 
 import android.annotation.SuppressLint
+import android.graphics.Color
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import org.telegram.messenger.databinding.ItemVipPriceBinding
 import org.telegram.ui.ActionBar.Theme
-import org.tg_member.features.home.model.OrderMemberToMoney
+import org.tg_member.features.home.model.OrderDisplayData
 
-class HomeAdapter(var list: ArrayList<OrderMemberToMoney>, var homeClick:HomeClick) :
+class HomeAdapter(var list: ArrayList<OrderDisplayData>, var homeClick: HomeClick) :
     RecyclerView.Adapter<HomeAdapter.HomeVH>() {
 
-    inner class HomeVH(var itemVipPriceBinding: ItemVipPriceBinding) :
+    inner class HomeVH(private var itemVipPriceBinding: ItemVipPriceBinding) :
         RecyclerView.ViewHolder(itemVipPriceBinding.root) {
         @SuppressLint("SetTextI18n")
-        fun onBind(orderMemberToMoney: OrderMemberToMoney) {
+        fun onBind(orderDisplayData: OrderDisplayData) {
             itemVipPriceBinding.apply {
                 root.setOnClickListener {
-                    homeClick.click(orderMemberToMoney)
+                    homeClick.click(orderDisplayData)
                 }
                 tvMemberCount.apply {
-                    text = "${orderMemberToMoney.memberCount}"
+                    text = "${orderDisplayData.count}"
                     setTextColor(Theme.getColor(Theme.key_chats_menuItemText))
                 }
-                discount.apply {
-                    text = "${orderMemberToMoney.discount} %"
-                    setTextColor(Theme.getColor(Theme.key_chats_menuItemText))
+                if (orderDisplayData.discount != 0) {
+                    discount.visibility = View.VISIBLE
+                    discount.apply {
+                        text = "${orderDisplayData.discount} %"
+                        setTextColor(Color.WHITE)
+                    }
                 }
                 price.apply {
-                    text = "${orderMemberToMoney.price} USD"
+                    text = "${orderDisplayData.price} USD"
                     setTextColor(Theme.getColor(Theme.key_myColor))
                 }
-                ivPerson.setColorFilter(Theme.getColor(Theme.key_myColor))
+                ivTypeImage.setImageResource(list[adapterPosition].icon)
+                ivTypeImage.setColorFilter(Theme.getColor(Theme.key_myColor))
             }
         }
     }
@@ -52,8 +58,8 @@ class HomeAdapter(var list: ArrayList<OrderMemberToMoney>, var homeClick:HomeCli
 
     override fun getItemCount(): Int = list.size
 
-    interface HomeClick{
-        fun click(orderMemberToMoney: OrderMemberToMoney)
+    interface HomeClick {
+        fun click(orderDisplayData: OrderDisplayData)
     }
 
 }
