@@ -13,6 +13,7 @@ import org.telegram.ui.ActionBar.AlertDialog
 import org.telegram.ui.ActionBar.BaseFragment
 import org.telegram.ui.ActionBar.Theme
 import org.tg_member.core.utils.LoadSelectedChannel
+import org.tg_member.core.utils.TgMemberStr
 import org.tg_member.features.home.model.OrderMemberToMoney
 import org.tg_member.features.input_channel.adapters.ChannelAdapter
 
@@ -64,12 +65,14 @@ class InputChannelFragment(private val orderMemberToMoney: OrderMemberToMoney) :
         binding.tvRule.setTextColor(Theme.getColor(Theme.key_chats_menuItemText))
         binding.edtInputLink.setTextColor(Theme.getColor(Theme.key_chats_menuItemText))
         binding.sendBtn.setTextColor(Color.WHITE)
+        binding.sendBtn.text = TgMemberStr.getStr(43)
+        binding.edtInputLink.hint=TgMemberStr.getStr(41)
         binding.edtInputLink.setHintTextColor(Theme.getColor(Theme.key_chats_menuItemText))
         progressDialog = AlertDialog(context, AlertDialog.ALERT_TYPE_SPINNER)
     }
 
     private fun configureActionBar() {
-        actionBar.setTitle("Order")
+        actionBar.setTitle(TgMemberStr.getStr(29))
         actionBar.setBackButtonImage(R.drawable.msg_arrow_back)
         actionBar.backgroundColor=Theme.getColor(Theme.key_myColor)
         actionBar.backButtonImageView.setOnClickListener {
@@ -88,7 +91,7 @@ class InputChannelFragment(private val orderMemberToMoney: OrderMemberToMoney) :
                 channelLink.substring(channelLink.lastIndexOf('/') + 1, channelLink.length)
             LoadSelectedChannel.loadChannel(userName, UserConfig.selectedAccount) { bool ->
                 if (!bool)
-                    Toast.makeText(binding.root.context, "No channels", Toast.LENGTH_SHORT)
+                    Toast.makeText(binding.root.context, TgMemberStr.getStr(42), Toast.LENGTH_SHORT)
                         .show()
                 progressDialog.dismiss()
                 parentActivity.runOnUiThread {
@@ -99,7 +102,7 @@ class InputChannelFragment(private val orderMemberToMoney: OrderMemberToMoney) :
         } else {
             Toast.makeText(
                 binding.root.context,
-                "Please enter your channel link",
+                TgMemberStr.getStr(41),
                 Toast.LENGTH_SHORT
             ).show()
         }
