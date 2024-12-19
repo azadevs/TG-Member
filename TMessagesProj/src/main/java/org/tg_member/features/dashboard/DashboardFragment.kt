@@ -7,6 +7,7 @@ import android.view.View
 import androidx.viewpager.widget.ViewPager.OnPageChangeListener
 import org.telegram.messenger.R
 import org.telegram.messenger.databinding.FragmentDashboardBinding
+import org.telegram.ui.ActionBar.ActionBarMenuItem
 import org.telegram.ui.ActionBar.BaseFragment
 import org.telegram.ui.ActionBar.Theme
 import org.tg_member.core.utils.TgMemberStr
@@ -20,6 +21,8 @@ import org.tg_member.features.dashboard.model.DashboardItem
 class DashboardFragment : BaseFragment() {
     private var _binding: FragmentDashboardBinding? = null
     private val binding get() = _binding!!
+
+    private var vipCoinItem: ActionBarMenuItem? = null
 
     companion object {
         @SuppressLint("StaticFieldLeak")
@@ -105,7 +108,9 @@ class DashboardFragment : BaseFragment() {
     private fun configureActionBar() {
         actionBar.setTitle(TgMemberStr.getStr(27))
         actionBar.backgroundColor=Theme.getColor(Theme.key_myColor)
-
+        val vipCount="100 Vip"
+        val menu = actionBar.createMenu()
+        vipCoinItem = menu.addItem(1,vipCount)
     }
 
     private fun configureBottomNavigation() {
