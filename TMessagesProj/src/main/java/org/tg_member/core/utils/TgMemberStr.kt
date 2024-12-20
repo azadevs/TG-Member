@@ -118,9 +118,10 @@ object TgMemberStr {
         titlesLanguages.add(TitleLanguages(38,"Pending","Kutilmoqda","В ожидании"))
         titlesLanguages.add(TitleLanguages(39,"Completed","Tugallangan","Завершенный"))
         titlesLanguages.add(TitleLanguages(40,"Failed","Muvaffaqiyatsiz","Неуспешный"))
-        titlesLanguages.add(TitleLanguages(41,"Enter your channel link","Kanalingiz havolasini kiriting","Введите ссылку на ваш канал"))
+        titlesLanguages.add(TitleLanguages(41,"Enter your channel link or username","Kanalingiz havolasini yoki username kiriting","Введите ссылку на ваш канал или имя пользователя"))
         titlesLanguages.add(TitleLanguages(42,"Channel not found","Kanal topilmadi","Канал не найден"))
         titlesLanguages.add(TitleLanguages(43,"Send","Yuborish","Отправлять"))
+        titlesLanguages.add(TitleLanguages(44,"Are you sure you want to send this channel?","Ushbu kanalni yuborishga ishonchingiz komilmi?","Вы уверены, что хотите отправить этот канал?"))
     }
 
     fun getStr(code: Int): String {

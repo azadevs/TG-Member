@@ -2,20 +2,15 @@ package org.tg_member.features.free
 
 import android.annotation.SuppressLint
 import android.graphics.Color
-import android.util.Log
 import androidx.recyclerview.widget.LinearLayoutManager
-import org.telegram.messenger.R
 import org.telegram.messenger.UserConfig
 import org.telegram.messenger.databinding.FragmentFreeBinding
-import org.telegram.ui.ActionBar.Theme
 import org.telegram.ui.LaunchActivity
 import org.telegram.ui.LoginActivity
 import org.tg_member.core.utils.TgMemberStr
-import org.tg_member.core.utils.getDrawableStateList
-import org.tg_member.features.dashboard.DashboardFragment
+import org.tg_member.core.utils.getAccounts
 import org.tg_member.features.details.AccountDetailsFragment
 import org.tg_member.features.free.adapter.FreeAdapter
-import org.tg_member.features.free.model.AccountData
 
 /**
  * Created by : Azamat Kalmurzaev
@@ -80,28 +75,6 @@ class FreeFragment(private val binding: FragmentFreeBinding, val navigationBarCo
             LinearLayoutManager(binding.root.context, LinearLayoutManager.VERTICAL, false)
         binding.rvAccount.adapter = adapter
         adapter.submitList(getAccounts())
-    }
-
-    fun getAccounts(): List<AccountData> {
-        val accounts = mutableListOf<AccountData>()
-        for (i in 0 until UserConfig.MAX_ACCOUNT_COUNT) {
-            if (UserConfig.isValidAccount(i)) {
-                val currentUser = UserConfig.getInstance(i).currentUser
-                accounts.add(
-                    AccountData(
-                        name = currentUser.first_name + if (currentUser.last_name != null) {
-                            currentUser.last_name
-                        } else {
-                            ""
-                        },
-                        number = currentUser.phone,
-                        id = currentUser.id,
-                        i
-                    )
-                )
-            }
-        }
-        return accounts
     }
 
 }
