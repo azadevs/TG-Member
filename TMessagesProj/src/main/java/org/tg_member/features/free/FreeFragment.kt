@@ -5,6 +5,7 @@ import android.graphics.Color
 import androidx.recyclerview.widget.LinearLayoutManager
 import org.telegram.messenger.UserConfig
 import org.telegram.messenger.databinding.FragmentFreeBinding
+import org.telegram.ui.ActionBar.Theme
 import org.telegram.ui.LaunchActivity
 import org.telegram.ui.LoginActivity
 import org.tg_member.core.utils.TgMemberStr
@@ -16,7 +17,7 @@ import org.tg_member.features.free.adapter.FreeAdapter
  * Created by : Azamat Kalmurzaev
  * 26/11/24
  */
-class FreeFragment(private val binding: FragmentFreeBinding, val navigationBarColor: Int) {
+class FreeFragment(private val binding: FragmentFreeBinding) {
 
     private lateinit var adapter: FreeAdapter
 
@@ -40,9 +41,10 @@ class FreeFragment(private val binding: FragmentFreeBinding, val navigationBarCo
     }
 
     private fun configureUi() {
+        binding.root.setBackgroundColor(Theme.getColor(Theme.key_iv_navigationBackground))
         binding.autoJoinBtn.setTextColor(Color.WHITE)
         binding.autoJoinBtn.text = TgMemberStr.getStr(21)
-        binding.containerBottomViews.setBackgroundColor(navigationBarColor)
+        binding.containerBottomViews.setBackgroundColor(LaunchActivity.instance.navigationBarColor)
         binding.addBtn.text = TgMemberStr.getStr(26)
         binding.addBtn.setTextColor(Color.WHITE)
         binding.addBtn.setOnClickListener {

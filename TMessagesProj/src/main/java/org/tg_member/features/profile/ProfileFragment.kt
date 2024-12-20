@@ -6,6 +6,7 @@ import android.widget.Toast
 import androidx.core.content.ContextCompat.getSystemService
 import org.telegram.messenger.databinding.FragmentProfileBinding
 import org.telegram.ui.ActionBar.Theme
+import org.telegram.ui.LaunchActivity
 import org.tg_member.core.utils.TgMemberStr
 
 
@@ -35,9 +36,10 @@ class ProfileFragment(var binding: FragmentProfileBinding) {
         binding.emailTv.text = "hey@gmail.com"
         binding.emailTv.setTextColor(Theme.getColor(Theme.key_chats_menuItemText))
         binding.contactUs.text = TgMemberStr.getStr(0)
+        binding.root.setBackgroundColor(Theme.getColor(Theme.key_iv_navigationBackground))
         binding.contactUs.setTextColor(Theme.getColor(Theme.key_chats_menuItemText))
-        binding.cardEmail.setCardBackgroundColor(Theme.getColor(Theme.key_dialogBackground))
-        binding.languageCard.setCardBackgroundColor(Theme.getColor(Theme.key_dialogBackground))
+        binding.cardEmail.setCardBackgroundColor(Theme.getColor(Theme.key_iv_navigationBackground))
+        binding.languageCard.setCardBackgroundColor(Theme.getColor(Theme.key_iv_navigationBackground))
         binding.languageId.setColorFilter(Theme.getColor(Theme.key_chats_menuItemText))
         binding.languageTv.setTextColor(Theme.getColor(Theme.key_chats_menuItemText))
         binding.languageTv.text = TgMemberStr.getStr(24)

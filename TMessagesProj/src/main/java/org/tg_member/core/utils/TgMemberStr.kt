@@ -3,6 +3,7 @@ package org.tg_member.core.utils
 import android.content.Context
 import android.view.View
 import android.widget.LinearLayout
+import androidx.core.content.res.ResourcesCompat
 import org.telegram.messenger.AndroidUtilities
 import org.telegram.messenger.ApplicationLoader
 import org.telegram.messenger.LocaleController
@@ -11,6 +12,7 @@ import org.telegram.messenger.LocaleController.getString
 import org.telegram.messenger.R
 import org.telegram.ui.ActionBar.AlertDialog
 import org.telegram.ui.ActionBar.Theme
+import org.telegram.ui.ActionBar.Theme.ResourcesProvider
 import org.telegram.ui.Cells.RadioColorCell
 import org.tg_member.features.dashboard.DashboardFragment
 import javax.inject.Singleton
@@ -111,7 +113,7 @@ object TgMemberStr {
         titlesLanguages.add(TitleLanguages(31,"Profile","Hisob","Профиль"))
         titlesLanguages.add(TitleLanguages(32,"All types","Barcha tur","Все типы"))
         titlesLanguages.add(TitleLanguages(33,"Premium","Premium","Премиум"))
-        titlesLanguages.add(TitleLanguages(34,"Member","Azo","Член"))
+        titlesLanguages.add(TitleLanguages(34,"Member","A'zo","Член"))
         titlesLanguages.add(TitleLanguages(35,"View","Ko'rish","Просмотр"))
         titlesLanguages.add(TitleLanguages(36,"Reaction","Reaksiya","Реакция"))
         titlesLanguages.add(TitleLanguages(37,"All Status","Barcha holat","Все статусы"))
@@ -122,6 +124,7 @@ object TgMemberStr {
         titlesLanguages.add(TitleLanguages(42,"Channel not found","Kanal topilmadi","Канал не найден"))
         titlesLanguages.add(TitleLanguages(43,"Send","Yuborish","Отправлять"))
         titlesLanguages.add(TitleLanguages(44,"Are you sure you want to send this channel?","Ushbu kanalni yuborishga ishonchingiz komilmi?","Вы уверены, что хотите отправить этот канал?"))
+        titlesLanguages.add(TitleLanguages(45,"Join","Qo'shish", "Присоединяйтесь"))
     }
 
     fun getStr(code: Int): String {

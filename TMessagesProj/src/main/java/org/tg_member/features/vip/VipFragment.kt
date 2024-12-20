@@ -1,22 +1,11 @@
 package org.tg_member.features.vip
 
 import android.content.Context
-import android.graphics.drawable.GradientDrawable
-import android.graphics.drawable.StateListDrawable
-import android.view.LayoutInflater
-import android.view.View
-import android.widget.TextView
-import androidx.core.content.ContextCompat
-import com.google.android.material.tabs.TabLayout
-import com.google.android.material.tabs.TabLayoutMediator
-import org.telegram.messenger.R
 import org.telegram.messenger.databinding.FragmentVipBinding
-import org.telegram.messenger.databinding.TabItemBinding
 import org.telegram.ui.ActionBar.Theme
-import org.telegram.ui.Components.ProfileGalleryView.ViewPagerAdapter
+import org.telegram.ui.LaunchActivity
 import org.tg_member.core.utils.TgMemberStr
 import org.tg_member.features.vip.adapter.VipPagerAdapter
-import org.tg_member.features.vip.adapter.VipVPAdapter
 import org.tg_member.features.vip.model.VipItem
 
 /**
@@ -24,7 +13,7 @@ import org.tg_member.features.vip.model.VipItem
  * 30/11/24
  */
 class VipFragment(
-    private val binding: FragmentVipBinding, val barColor: Int
+    private val binding: FragmentVipBinding, private val actionBarColor: Int
 ) {
     private lateinit var vipVPAdapter: VipPagerAdapter
     var pages = arrayListOf(VipItem.BuyItem, VipItem.TransferItem, VipItem.GiftItem)
@@ -39,74 +28,17 @@ class VipFragment(
     private fun configureViewPagerAndTab() {
         vipVPAdapter = VipPagerAdapter(pages)
         binding.vipVp.adapter = vipVPAdapter
-        binding.vipTab.setBackgroundColor(barColor)
+        binding.root.setBackgroundColor(LaunchActivity.instance.navigationBarColor)
+        binding.vipTab.setBackgroundColor(actionBarColor)
         binding.vipTab.setupWithViewPager(binding.vipVp)
+        binding.vipTab.setSelectedTabIndicatorColor(Theme.getColor(Theme.key_actionBarTabActiveText))
+        binding.vipTab.setTabTextColors(Theme.getColor(Theme.key_actionBarTabUnactiveText),Theme.getColor(Theme.key_actionBarTabActiveText))
 
-        configureCustomTab()
-
-        binding.vipTab.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
-            override fun onTabSelected(tab: TabLayout.Tab?) {
-                val indicator = tab?.customView?.findViewById<View>(R.id.indicator)
-                indicator?.visibility = View.VISIBLE
-                val stateListDrawable = ContextCompat.getDrawable(
-                    binding.root.context,
-                    R.drawable.vip_tab_item_bg
-                ) as StateListDrawable
-                val gradientDrawable = stateListDrawable.current as GradientDrawable
-                gradientDrawable.setColor(Theme.getColor(Theme.key_actionBarTabActiveText))
-                indicator?.background = stateListDrawable
-                tab?.customView?.findViewById<TextView>(R.id.title_tv)
-                    ?.setTextColor(Theme.getColor(Theme.key_actionBarTabActiveText))
-            }
-
-            override fun onTabUnselected(tab: TabLayout.Tab?) {
-                val indicator = tab?.customView?.findViewById<View>(R.id.indicator)
-                indicator?.visibility = View.INVISIBLE
-                indicator?.setBackgroundResource(0)
-                tab?.customView?.findViewById<TextView>(R.id.title_tv)
-                    ?.setTextColor(Theme.getColor(Theme.key_actionBarTabUnactiveText))
-            }
-
-            override fun onTabReselected(tab: TabLayout.Tab?) {}
-        })
-    }
-
-    private fun configureCustomTab() {
-        val tabCount = binding.vipTab.tabCount
-        for (i in 0 until tabCount) {
-
-            val tabBinding = TabItemBinding.inflate(
-                LayoutInflater.from(context),
-                null,
-                false
-            )
-            val tab = binding.vipTab.getTabAt(i)
-
-            tab?.customView = tabBinding.root
-
-            val tabIndicator = tab?.customView?.findViewById<View>(R.id.indicator)
-            val tabTitle = tab?.customView?.findViewById<TextView>(R.id.title_tv)
-
-            tabTitle?.text =  when(pages.get(i)){
+        for (i in 0 until binding.vipTab.tabCount) {
+            binding.vipTab.getTabAt(i)?.text = when (pages[i]) {
                 is VipItem.BuyItem -> TgMemberStr.getStr(1)
                 is VipItem.TransferItem -> TgMemberStr.getStr(2)
                 is VipItem.GiftItem -> TgMemberStr.getStr(3)
-            }
-
-            if (i == 0){
-                tabIndicator?.visibility = View.VISIBLE
-                val stateListDrawable = ContextCompat.getDrawable(
-                    binding.root.context,
-                    R.drawable.vip_tab_item_bg
-                ) as StateListDrawable
-                val gradientDrawable = stateListDrawable.current as GradientDrawable
-                gradientDrawable.setColor(Theme.getColor(Theme.key_actionBarTabActiveText))
-                tabIndicator?.background = stateListDrawable
-                tabTitle?.setTextColor(Theme.getColor(Theme.key_actionBarTabActiveText))
-            }else{
-                tabIndicator?.visibility = View.INVISIBLE
-                tabIndicator?.setBackgroundResource(0)
-                tabTitle?.setTextColor(Theme.getColor(Theme.key_actionBarTabUnactiveText))
             }
         }
     }

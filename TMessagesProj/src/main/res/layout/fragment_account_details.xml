@@ -26,7 +26,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:fontFamily="@font/poppins_medium"
+        android:fontFamily="@font/poppins_semibold"
         android:gravity="center"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="@id/ivChannelImage"
@@ -64,8 +64,7 @@
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/auto_join"
         android:layout_width="0dp"
-        android:layout_height="35dp"
-        android:layout_marginStart="2dp"
+        android:layout_height="40dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="6dp"
         android:text="Auto Join"
@@ -79,7 +78,7 @@
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btnNext"
         android:layout_width="wrap_content"
-        android:layout_height="35dp"
+        android:layout_height="40dp"
         android:textAllCaps="false"
         android:paddingHorizontal="8dp"
         android:layout_marginStart="6dp"

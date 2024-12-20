@@ -18,7 +18,6 @@ import org.tg_member.features.vip.VipFragment
 
 class DashboardPagerAdapter(
     val items: List<DashboardItem>,
-    val navigationColor:Int,
     val actionBarColor:Int
 ) : PagerAdapter() {
 
@@ -33,7 +32,7 @@ class DashboardPagerAdapter(
             DashboardItem.FreeItem -> {
                 val binding =
                     FragmentFreeBinding.inflate(LayoutInflater.from(container.context), container, false)
-                FreeFragment(binding,navigationColor).createView()
+                FreeFragment(binding).createView()
                 container.addView(binding.root)
                 return binding.root
             }

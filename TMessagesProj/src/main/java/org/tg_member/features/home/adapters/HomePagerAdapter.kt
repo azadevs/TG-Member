@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import androidx.viewpager.widget.PagerAdapter
 import org.telegram.messenger.databinding.BuyFragmentBinding
 import org.telegram.messenger.databinding.FragmentMemberBinding
+import org.telegram.messenger.databinding.FragmentPremiumBinding
 import org.telegram.messenger.databinding.FragmentReactionBinding
 import org.telegram.messenger.databinding.FragmentViewBinding
 import org.telegram.messenger.databinding.GiftFragmentBinding
@@ -14,6 +15,7 @@ import org.tg_member.features.buy.BuyFragment
 import org.tg_member.features.gift.GiftFragment
 import org.tg_member.features.home.model.HomeItem
 import org.tg_member.features.home.pager.member.MemberFragment
+import org.tg_member.features.home.pager.premium.PremiumFragment
 import org.tg_member.features.home.pager.reaction.ReactionFragment
 import org.tg_member.features.home.pager.view.ViewFragment
 import org.tg_member.features.transfer.TransferFragment
@@ -59,6 +61,16 @@ class HomePagerAdapter(
                     false
                 )
                 ReactionFragment(binding).createView()
+                container.addView(binding.root)
+                return binding.root
+            }
+            HomeItem.Premium->{
+                val binding = FragmentPremiumBinding.inflate(
+                    LayoutInflater.from(container.context),
+                    container,
+                    false
+                )
+                PremiumFragment(binding).createView()
                 container.addView(binding.root)
                 return binding.root
             }

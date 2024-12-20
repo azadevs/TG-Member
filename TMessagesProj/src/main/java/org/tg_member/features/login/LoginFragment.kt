@@ -14,8 +14,6 @@ import org.tg_member.features.dashboard.DashboardFragment
 
 
 class LoginFragment : BaseFragment() {
-
-
     private var _binding: LoginFragmentBinding? = null
     private val binding get() = _binding!!
     override fun createView(context: Context?): View {
@@ -66,6 +64,7 @@ class LoginFragment : BaseFragment() {
     private fun configureUi() {
         binding.loginInfo.text = TgMemberStr.getStr(18)
         binding.loginInfo.setTextColor(Theme.getColor(Theme.key_chats_menuItemText))
+        binding.root.setBackgroundColor(navigationBarColor)
 
         binding.gmailEt.hint = TgMemberStr.getStr(16)
         binding.gmailEt.setTextColor(Theme.getColor(Theme.key_chats_menuItemText))

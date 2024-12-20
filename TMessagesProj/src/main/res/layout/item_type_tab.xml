@@ -30,16 +30,4 @@
         app:layout_constraintTop_toTopOf="@id/ivTypeImage"
         tool:text="asdasdad" />
 
-    <FrameLayout
-        android:id="@+id/indicator"
-        android:layout_marginTop="8dp"
-        android:layout_width="0dp"
-        android:layout_height="4dp"
-        android:background="@drawable/vip_tab_item_bg"
-        android:orientation="horizontal"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintRight_toRightOf="@id/tvTitle"
-        app:layout_constraintLeft_toLeftOf="@id/ivTypeImage"
-        app:layout_constraintTop_toBottomOf="@id/ivTypeImage" />
-
 </androidx.constraintlayout.widget.ConstraintLayout>

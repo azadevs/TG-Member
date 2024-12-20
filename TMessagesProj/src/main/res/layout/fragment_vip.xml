@@ -8,10 +8,11 @@
         android:id="@+id/vip_tab"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:elevation="0dp"
+        app:tabIndicatorGravity="bottom"
+        app:tabIndicatorFullWidth="false"
+        app:tabTextAppearance="@style/CustomTabText"
+        app:tabIndicator="@drawable/tab_indicator"
         app:layout_constraintTop_toTopOf="parent"
-        app:tabIndicatorHeight="0dp"
-        app:tabPaddingBottom="0dp"
         app:tabRippleColor="@null" />
 
     <androidx.viewpager.widget.ViewPager

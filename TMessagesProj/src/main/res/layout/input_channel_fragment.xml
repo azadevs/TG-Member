@@ -18,18 +18,17 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.05" />
+        app:layout_constraintVertical_bias="0.03" />
 
     <EditText
         android:id="@+id/edtInputLink"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="16dp"
         android:background="@drawable/cut_corners_background"
         android:fontFamily="@font/poppins_regular"
-        android:textSize="14sp"
+        android:textSize="15sp"
         android:paddingHorizontal="12dp"
-        android:paddingVertical="8dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tvRule" />
@@ -38,10 +37,11 @@
         android:id="@+id/sendBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="16dp"
         android:background="@drawable/transfer_btn"
         android:minWidth="100dp"
-        android:fontFamily="@font/poppins_semibold"
+        android:textSize="16sp"
+        android:fontFamily="@font/poppins_medium"
         android:text="Send"
         android:textAllCaps="false"
         app:layout_constraintEnd_toEndOf="@id/edtInputLink"
@@ -52,7 +52,7 @@
         android:layout_width="match_parent"
         tools:listitem="@layout/item_channel"
         android:layout_height="0dp"
-        android:layout_marginTop="12dp"
+        android:layout_marginTop="16dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@id/sendBtn" />
 

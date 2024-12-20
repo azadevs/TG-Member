@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import org.telegram.messenger.R
 import org.telegram.messenger.databinding.FragmentOrdersBinding
 import org.telegram.ui.ActionBar.Theme
+import org.telegram.ui.LaunchActivity
 import org.tg_member.core.adapter.TypeSpinnerAdapter
 import org.tg_member.core.utils.Status
 import org.tg_member.core.utils.TgMemberStr
@@ -55,13 +56,13 @@ class OrdersFragment {
         binding.containerTypeSpinner.background = getDrawableStateList(
             R.drawable.cut_corners_background,
             binding.root.context,
-            Theme.key_dialogBackground
+            Theme.key_iv_navigationBackground
         )
         binding.spinnerType.setPopupBackgroundDrawable(
             getDrawableStateList(
                 R.drawable.cut_corners_background,
                 binding.root.context,
-                Theme.key_dialogBackground
+                Theme.key_iv_navigationBackground
             )
         )
 
@@ -70,13 +71,13 @@ class OrdersFragment {
         binding.containerStatusSpinner.background = getDrawableStateList(
             R.drawable.cut_corners_background,
             binding.root.context,
-            Theme.key_dialogBackground
+            Theme.key_iv_navigationBackground
         )
         binding.spinnerStatus.setPopupBackgroundDrawable(
             getDrawableStateList(
                 R.drawable.cut_corners_background,
                 binding.root.context,
-                Theme.key_dialogBackground
+                Theme.key_iv_navigationBackground
             )
         )
 
@@ -180,6 +181,7 @@ class OrdersFragment {
     private fun configureUi(binding: FragmentOrdersBinding) {
         binding.spinnerStatus.setSelection(0)
         binding.spinnerType.setSelection(0)
+        binding.root.setBackgroundColor(Theme.getColor(Theme.key_iv_navigationBackground))
 
         invisibleBoxIfEmpty(binding, list)
 

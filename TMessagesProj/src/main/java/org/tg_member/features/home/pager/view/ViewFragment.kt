@@ -30,10 +30,25 @@ class ViewFragment(
         "5 Posts",
         "10 Posts"
     )
+    private val countries = mutableListOf(
+        CountryDisplayData(
+            R.drawable.ic_flag_uz,
+            "Uzbekistan"
+        ),
+        CountryDisplayData(
+            R.drawable.ic_flag_india,
+            "India"
+        ),
+        CountryDisplayData(
+            R.drawable.ic_flag_tr,
+            "Turkey"
+        ),
+    )
 
     fun createView() {
         setFakeData()
-        configureCustomTab()
+        configureCustomPostTab()
+        configureCustomCountryTab()
         configureAdapter()
     }
 
@@ -48,20 +63,20 @@ class ViewFragment(
     }
 
 
-    private fun configureCustomTab() {
+    private fun configureCustomPostTab() {
         for (i in 0 until posts.size) {
-            binding.tab.addTab(
-                binding.tab.newTab()
+            binding.tabPost.addTab(
+                binding.tabPost.newTab()
             )
         }
-        val tabCount = binding.tab.tabCount
+        val tabCount = binding.tabPost.tabCount
         for (i in 0 until tabCount) {
             val tabBinding = ItemTabViewBinding.inflate(
                 LayoutInflater.from(binding.root.context),
                 null,
                 false
             )
-            val tab = binding.tab.getTabAt(i)
+            val tab = binding.tabPost.getTabAt(i)
             tabBinding.tvPostCount.text = posts[i]
 
             tab?.customView = tabBinding.root
@@ -81,7 +96,7 @@ class ViewFragment(
                 tabBinding.tvPostCount.setTextColor(Theme.getColor(Theme.key_chats_menuItemText))
             }
         }
-        binding.tab.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
+        binding.tabPost.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab?) {
                 val indicator = tab?.customView?.findViewById<View>(R.id.indicator)
                 indicator?.visibility = View.VISIBLE
@@ -100,6 +115,66 @@ class ViewFragment(
                 val indicator = tab?.customView?.findViewById<View>(R.id.indicator)
                 indicator?.visibility = View.GONE
                 tab?.customView?.findViewById<TextView>(R.id.tvPostCount)
+                    ?.setTextColor(Theme.getColor(Theme.key_chats_menuItemText))
+            }
+
+            override fun onTabReselected(tab: TabLayout.Tab?) {}
+        })
+    }
+
+    private fun configureCustomCountryTab() {
+        for (i in 0 until countries.size) {
+            binding.tabCountry.addTab(
+                binding.tabCountry.newTab()
+            )
+        }
+        val tabCount = binding.tabCountry.tabCount
+        for (i in 0 until tabCount) {
+            val tabBinding = ItemTabCountryBinding.inflate(
+                LayoutInflater.from(binding.root.context),
+                null,
+                false
+            )
+            val tab = binding.tabCountry.getTabAt(i)
+            tabBinding.tvCountryName.text = countries[i].country
+            tabBinding.ivCountryFlag.setImageResource(countries[i].icon)
+
+            tab?.customView = tabBinding.root
+
+            if (i == 0) {
+                tabBinding.indicator.visibility = View.VISIBLE
+                val stateListDrawable = ContextCompat.getDrawable(
+                    binding.root.context,
+                    R.drawable.cut_corners_filled_background
+                ) as StateListDrawable
+                val gradientDrawable = stateListDrawable.current as GradientDrawable
+                gradientDrawable.setColor(Theme.getColor(Theme.key_myColor))
+                tabBinding.indicator.background = stateListDrawable
+                tabBinding.tvCountryName.setTextColor(Theme.getColor(Theme.key_actionBarTabActiveText))
+            } else {
+                tabBinding.indicator.visibility = View.GONE
+                tabBinding.tvCountryName.setTextColor(Theme.getColor(Theme.key_chats_menuItemText))
+            }
+        }
+        binding.tabCountry.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
+            override fun onTabSelected(tab: TabLayout.Tab?) {
+                val indicator = tab?.customView?.findViewById<View>(R.id.indicator)
+                indicator?.visibility = View.VISIBLE
+                val stateListDrawable = ContextCompat.getDrawable(
+                    binding.root.context,
+                    R.drawable.cut_corners_filled_background
+                ) as StateListDrawable
+                val gradientDrawable = stateListDrawable.current as GradientDrawable
+                gradientDrawable.setColor(Theme.getColor(Theme.key_myColor))
+                indicator?.background = stateListDrawable
+                tab?.customView?.findViewById<TextView>(R.id.tvCountryName)
+                    ?.setTextColor(Theme.getColor(Theme.key_actionBarTabActiveText))
+            }
+
+            override fun onTabUnselected(tab: TabLayout.Tab?) {
+                val indicator = tab?.customView?.findViewById<View>(R.id.indicator)
+                indicator?.visibility = View.GONE
+                tab?.customView?.findViewById<TextView>(R.id.tvCountryName)
                     ?.setTextColor(Theme.getColor(Theme.key_chats_menuItemText))
             }
 

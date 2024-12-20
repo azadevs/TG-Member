@@ -2,9 +2,13 @@ package org.tg_member.features.details
 
 import android.content.Context
 import android.content.DialogInterface
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
+import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.core.content.res.ResourcesCompat
 import org.telegram.messenger.LocaleController
 import org.telegram.messenger.MessagesController
 import org.telegram.messenger.R
@@ -13,6 +17,7 @@ import org.telegram.messenger.databinding.FragmentAccountDetailsBinding
 import org.telegram.ui.ActionBar.AlertDialog
 import org.telegram.ui.ActionBar.BaseFragment
 import org.telegram.ui.ActionBar.Theme
+import org.telegram.ui.Components.LayoutHelper
 import org.tg_member.core.utils.JoinChannels
 import org.tg_member.core.utils.TgMemberStr
 import org.tg_member.features.free.FreeFragment
@@ -43,9 +48,48 @@ class AccountDetailsFragment(var selectedAccount: Int) : BaseFragment() {
     }
 
     private fun configureActionBar() {
-        actionBar.setTitle("Join")
+        actionBar.setTitle(TgMemberStr.getStr(45))
         actionBar.setBackButtonImage(R.drawable.msg_arrow_back)
         actionBar.backgroundColor=Theme.getColor(Theme.key_myColor)
+       val menu= actionBar.createMenu()
+        val linearLayout= LinearLayout(binding.root.context).apply {
+            layoutParams= LinearLayout.LayoutParams(LayoutHelper.MATCH_PARENT, LayoutHelper.MATCH_PARENT)
+            gravity= Gravity.CENTER_VERTICAL
+        }
+        val vipCountTextView=TextView(binding.root.context)
+        val vipIcon= ImageView(binding.root.context)
+        vipIcon.setImageResource(R.drawable.vip_svgrepo_com)
+        vipCountTextView.textSize=16f
+        vipCountTextView.setTypeface(ResourcesCompat.getFont(context, R.font.poppins_semibold))
+        vipCountTextView.setTextColor(Theme.getColor(Theme.key_actionBarTabActiveText))
+        vipIcon.setColorFilter(Theme.getColor(Theme.key_actionBarTabActiveText))
+        vipCountTextView.text="2000"
+        linearLayout.addView(
+            vipCountTextView,
+            LayoutHelper.createLinear(
+                LayoutHelper.WRAP_CONTENT,
+                LayoutHelper.WRAP_CONTENT,
+                Gravity.RIGHT or Gravity.CENTER,
+                0,
+                0,
+                7,
+                0
+            )
+        )
+        linearLayout.addView(
+            vipIcon,
+            LayoutHelper.createLinear(
+                20,
+                20,
+                Gravity.RIGHT or Gravity.CENTER,
+                0,
+                0,
+                16,
+                0
+            )
+
+        )
+        menu.addView(linearLayout)
         actionBar.backButtonImageView.setOnClickListener {
             finishFragment()
             clearViews()
@@ -56,6 +100,7 @@ class AccountDetailsFragment(var selectedAccount: Int) : BaseFragment() {
     private fun configureUi() {
         binding.tvChannelLink.setTextColor(Theme.getColor(Theme.key_chats_menuItemText))
         binding.tvChannelName.setTextColor(Theme.getColor(Theme.key_chats_menuItemText))
+        binding.root.setBackgroundColor(navigationBarColor)
         binding.btnJoin.setTextColor(Theme.getColor(Theme.key_chats_menuItemText))
         binding.btnNext.setTextColor(Theme.getColor(Theme.key_chats_menuItemText))
         binding.btnNext.text = TgMemberStr.getStr(19)

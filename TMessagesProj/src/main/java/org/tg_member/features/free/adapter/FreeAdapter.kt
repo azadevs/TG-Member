@@ -22,7 +22,7 @@ class FreeAdapter(
                 binding.tvUserPhone.setTextColor(Theme.getColor(Theme.key_chats_menuItemText))
                 binding.tvUserName.setTextColor(Theme.getColor(Theme.key_chats_menuItemText))
 
-                cardAccount.setCardBackgroundColor(Theme.getColor(Theme.key_dialogBackground))
+                cardAccount.setCardBackgroundColor(Theme.getColor(Theme.key_iv_navigationBackground))
                 cardAccount.setOnClickListener {
                     onItemClick.invoke(accountData)
                 }
