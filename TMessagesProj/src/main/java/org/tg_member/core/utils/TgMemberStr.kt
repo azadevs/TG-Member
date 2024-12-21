@@ -99,7 +99,7 @@ object TgMemberStr {
         titlesLanguages.add(TitleLanguages(17, "Enter verification code", "Tasdiqlash kodini kiriting", "Введите код подтверждения"))
         titlesLanguages.add(TitleLanguages(18, "Enter your email address then click on a button below then you will receive a verification code to your email account. Then you need to enter verification code. Then you will be successfully registered", "Elektron pochta manzilingizni kiriting, so'ng quyidagi tugmani bosing, keyin siz elektron pochta hisobingizga tasdiqlash kodini olasiz. Keyin tasdiqlash kodini kiritishingiz kerak. Keyin siz muvaffaqiyatli ro'yxatdan o'tasiz", "Введите свой адрес электронной почты, затем нажмите на кнопку ниже, после чего вы получите проверочный код на свой адрес электронной почты. Затем вам нужно ввести проверочный код. После этого вы будете успешно зарегистрированы."))
         titlesLanguages.add(TitleLanguages(19,"Next","Keyingi","Следующий"))
-        titlesLanguages.add(TitleLanguages(20,"Join + \uD83D\uDD37","Qo'shish + \uD83D\uDD37", "Присоединяйтесь + \uD83D\uDD37"))
+        titlesLanguages.add(TitleLanguages(20,"Join + 2 \uD83D\uDD37","Qo'shish + 2 \uD83D\uDD37", "Присоединяйтесь + 2 \uD83D\uDD37"))
         titlesLanguages.add(TitleLanguages(21,"Auto Join", "Avto qo'shish", "Автоприсоединение"))
         titlesLanguages.add(TitleLanguages(22,"Email Copied","Elektron pochtadan nusxa olindi","Электронная почта скопирована"))
         titlesLanguages.add(TitleLanguages(23,"Log Out","Hisobdan chiqish","Выход"))
@@ -125,6 +125,8 @@ object TgMemberStr {
         titlesLanguages.add(TitleLanguages(43,"Send","Yuborish","Отправлять"))
         titlesLanguages.add(TitleLanguages(44,"Are you sure you want to send this channel?","Ushbu kanalni yuborishga ishonchingiz komilmi?","Вы уверены, что хотите отправить этот канал?"))
         titlesLanguages.add(TitleLanguages(45,"Join","Qo'shish", "Присоединяйтесь"))
+        titlesLanguages.add(TitleLanguages(46,"Visit channel","Kanalga o'tish", "Посетите канал"))
+        titlesLanguages.add(TitleLanguages(47,"Report","Shikoyat", "Жалоба"))
     }
 
     fun getStr(code: Int): String {

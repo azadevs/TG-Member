@@ -55,6 +55,7 @@ import org.telegram.ui.ChatActivity;
 import org.telegram.ui.LaunchActivity;
 import org.telegram.ui.PremiumPreviewFragment;
 import org.telegram.ui.Stories.recorder.HintView2;
+import org.tg_member.core.utils.TgMemberStr;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -1218,6 +1219,20 @@ public final class BulletinFactory {
         if (banned) {
             layout.setAnimation(R.raw.ic_ban, "Hand");
             text = LocaleController.getString(R.string.UserBlocked);
+        } else {
+            layout.setAnimation(R.raw.ic_unban, "Main", "Finger 1", "Finger 2", "Finger 3", "Finger 4");
+            text = LocaleController.getString(R.string.UserUnblocked);
+        }
+        layout.textView.setText(AndroidUtilities.replaceTags(text));
+        return Bulletin.make(fragment, layout, Bulletin.DURATION_SHORT);
+    }
+  @CheckResult
+    public static Bulletin createBanReportBulletin(BaseFragment fragment, boolean banned) {
+        final Bulletin.LottieLayout layout = new Bulletin.LottieLayout(fragment.getParentActivity(), fragment.getResourceProvider());
+        final String text;
+        if (banned) {
+            layout.setAnimation(R.raw.ic_ban, "Hand");
+            text = TgMemberStr.INSTANCE.getStr(47);
         } else {
             layout.setAnimation(R.raw.ic_unban, "Main", "Finger 1", "Finger 2", "Finger 3", "Finger 4");
             text = LocaleController.getString(R.string.UserUnblocked);
