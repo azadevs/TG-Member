@@ -1,4 +1,4 @@
-package org.tg_member.features.buy.adapters
+package org.tg_member.features.buy.adapter
 
 import android.annotation.SuppressLint
 import android.graphics.Color

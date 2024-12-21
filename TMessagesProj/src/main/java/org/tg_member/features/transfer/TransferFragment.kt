@@ -3,9 +3,11 @@ package org.tg_member.features.transfer
 import android.graphics.Color
 import org.telegram.messenger.databinding.TransferFragmentBinding
 import org.telegram.ui.ActionBar.Theme
+import org.telegram.ui.LaunchActivity
 import org.tg_member.core.utils.TgMemberStr
+import org.tg_member.features.transfer.history.TransferHistoryFragment
 
-class TransferFragment(var transferFragmentBinding: TransferFragmentBinding) {
+class TransferFragment(private var transferFragmentBinding: TransferFragmentBinding) {
     fun createView() {
 
         configureUi()
@@ -29,5 +31,9 @@ class TransferFragment(var transferFragmentBinding: TransferFragmentBinding) {
 
         transferFragmentBinding.transfersHistoryBtn.text = TgMemberStr.getStr(9)
         transferFragmentBinding.transfersHistoryBtn.setTextColor(Color.WHITE)
+
+        transferFragmentBinding.transfersHistoryBtn.setOnClickListener {
+            LaunchActivity.instance.presentFragment(TransferHistoryFragment())
+        }
     }
 }

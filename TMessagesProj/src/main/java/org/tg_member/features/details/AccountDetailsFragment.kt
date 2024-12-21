@@ -134,7 +134,7 @@ class AccountDetailsFragment(var selectedAccount: Int) : BaseFragment() {
             LocaleController.getString(R.string.LogOut)
         ) { _: DialogInterface?, _: Int ->
             MessagesController.getInstance(selectedAccount).performLogout(1)
-            FreeFragment.instance.update()
+            FreeFragment.instance.updateAccountAdapter()
             finishFragment()
         }
         builder.setNegativeButton(LocaleController.getString(R.string.Cancel), null)

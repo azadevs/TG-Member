@@ -1649,7 +1649,7 @@ public class LoginActivity extends BaseFragment implements NotificationCenter.No
 //                    return new DialogsActivity(args);
 //                });
                 pendingSwitchingAccount = false;
-                FreeFragment.instance.update();
+                FreeFragment.instance.updateAccountAdapter();
                 finishFragment();
             } else {
 
@@ -1659,7 +1659,7 @@ public class LoginActivity extends BaseFragment implements NotificationCenter.No
                     twoStepVerification.setFromRegistration(true);
                     presentFragment(twoStepVerification, true);
                 } else {
-                    FreeFragment.instance.update();
+                    FreeFragment.instance.updateAccountAdapter();
                     finishFragment();
 //                    Bundle args = new Bundle();
 //                    args.putBoolean("afterSignup", afterSignup);

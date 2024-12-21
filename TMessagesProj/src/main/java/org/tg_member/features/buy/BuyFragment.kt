@@ -2,7 +2,7 @@ package org.tg_member.features.buy
 
 import androidx.recyclerview.widget.LinearLayoutManager
 import org.telegram.messenger.databinding.BuyFragmentBinding
-import org.tg_member.features.buy.adapters.BuyAdapter
+import org.tg_member.features.buy.adapter.BuyAdapter
 import org.tg_member.features.vip.model.VipDisplayData
 
 class BuyFragment(var buyFragmentBinding: BuyFragmentBinding) {

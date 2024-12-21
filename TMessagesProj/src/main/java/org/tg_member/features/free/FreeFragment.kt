@@ -36,7 +36,7 @@ class FreeFragment(private val binding: FragmentFreeBinding) {
         configureAccountAdapter()
     }
 
-    fun update(){
+    fun updateAccountAdapter(){
         adapter.submitList(getAccounts())
     }
 
