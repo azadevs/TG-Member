@@ -1,8 +1,9 @@
 package org.tg_member.features.free.model
 
 data class AccountData(
-    val name: String,
+    val firstName: String,
+    val lastName:String,
     val number: String,
     val id: Long,
-    val accountPosition:Int
+    val accountPosition:Int,
 )

@@ -1,15 +1,23 @@
 package org.tg_member.core.utils
 
 import android.content.Context
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
+import android.graphics.Color
 import android.graphics.drawable.GradientDrawable
 import android.graphics.drawable.StateListDrawable
+import android.util.Log
 import androidx.annotation.DrawableRes
 import androidx.core.content.ContextCompat
+import org.telegram.messenger.AndroidUtilities
+import org.telegram.messenger.FileLoader
 import org.telegram.messenger.R
+import org.telegram.tgnet.TLRPC
 import org.telegram.messenger.UserConfig
 import org.telegram.ui.ActionBar.Theme
 import org.tg_member.core.model.SpinnerTypeData
 import org.tg_member.features.free.model.AccountData
+import java.io.File
 
 /**
  * Created by : Azamat Kalmurzaev
@@ -19,6 +27,10 @@ import org.tg_member.features.free.model.AccountData
 
 object TGMemberUtilities {
 
+    /**
+     * ---------------------------------------------------------------------------------------------
+     */
+
     fun getAccounts(): List<AccountData> {
         val accounts = mutableListOf<AccountData>()
         for (i in 0 until UserConfig.MAX_ACCOUNT_COUNT) {
@@ -26,20 +38,54 @@ object TGMemberUtilities {
                 val currentUser = UserConfig.getInstance(i).currentUser
                 accounts.add(
                     AccountData(
-                        name = currentUser.first_name + if (currentUser.last_name != null) {
-                            currentUser.last_name
-                        } else {
-                            ""
-                        },
+                        firstName = currentUser.first_name,
+                        lastName = if (currentUser.last_name != null) currentUser.last_name else "",
                         number = currentUser.phone,
                         id = currentUser.id,
-                        i
+                        accountPosition = i,
                     )
                 )
             }
         }
         return accounts
     }
+
+
+//    fun getImageBitmap(): Bitmap? {
+//        val accounts = mutableListOf<AccountData>()
+//        var bitmap: Bitmap? = null
+//        var photoPath: TLRPC.FileLocation?
+//        for (i in 0 until UserConfig.MAX_ACCOUNT_COUNT) {
+//            if (UserConfig.isValidAccount(i)) {
+//                val currentUser = UserConfig.getInstance(i).currentUser
+//                accounts.add(
+//                    AccountData(
+//                        firstName = currentUser.first_name,
+//                        lastName = if (currentUser.last_name != null) currentUser.last_name else "",
+//                        number = currentUser.phone,
+//                        id = currentUser.id,
+//                        accountPosition = i,
+//                    )
+//                )
+//                if (currentUser.photo != null) {
+//                    photoPath = currentUser.photo.photo_small
+//                    val size = AndroidUtilities.dp(48f)
+//                    val path: File = FileLoader.getInstance(i).getPathToAttach(photoPath, true)
+//                    bitmap = BitmapFactory.decodeFile(path.toString())
+//                    val result = Bitmap.createBitmap(size, size, Bitmap.Config.ARGB_8888)
+//                    result.eraseColor(Color.TRANSPARENT)
+//                    Log.d("HIII", "getAccounts: ${currentUser.photo.photo_small}")
+//                }
+//                Log.d("HIII", "getAccounts: ${currentUser.color}")
+//                Log.d("HIII", "getAccounts: ${currentUser.profile_color}")
+//            }
+//        }
+//        return bitmap
+//    }
+
+    /**
+     * ---------------------------------------------------------------------------------------------
+     */
 
     fun getDrawableStateList(
         @DrawableRes drawable: Int,
@@ -53,6 +99,10 @@ object TGMemberUtilities {
         gradientDrawablePopup.setColor(Theme.getColor(color))
         return stateListDrawablePopup
     }
+
+    /**
+     * ---------------------------------------------------------------------------------------------
+     */
 
     enum class Types {
         AllTypes,

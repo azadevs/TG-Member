@@ -3,42 +3,30 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:paddingVertical="12dp"
+    android:paddingStart="12dp"
+    android:paddingEnd="6dp"
     android:layout_height="wrap_content">
 
-    <androidx.cardview.widget.CardView
-        android:id="@+id/cardAccount"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
-        android:layout_marginBottom="4dp"
-        android:layout_marginEnd="4dp"
-        android:layout_marginStart="12dp"
-        android:clickable="true"
-        android:focusable="true"
-        android:foreground="?selectableItemBackground"
-        app:cardCornerRadius="6dp"
-        app:cardElevation="3dp"
-        app:cardUseCompatPadding="true"
-        app:contentPaddingLeft="8dp"
-        app:contentPaddingRight="8dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/checkBoxAccount"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintWidth_percent="0.9">
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:paddingVertical="4dp"
-            android:gravity="center_vertical"
-            android:orientation="horizontal">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/tvNameLabel"
+                android:includeFontPadding="false"
+                android:fontFamily="@font/poppins_semibold"
+                android:textSize="18sp"
+                android:translationZ="10dp"
+                app:layout_constraintTop_toTopOf="@id/ivUser"
+                app:layout_constraintBottom_toBottomOf="@id/ivUser"
+                app:layout_constraintStart_toStartOf="@id/ivUser"
+                app:layout_constraintEnd_toEndOf="@id/ivUser"
+                android:textAllCaps="true"/>
 
             <com.google.android.material.imageview.ShapeableImageView
                 android:id="@+id/ivUser"
-                android:layout_width="36dp"
-                android:layout_height="36dp"
-                android:src="@drawable/left_status_profile"
+                android:layout_width="45dp"
+                android:layout_height="45dp"
+                android:background="@color/color_telegram_background"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
@@ -55,9 +43,10 @@
                 android:fontFamily="@font/poppins_medium"
                 android:includeFontPadding="false"
                 android:maxLines="1"
+                android:layout_marginEnd="16dp"
                 android:textSize="15sp"
                 app:layout_constraintBottom_toTopOf="@id/tvUserPhone"
-                app:layout_constraintEnd_toStartOf="@id/tvStop"
+                app:layout_constraintEnd_toStartOf="@id/cardStop"
                 app:layout_constraintStart_toEndOf="@id/ivUser"
                 app:layout_constraintTop_toTopOf="@id/ivUser"
                 tools:text="@tools:sample/full_names" />
@@ -76,7 +65,7 @@
                 tools:text="@tools:sample/us_phones" />
 
             <androidx.cardview.widget.CardView
-                android:id="@+id/tvStop"
+                android:id="@+id/cardStop"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="4dp"
@@ -85,9 +74,9 @@
                 android:foreground="?selectableItemBackground"
                 android:visibility="gone"
                 app:cardBackgroundColor="@color/design_default_color_error"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
+                app:layout_constraintBottom_toBottomOf="@id/tvUserPhone"
+                app:layout_constraintEnd_toStartOf="@id/checkBoxAccount"
+                app:layout_constraintTop_toTopOf="@id/tvUserName">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -100,17 +89,13 @@
                     android:textColor="@color/widget_divider" />
             </androidx.cardview.widget.CardView>
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
-    </androidx.cardview.widget.CardView>
-
     <androidx.appcompat.widget.AppCompatCheckBox
         style="@style/FreeCheckStyle"
         android:id="@+id/checkBoxAccount"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="4dp"
-        app:layout_constraintBottom_toBottomOf="@id/cardAccount"
+        app:layout_constraintBottom_toBottomOf="@id/ivUser"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@id/cardAccount" />
+        app:layout_constraintTop_toTopOf="@id/ivUser" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
