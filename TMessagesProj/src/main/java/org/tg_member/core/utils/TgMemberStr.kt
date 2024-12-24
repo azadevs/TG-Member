@@ -127,6 +127,7 @@ object TgMemberStr {
         titlesLanguages.add(TitleLanguages(45,"Join","Qo'shish", "Присоединяйтесь"))
         titlesLanguages.add(TitleLanguages(46,"Visit channel","Kanalga o'tish", "Посетите канал"))
         titlesLanguages.add(TitleLanguages(47,"Report","Shikoyat", "Жалоба"))
+        titlesLanguages.add(TitleLanguages(48,"Your order has been received","Buyurtmangiz qabul qilindi", "Ваш заказ получен"))
     }
 
     fun getStr(code: Int): String {

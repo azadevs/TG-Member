@@ -80,7 +80,7 @@ class HomeFragment(
                     HomeItem.Member -> R.drawable.ic_person
                     HomeItem.Reaction -> R.drawable.ic_reaction
                     HomeItem.View -> R.drawable.ic_view
-                    HomeItem.Premium -> R.drawable.vip_ic
+                    HomeItem.Premium -> R.drawable.ic_premium_member
                 }
             )
 

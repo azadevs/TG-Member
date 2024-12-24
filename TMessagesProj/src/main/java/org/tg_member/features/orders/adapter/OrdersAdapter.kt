@@ -1,13 +1,12 @@
 package org.tg_member.features.orders.adapter
 
-import org.telegram.messenger.R
-import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import org.telegram.messenger.R
 import org.telegram.messenger.databinding.ItemOrderBinding
 import org.telegram.ui.ActionBar.Theme
-import org.tg_member.core.utils.Types
+import org.tg_member.core.utils.TGMemberUtilities.Types
 import org.tg_member.features.orders.model.Order
 
 /**

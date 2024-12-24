@@ -13,18 +13,15 @@ import android.widget.Toast
 import androidx.core.content.res.ResourcesCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import org.telegram.messenger.LocaleController
-import org.telegram.messenger.MessagesController
 import org.telegram.messenger.R
-import org.telegram.messenger.UserConfig
 import org.telegram.messenger.databinding.InputChannelFragmentBinding
 import org.telegram.ui.ActionBar.AlertDialog
 import org.telegram.ui.ActionBar.BaseFragment
 import org.telegram.ui.ActionBar.Theme
 import org.telegram.ui.Components.LayoutHelper
 import org.tg_member.core.utils.LoadSelectedChannel
+import org.tg_member.core.utils.TGMemberUtilities.getAccounts
 import org.tg_member.core.utils.TgMemberStr
-import org.tg_member.core.utils.getAccounts
-import org.tg_member.features.free.FreeFragment
 import org.tg_member.features.home.model.OrderDisplayData
 import org.tg_member.features.input_channel.adapters.ChannelAdapter
 
@@ -177,7 +174,7 @@ class InputChannelFragment(private val orderDisplayData: OrderDisplayData) : Bas
         builder.setPositiveButton(
             TgMemberStr.getStr(43)
         ) { _: DialogInterface?, _: Int ->
-            Toast.makeText(binding.root.context, "Successfully", Toast.LENGTH_SHORT).show()
+            Toast.makeText(binding.root.context, TgMemberStr.getStr(48), Toast.LENGTH_SHORT).show()
             finishFragment()
         }
         builder.setNegativeButton(LocaleController.getString(R.string.Cancel), null)
