@@ -6,8 +6,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import org.telegram.messenger.R
 import org.telegram.messenger.databinding.BuyVipItemBinding
 import org.telegram.ui.ActionBar.Theme
+import org.tg_member.core.utils.TGMemberUtilities
 import org.tg_member.features.vip.model.VipDisplayData
 
 class BuyAdapter(private var vipPriceList: ArrayList<VipDisplayData>) :
@@ -25,13 +27,14 @@ class BuyAdapter(private var vipPriceList: ArrayList<VipDisplayData>) :
                 }
                 vipPrice.apply {
                     text = "${vipDisplayData.price} USD"
-                    setTextColor(Theme.getColor(Theme.key_myColor))
+                    setTextColor(Theme.getColor(Theme.key_chats_menuItemText))
                 }
                 discount.apply {
                     if (vipDisplayData.discount != 0) {
                         discount.visibility = View.VISIBLE
                         text = "${vipDisplayData.discount} %"
-                        setTextColor(Color.WHITE)
+                        background= TGMemberUtilities.getDrawableStateList(R.drawable.transfer_btn,root.context,Theme.key_chats_sentError)
+                        setTextColor(Theme.getColor(Theme.key_chats_menuName))
                     }
                 }
             }

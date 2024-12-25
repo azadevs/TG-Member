@@ -1232,7 +1232,7 @@ public final class BulletinFactory {
         final String text;
         if (banned) {
             layout.setAnimation(R.raw.ic_ban, "Hand");
-            text = TgMemberStr.INSTANCE.getStr(47);
+            text = TgMemberStr.INSTANCE.getStr(49);
         } else {
             layout.setAnimation(R.raw.ic_unban, "Main", "Finger 1", "Finger 2", "Finger 3", "Finger 4");
             text = LocaleController.getString(R.string.UserUnblocked);

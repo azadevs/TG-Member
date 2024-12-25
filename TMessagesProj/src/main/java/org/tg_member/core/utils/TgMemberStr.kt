@@ -128,6 +128,10 @@ object TgMemberStr {
         titlesLanguages.add(TitleLanguages(46,"Visit channel","Kanalga o'tish", "Посетите канал"))
         titlesLanguages.add(TitleLanguages(47,"Report","Shikoyat", "Жалоба"))
         titlesLanguages.add(TitleLanguages(48,"Your order has been received","Buyurtmangiz qabul qilindi", "Ваш заказ получен"))
+        titlesLanguages.add(TitleLanguages(49,"Your report has been sent...","Shikoyatingiz yuborildi...", "Ваша жалоба отправлена..."))
+        titlesLanguages.add(TitleLanguages(50,"Incorrect code","Kod noto'g'ri", "Неверный код"))
+        titlesLanguages.add(TitleLanguages(51,"Enter the code!","Kodni kiriting!", "Введите код!"))
+        titlesLanguages.add(TitleLanguages(52,"Email address is incorrect","Elektron pochta manzili noto'g'ri", "Адрес электронной почты неверен"))
     }
 
     fun getStr(code: Int): String {

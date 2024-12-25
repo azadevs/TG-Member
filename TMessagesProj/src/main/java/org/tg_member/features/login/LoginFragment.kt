@@ -1,11 +1,15 @@
 package org.tg_member.features.login
 
 import android.content.Context
-import android.graphics.Color
+import android.content.Context.MODE_PRIVATE
+import android.text.Editable
+import android.text.TextUtils
+import android.text.TextWatcher
+import android.util.Patterns
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.Toast
-import org.telegram.messenger.R
+import org.telegram.messenger.ApplicationLoader
 import org.telegram.messenger.databinding.LoginFragmentBinding
 import org.telegram.ui.ActionBar.BaseFragment
 import org.telegram.ui.ActionBar.Theme
@@ -16,6 +20,7 @@ import org.tg_member.features.dashboard.DashboardFragment
 class LoginFragment : BaseFragment() {
     private var _binding: LoginFragmentBinding? = null
     private val binding get() = _binding!!
+    private var email: String = ""
     override fun createView(context: Context?): View {
         _binding = LoginFragmentBinding.inflate(LayoutInflater.from(context), null, false)
 
@@ -24,36 +29,66 @@ class LoginFragment : BaseFragment() {
 
         configureActionBar()
 
-        binding.loginBtn.setOnClickListener {
-//            if (binding.codeEt.visibility == View.VISIBLE){
-//                var password = 0
-//                try {
-//                    password = binding.codeEt.text.toString().toInt()
-//                }catch (e:Exception){}
-//                if (password != 0) {
-//                    if (EmailCodeSender.checkCode(password)){
-//                        presentFragment(DashboardFragment())
-//                    }else{
-//                        Toast.makeText(context, "Pasrol xato", Toast.LENGTH_SHORT).show()
-//                    }
-//                }else{
-//                    Toast.makeText(context, "parolni kiriting", Toast.LENGTH_SHORT).show()
-//                }
-//            }else{
-//                val email = binding.gmailEt.text.toString()
-//                if (email != "") {
-//                    EmailCodeSender.sendEmail(email)
-//                }
-//                binding.codeEt.visibility = View.VISIBLE
-//                binding.loginBtn.text = "Verify"
-//            }
-
-            presentFragment(DashboardFragment(),true)
-        }
-
         fragmentView = binding.root
 
         return fragmentView
+    }
+
+
+    private fun checkUserCredentials() {
+
+        if (binding.codeEt.visibility == View.VISIBLE) {
+            checkInputCode()
+        } else {
+            val inputEmail = binding.gmailEt.text.toString()
+            email=inputEmail
+            if (inputEmail != "" && isValidEmail(inputEmail)) {
+                EmailCodeSender.sendEmail(inputEmail)
+                needInputCodeScreen()
+            } else {
+                Toast.makeText(context, TgMemberStr.getStr(52), Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
+
+    private fun checkInputCode(){
+        val editor =
+            ApplicationLoader.applicationContext.getSharedPreferences("mainconfig", MODE_PRIVATE)
+                .edit()
+        var password = 0
+        try {
+            password = binding.codeEt.text.toString().toInt()
+        } catch (e: Exception) {
+            Toast.makeText(context, e.message, Toast.LENGTH_SHORT).show()
+        }
+        if (password != 0) {
+            if (EmailCodeSender.checkCode(password)) {
+                editor.putBoolean("isLogged", true).apply()
+                editor.putString("userEmail", binding.gmailEt.text.toString())
+                presentFragment(DashboardFragment(), true)
+                finishFragment()
+            } else {
+                Toast.makeText(context, TgMemberStr.getStr(50), Toast.LENGTH_SHORT).show()
+            }
+        } else {
+            Toast.makeText(context, TgMemberStr.getStr(51), Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    private fun needInputEmailScreen() {
+        binding.codeEt.visibility = View.INVISIBLE
+        binding.loginBtn.text = TgMemberStr.getStr(15)
+    }
+
+    private fun needInputCodeScreen() {
+        binding.codeEt.visibility = View.VISIBLE
+        binding.loginBtn.text = TgMemberStr.getStr(14)
+    }
+
+    private fun isValidEmail(target: CharSequence?): Boolean {
+        return !TextUtils.isEmpty(target) && target?.let {
+            Patterns.EMAIL_ADDRESS.matcher(it).matches()
+        } == true
     }
 
     override fun onFragmentDestroy() {
@@ -75,18 +110,34 @@ class LoginFragment : BaseFragment() {
         binding.codeEt.setHintTextColor(Theme.getColor(Theme.key_chats_menuItemText))
 
         binding.loginBtn.text = TgMemberStr.getStr(15)
-        binding.loginBtn.setTextColor(Color.WHITE)
+        binding.loginBtn.setTextColor(Theme.getColor(Theme.key_chats_menuName))
+
+        binding.loginBtn.setOnClickListener {
+            checkUserCredentials()
+            observerEmailEditText()
+        }
+    }
+
+    private fun observerEmailEditText() {
+        binding.gmailEt.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+            }
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                if(TextUtils.equals(s,email)){
+                    needInputCodeScreen()
+                }else{
+                    needInputEmailScreen()
+                }
+            }
+
+            override fun afterTextChanged(s: Editable?) {
+            }
+        })
     }
 
     private fun configureActionBar() {
         actionBar.setTitle(TgMemberStr.getStr(14))
-        actionBar.backgroundColor=Theme.getColor(Theme.key_myColor)
-//        actionBar.setBackButtonImage(R.drawable.msg_arrow_back)
-//        actionBar.backButtonImageView.setOnClickListener {
-//            finishFragment()
-//            clearViews()
-//            _binding = null
-//        }
+        actionBar.backgroundColor = Theme.getColor(Theme.key_myColor)
     }
 
 }

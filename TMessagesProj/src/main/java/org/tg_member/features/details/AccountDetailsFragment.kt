@@ -32,6 +32,7 @@ import org.telegram.ui.Components.LayoutHelper
 import org.tg_member.core.utils.JoinChannels
 import org.tg_member.core.utils.TgMemberStr
 import org.tg_member.features.free.FreeFragment
+import kotlin.math.abs
 
 class AccountDetailsFragment(var selectedAccount: Int) : BaseFragment() {
 
@@ -118,8 +119,10 @@ class AccountDetailsFragment(var selectedAccount: Int) : BaseFragment() {
     private fun configureUi() {
         binding.tvChannelLink.setTextColor(Theme.getColor(Theme.key_chats_menuItemText))
         binding.tvChannelName.setTextColor(Theme.getColor(Theme.key_chats_menuItemText))
+        binding.tvChannelName.text="Kun.uz | Расмий канал"
+        binding.tvChannelLink.text="kunuzoffical"
         binding.root.setBackgroundColor(navigationBarColor)
-        binding.btnJoin.setTextColor(Theme.getColor(Theme.key_chats_menuItemText))
+        binding.btnJoin.setTextColor(Theme.getColor(Theme.key_chats_menuName))
         binding.btnNext.setTextColor(Theme.getColor(Theme.key_chats_menuItemText))
         binding.btnNext.text = TgMemberStr.getStr(19)
         binding.btnJoin.text = TgMemberStr.getStr(20)
@@ -127,7 +130,9 @@ class AccountDetailsFragment(var selectedAccount: Int) : BaseFragment() {
         binding.autoJoin.text = TgMemberStr.getStr(21)
         binding.logOut.text = TgMemberStr.getStr(23)
         binding.logOut.setTextColor(Theme.getColor(Theme.key_chats_menuItemText))
-
+        binding.ivChannelImage.setBackgroundColor(Theme.getColor(Theme.keys_avatar_nameInMessage[abs((1001766948 % Theme.keys_avatar_background.size).toDouble()).toInt()]))
+        binding.tvChannelLabel.text="KU"
+        binding.tvChannelLabel.setTextColor(Color.WHITE)
         binding.logOut.setOnClickListener {
             makeLogOutDialog(context).show()
         }
@@ -203,11 +208,11 @@ class AccountDetailsFragment(var selectedAccount: Int) : BaseFragment() {
         popupMenu?.show(
             binding.ivMenu,
             0,
-            - binding.ivMenu.measuredHeight - AndroidUtilities.dp(8f)
+             - binding.ivMenu.measuredHeight+AndroidUtilities.dp(8f)
         )
     }
 
-    private fun openChannelInTelegram(){
+    private fun openChannelInTelegram(username:String="kunuzofficial"){
         var intent: Intent?
         try {
             try {
@@ -222,11 +227,11 @@ class AccountDetailsFragment(var selectedAccount: Int) : BaseFragment() {
                 )
             }
             intent =
-                Intent(Intent.ACTION_VIEW, Uri.parse("tg://resolve?domain=kunuzofficial"))
+                Intent(Intent.ACTION_VIEW, Uri.parse("tg://resolve?domain=$username"))
         } catch (e: Exception) {
             intent = Intent(
                 Intent.ACTION_VIEW,
-                Uri.parse("http://www.telegram.me/kunuzofficial")
+                Uri.parse("http://www.telegram.me/$username")
             )
         }
         startActivity(context,intent!!,null)

@@ -70,7 +70,7 @@ class InputChannelFragment(private val orderDisplayData: OrderDisplayData) : Bas
         binding.root.setBackgroundColor(Theme.getColor(Theme.key_iv_navigationBackground))
         binding.tvRule.setTextColor(Theme.getColor(Theme.key_chats_menuItemText))
         binding.edtInputLink.setTextColor(Theme.getColor(Theme.key_chats_menuItemText))
-        binding.sendBtn.setTextColor(Color.WHITE)
+        binding.sendBtn.setTextColor(Theme.getColor(Theme.key_chats_menuName))
         binding.sendBtn.text = TgMemberStr.getStr(43)
         binding.edtInputLink.hint = TgMemberStr.getStr(41)
         binding.edtInputLink.setHintTextColor(Theme.getColor(Theme.key_chats_menuItemText))
@@ -130,8 +130,7 @@ class InputChannelFragment(private val orderDisplayData: OrderDisplayData) : Bas
         val channelLink = binding.edtInputLink.text.toString()
         progressDialog.setCancelDialog(true)
         if (channelLink.isNotEmpty()) {
-            var userName =""
-            userName = if(channelLink.contains("https")){
+            val userName: String = if(channelLink.contains("https")){
                 channelLink.substring(channelLink.lastIndexOf('/') + 1, channelLink.length)
             }else if(channelLink.contains("@")){
                 channelLink.replace("@","")

@@ -201,6 +201,7 @@ import org.telegram.ui.Stories.recorder.StoryRecorder;
 import org.telegram.ui.bots.BotWebViewAttachedSheet;
 import org.telegram.ui.bots.BotWebViewSheet;
 import org.telegram.ui.bots.WebViewRequestProps;
+import org.tg_member.features.dashboard.DashboardFragment;
 import org.tg_member.features.login.LoginFragment;
 import org.webrtc.voiceengine.WebRtcAudioTrack;
 
@@ -665,10 +666,6 @@ public class LaunchActivity extends BasePermissionsActivity implements INavigati
                     args.putInt("type", MediaActivity.TYPE_STORIES);
                     presentFragment(new MediaActivity(args, null));
                 }
-//                else if(id == 1001){
-//                    drawerLayoutContainer.closeDrawer(true);
-//                    presentFragment(new LoginFragment());
-//                }
             }
         });
         final ItemTouchHelper sideMenuTouchHelper = new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(ItemTouchHelper.UP | ItemTouchHelper.DOWN, 0) {
@@ -1202,11 +1199,13 @@ public class LaunchActivity extends BasePermissionsActivity implements INavigati
         onUserLeaveHintListeners.remove(callback);
     }
 
+    boolean isLogged=ApplicationLoader.applicationContext.getSharedPreferences("mainconfig",MODE_PRIVATE).getBoolean("isLogged",false);
     private BaseFragment getClientNotActivatedFragment() {
         if (LoginActivity.loadCurrentState(false, currentAccount).getInt("currentViewNum", 0) != 0) {
             return new LoginActivity();
         }
-        return new LoginFragment();
+        if(isLogged) return new DashboardFragment();
+        else return new LoginFragment();
     }
 
     public void showSelectStatusDialog() {
@@ -1476,7 +1475,8 @@ public class LaunchActivity extends BasePermissionsActivity implements INavigati
                 rightActionBarLayout.rebuildLogout();
             }
 //            presentFragment(new IntroActivity().setOnLogout());
-            presentFragment(new LoginFragment());
+            if(isLogged) presentFragment(new DashboardFragment());
+            else presentFragment(new LoginFragment());
         }
     }
 
