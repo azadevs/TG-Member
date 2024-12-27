@@ -15,35 +15,49 @@
         android:clickable="true"
         android:focusable="true"
         android:background="?selectableItemBackground"
-        app:layout_constraintBottom_toBottomOf="@id/ivChannelImage"
+        app:layout_constraintBottom_toBottomOf="@id/containerChannelImage"
         android:layout_width="wrap_content"
         android:src="@drawable/ic_dots"
         android:layout_height="wrap_content" />
 
-    <com.google.android.material.imageview.ShapeableImageView
-        android:id="@+id/ivChannelImage"
-        android:layout_width="110dp"
-        android:layout_height="110dp"
-        android:importantForAccessibility="no"
-        android:scaleType="centerCrop"
-        android:tint="@color/widget_time"
+    <FrameLayout
+        android:id="@+id/containerChannelImage"
+        android:layout_width="130dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.05"
-        app:shapeAppearance="@style/CircleShapeableImageView" />
+        app:layout_constraintVertical_bias="0.1"
+        android:layout_height="130dp">
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/ivChannelImage"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:importantForAccessibility="no"
+            android:scaleType="centerCrop"
+            android:tint="@color/widget_time"
+            app:shapeAppearance="@style/CircleShapeableImageView" />
+
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/lottieView"
+            android:visibility="gone"
+            app:lottie_rawRes="@raw/utyan_streaming"
+            android:layout_width="match_parent"
+            app:lottie_loop="true"
+            android:layout_height="match_parent"/>
+    </FrameLayout>
 
     <TextView
         android:id="@+id/tvChannelLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="@id/ivChannelImage"
-        app:layout_constraintStart_toStartOf="@id/ivChannelImage"
-        app:layout_constraintEnd_toEndOf="@id/ivChannelImage"
-        app:layout_constraintBottom_toBottomOf="@id/ivChannelImage"
+        android:includeFontPadding="false"
+        app:layout_constraintTop_toTopOf="@id/containerChannelImage"
+        app:layout_constraintStart_toStartOf="@id/containerChannelImage"
+        app:layout_constraintEnd_toEndOf="@id/containerChannelImage"
+        app:layout_constraintBottom_toBottomOf="@id/containerChannelImage"
         android:fontFamily="@font/poppins_semibold"
-        android:textSize="30sp"/>
+        android:textSize="40sp"/>
 
     <TextView
         android:id="@+id/tvChannelName"
@@ -53,9 +67,9 @@
         android:fontFamily="@font/poppins_semibold"
         android:gravity="center"
         android:textSize="18sp"
-        app:layout_constraintEnd_toEndOf="@id/ivChannelImage"
-        app:layout_constraintStart_toStartOf="@id/ivChannelImage"
-        app:layout_constraintTop_toBottomOf="@id/ivChannelImage"
+        app:layout_constraintEnd_toEndOf="@id/containerChannelImage"
+        app:layout_constraintStart_toStartOf="@id/containerChannelImage"
+        app:layout_constraintTop_toBottomOf="@id/containerChannelImage"
         tools:text="Hello World" />
 
     <TextView
@@ -64,8 +78,9 @@
         android:layout_height="wrap_content"
         android:fontFamily="@font/poppins_medium"
         android:gravity="center"
-        app:layout_constraintEnd_toEndOf="@id/ivChannelImage"
-        app:layout_constraintStart_toStartOf="@id/ivChannelImage"
+        android:includeFontPadding="false"
+        app:layout_constraintEnd_toEndOf="@id/containerChannelImage"
+        app:layout_constraintStart_toStartOf="@id/containerChannelImage"
         app:layout_constraintTop_toBottomOf="@id/tvChannelName"
         tools:text="Hello world" />
 
@@ -74,24 +89,23 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:background="@drawable/transfer_btn"
-        android:text="Join + 2 🔷"
         android:textSize="16sp"
-        android:fontFamily="@font/poppins_semibold"
+        android:fontFamily="@font/poppins_medium"
         android:textAllCaps="false"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@id/tvChannelLink"
         app:layout_constraintStart_toStartOf="@id/tvChannelLink"
         app:layout_constraintTop_toBottomOf="@id/tvChannelLink"
-        app:layout_constraintVertical_bias="0.05"
+        app:layout_constraintVertical_bias="0.0"
+        android:layout_marginTop="20dp"
         app:layout_constraintWidth_percent="0.9" />
 
     <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/auto_join"
+        android:id="@+id/btnAutoJoin"
         android:layout_width="0dp"
-        android:layout_height="40dp"
+        android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="6dp"
-        android:text="Auto Join"
         android:textSize="15sp"
         android:textAllCaps="false"
         android:fontFamily="@font/poppins_semibold"
@@ -103,32 +117,46 @@
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btnNext"
         android:layout_width="wrap_content"
-        android:layout_height="40dp"
+        android:layout_height="wrap_content"
         android:textAllCaps="false"
         android:minWidth="100dp"
         android:textSize="15sp"
         android:layout_marginStart="6dp"
-        android:fontFamily="@font/poppins_semibold"
+        android:fontFamily="@font/poppins_medium"
         android:background="@drawable/rounded_corners_background"
-        android:text="Next"
-        app:layout_constraintBottom_toBottomOf="@id/auto_join"
+        app:layout_constraintBottom_toBottomOf="@id/btnAutoJoin"
         app:layout_constraintEnd_toEndOf="@id/btnJoin"
-        app:layout_constraintStart_toEndOf="@id/auto_join"
-        app:layout_constraintTop_toTopOf="@id/auto_join" />
+        app:layout_constraintStart_toEndOf="@id/btnAutoJoin"
+        app:layout_constraintTop_toTopOf="@id/btnAutoJoin" />
 
     <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/log_out"
+        android:id="@+id/btnStop"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="invisible"
+        android:textAllCaps="false"
+        android:minWidth="100dp"
+        android:textSize="15sp"
+        android:layout_marginStart="6dp"
+        android:fontFamily="@font/poppins_medium"
+        android:background="@drawable/rounded_corners_background"
+        app:layout_constraintBottom_toBottomOf="@id/btnAutoJoin"
+        app:layout_constraintEnd_toEndOf="@id/btnJoin"
+        app:layout_constraintStart_toEndOf="@id/btnAutoJoin"
+        app:layout_constraintTop_toTopOf="@id/btnAutoJoin" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnLogOut"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:background="@drawable/rounded_corners_background"
-        android:text="Log Out"
         android:textSize="16sp"
-        android:fontFamily="@font/poppins_semibold"
+        android:fontFamily="@font/poppins_medium"
         android:textAllCaps="false"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@id/btnJoin"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="@id/btnJoin"
-        app:layout_constraintTop_toBottomOf="@id/tvChannelLink"
-        app:layout_constraintVertical_bias="0.95"/>
+        app:layout_constraintVertical_bias="0.98"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

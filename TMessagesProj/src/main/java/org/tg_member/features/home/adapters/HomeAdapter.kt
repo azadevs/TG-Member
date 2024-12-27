@@ -31,13 +31,13 @@ class HomeAdapter(var list: ArrayList<OrderDisplayData>, var homeClick: HomeClic
                     discount.visibility = View.VISIBLE
                     discount.apply {
                         text = "${orderDisplayData.discount} %"
-                        background=TGMemberUtilities.getDrawableStateList(R.drawable.transfer_btn,root.context,Theme.key_chats_sentError)
-                        setTextColor(Theme.getColor(Theme.key_chats_menuName))
+                            background=TGMemberUtilities.getDrawableStateList(R.drawable.transfer_btn,root.context,Theme.key_item_discount)
+                        setTextColor(Theme.getColor(Theme.key_chats_sentError))
                     }
                 }
                 price.apply {
-                    text = "${orderDisplayData.price} USD"
-                    setTextColor(Theme.getColor(Theme.key_chats_menuItemText))
+                    text = "$${orderDisplayData.price}"
+                    setTextColor(Theme.getColor(Theme.key_myColor))
                 }
                 ivTypeImage.setImageResource(list[adapterPosition].icon)
                 ivTypeImage.setColorFilter(Theme.getColor(Theme.key_myColor))

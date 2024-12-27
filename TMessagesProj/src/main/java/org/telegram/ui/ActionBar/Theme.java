@@ -3594,6 +3594,7 @@ public class Theme {
     public static final int key_chats_sentReadCheck = colorsCount++;
     public static final int key_chats_sentClock = colorsCount++;
     public static final int key_chats_sentError = colorsCount++;
+    public static final int key_item_discount = colorsCount++;
     public static final int key_chats_sentErrorIcon = colorsCount++;
     public static final int key_chats_verifiedBackground = colorsCount++;
     public static final int key_chats_verifiedCheck = colorsCount++;

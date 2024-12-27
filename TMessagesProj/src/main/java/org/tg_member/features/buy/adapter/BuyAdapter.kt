@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import org.telegram.messenger.R
 import org.telegram.messenger.databinding.BuyVipItemBinding
+import org.telegram.messenger.databinding.ItemVipPriceBinding
 import org.telegram.ui.ActionBar.Theme
 import org.tg_member.core.utils.TGMemberUtilities
 import org.tg_member.features.vip.model.VipDisplayData
@@ -15,26 +16,31 @@ import org.tg_member.features.vip.model.VipDisplayData
 class BuyAdapter(private var vipPriceList: ArrayList<VipDisplayData>) :
     RecyclerView.Adapter<BuyAdapter.BuyVH>() {
 
-    inner class BuyVH(private var buyVipItemBinding: BuyVipItemBinding) :
+    inner class BuyVH(private var buyVipItemBinding: ItemVipPriceBinding) :
         RecyclerView.ViewHolder(buyVipItemBinding.root) {
         @SuppressLint("SetTextI18n")
         fun onBind(vipDisplayData: VipDisplayData) {
             buyVipItemBinding.apply {
-                vip.setColorFilter(Theme.getColor(Theme.key_myColor))
-                vipCount.apply {
+                ivTypeImage.setImageResource(R.drawable.vip_svgrepo_com)
+                ivTypeImage.setColorFilter(Theme.getColor(Theme.key_myColor))
+                tvMemberCount.apply {
                     text = vipDisplayData.vipCount.toString()
                     setTextColor(Theme.getColor(Theme.key_chats_menuItemText))
                 }
-                vipPrice.apply {
-                    text = "${vipDisplayData.price} USD"
-                    setTextColor(Theme.getColor(Theme.key_chats_menuItemText))
+                price.apply {
+                    text = "$${vipDisplayData.price}"
+                    setTextColor(Theme.getColor(Theme.key_myColor))
                 }
                 discount.apply {
                     if (vipDisplayData.discount != 0) {
                         discount.visibility = View.VISIBLE
                         text = "${vipDisplayData.discount} %"
-                        background= TGMemberUtilities.getDrawableStateList(R.drawable.transfer_btn,root.context,Theme.key_chats_sentError)
-                        setTextColor(Theme.getColor(Theme.key_chats_menuName))
+                        background = TGMemberUtilities.getDrawableStateList(
+                            R.drawable.transfer_btn,
+                            root.context,
+                            Theme.key_item_discount
+                        )
+                        setTextColor(Theme.getColor(Theme.key_chats_sentError))
                     }
                 }
             }
@@ -42,7 +48,13 @@ class BuyAdapter(private var vipPriceList: ArrayList<VipDisplayData>) :
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BuyVH {
-        return BuyVH(BuyVipItemBinding.inflate(LayoutInflater.from(parent.context), parent, false))
+        return BuyVH(
+            ItemVipPriceBinding.inflate(
+                LayoutInflater.from(parent.context),
+                parent,
+                false
+            )
+        )
     }
 
     override fun onBindViewHolder(holder: BuyVH, position: Int) {

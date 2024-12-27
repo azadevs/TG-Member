@@ -56,10 +56,10 @@ class MemberFragment(
 
     private fun setFakeData() {
         orderDisplayDataList = ArrayList()
-        orderDisplayDataList.add(OrderDisplayData(100, 200F, 0, R.drawable.ic_person))
-        orderDisplayDataList.add(OrderDisplayData(200, 300F, 10, R.drawable.ic_person))
-        orderDisplayDataList.add(OrderDisplayData(300, 400F, 0, R.drawable.ic_person))
-        orderDisplayDataList.add(OrderDisplayData(400, 500F, 30, R.drawable.ic_person))
+        orderDisplayDataList.add(OrderDisplayData(100, 0.99f, 0, R.drawable.ic_person))
+        orderDisplayDataList.add(OrderDisplayData(200, 1.50F, 10, R.drawable.ic_person))
+        orderDisplayDataList.add(OrderDisplayData(300, 2.50F, 0, R.drawable.ic_person))
+        orderDisplayDataList.add(OrderDisplayData(400, 4.0F, 30, R.drawable.ic_person))
     }
 
     private fun configureCustomTab() {

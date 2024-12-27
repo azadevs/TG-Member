@@ -2,8 +2,10 @@ package org.tg_member.features.profile
 
 import android.content.ClipData
 import android.content.ClipboardManager
+import android.content.Context.MODE_PRIVATE
 import android.widget.Toast
 import androidx.core.content.ContextCompat.getSystemService
+import org.telegram.messenger.ApplicationLoader
 import org.telegram.messenger.databinding.FragmentProfileBinding
 import org.telegram.ui.ActionBar.Theme
 import org.telegram.ui.LaunchActivity
@@ -33,7 +35,7 @@ class ProfileFragment(var binding: FragmentProfileBinding) {
     }
 
     private fun configureUi() {
-        binding.emailTv.text = "hey@gmail.com"
+        binding.emailTv.text =  ApplicationLoader.applicationContext.getSharedPreferences("mainconfig", MODE_PRIVATE).getString("userEmail","Not found")
         binding.emailTv.setTextColor(Theme.getColor(Theme.key_chats_menuItemText))
         binding.contactUs.text = TgMemberStr.getStr(0)
         binding.root.setBackgroundColor(Theme.getColor(Theme.key_iv_navigationBackground))

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="10dp">
+    android:padding="16dp">
 
     <ImageView
         android:id="@+id/ivTypeImage"
@@ -24,7 +24,7 @@
         android:fontFamily="@font/poppins_medium"
         android:includeFontPadding="false"
         android:text="100"
-        android:textSize="16sp"
+        android:textSize="15sp"
         app:layout_constraintBottom_toBottomOf="@id/price"
         app:layout_constraintStart_toEndOf="@id/ivTypeImage"
         app:layout_constraintTop_toTopOf="@id/price" />
@@ -38,10 +38,11 @@
         android:paddingHorizontal="16dp"
         android:includeFontPadding="false"
         android:gravity="center"
-        android:minWidth="60dp"
+        android:minWidth="40dp"
+        android:paddingVertical="1dp"
         android:text="18%"
         android:textSize="13sp"
-        android:fontFamily="@font/poppins_medium"
+        android:fontFamily="@font/poppins_regular"
         android:background="@drawable/transfer_btn"
         app:layout_constraintBottom_toBottomOf="@id/price"
         app:layout_constraintRight_toLeftOf="@id/price"
@@ -51,15 +52,16 @@
         android:id="@+id/price"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@drawable/cut_corners_background"
+        android:background="@drawable/rounded_corners_background"
         android:fontFamily="@font/poppins_medium"
         android:includeFontPadding="false"
-        android:minWidth="80dp"
-        android:paddingHorizontal="16dp"
-        android:paddingVertical="4dp"
-        android:textSize="15sp"
+        android:gravity="center"
+        android:textAlignment="center"
+        android:minWidth="100dp"
+        android:paddingVertical="8dp"
+        android:textSize="14sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:text="@tools:sample/us_zipcodes" />
+        android:text="0.49$"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

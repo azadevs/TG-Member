@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:gravity="center_horizontal"
+    android:padding="16dp"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/tvTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Hello World"
+        android:fontFamily="@font/poppins_medium"
+        android:textSize="18sp"/>
+
+    <TextView
+        android:id="@+id/tvContent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="Hello World asdasdadaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaasdasdasdasdadasdad"
+        android:fontFamily="@font/poppins_regular"
+        android:textSize="15sp"/>
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnUnderstand"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Understand"
+        android:layout_marginTop="16dp"
+        android:textAllCaps="false"
+        android:textSize="16sp"
+        android:background="@drawable/transfer_btn"
+        android:fontFamily="@font/poppins_semibold"/>
+
+</LinearLayout>

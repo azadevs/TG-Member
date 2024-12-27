@@ -241,6 +241,7 @@ public class ThemeColors {
         defaultColors[key_chats_sentReadCheck] = 0xff46aa36;
         defaultColors[key_chats_sentClock] = 0xff75bd5e;
         defaultColors[key_chats_sentError] = 0xffd55252;
+        defaultColors[key_item_discount] = 0xFFFFCCCC;
         defaultColors[key_chats_sentErrorIcon] = 0xffffffff;
         defaultColors[key_chats_verifiedBackground] = 0xff33a8e6;
         defaultColors[key_chats_verifiedCheck] = 0xffffffff;

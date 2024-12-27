@@ -1,6 +1,7 @@
 package org.tg_member.features.details
 
 import android.content.Context
+import android.content.Context.MODE_PRIVATE
 import android.content.DialogInterface
 import android.content.Intent
 import android.graphics.Color
@@ -11,15 +12,16 @@ import android.view.View
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
-import android.widget.Toast
 import androidx.core.content.ContextCompat.startActivity
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.graphics.ColorUtils
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import org.telegram.messenger.AndroidUtilities
 import org.telegram.messenger.LocaleController
 import org.telegram.messenger.MessagesController
 import org.telegram.messenger.R
 import org.telegram.messenger.UserConfig
+import org.telegram.messenger.databinding.DialogBottomAutoJoinBinding
 import org.telegram.messenger.databinding.FragmentAccountDetailsBinding
 import org.telegram.ui.ActionBar.ActionBarMenuItem
 import org.telegram.ui.ActionBar.ActionBarPopupWindow.ActionBarPopupWindowLayout
@@ -30,6 +32,7 @@ import org.telegram.ui.Components.BulletinFactory
 import org.telegram.ui.Components.CustomPopupMenu
 import org.telegram.ui.Components.LayoutHelper
 import org.tg_member.core.utils.JoinChannels
+import org.tg_member.core.utils.TGMemberUtilities
 import org.tg_member.core.utils.TgMemberStr
 import org.tg_member.features.free.FreeFragment
 import kotlin.math.abs
@@ -39,6 +42,7 @@ class AccountDetailsFragment(var selectedAccount: Int) : BaseFragment() {
     private var _binding: FragmentAccountDetailsBinding? = null
     private val binding get() = _binding!!
     private var popupMenu: CustomPopupMenu? = null
+    private lateinit var vipCountTextView: TextView
 
     override fun createView(context: Context?): View {
         _binding = FragmentAccountDetailsBinding.inflate(LayoutInflater.from(context), null, false)
@@ -47,10 +51,10 @@ class AccountDetailsFragment(var selectedAccount: Int) : BaseFragment() {
 
         configureUi()
 
+        configureSharedPreference()
+
         joinChannel()
-
         binding.ivMenu.setOnClickListener {
-
             createPopUpMenu()
         }
 
@@ -58,6 +62,16 @@ class AccountDetailsFragment(var selectedAccount: Int) : BaseFragment() {
 
         return fragmentView
 
+    }
+
+    private fun configureSharedPreference(){
+        val sharedPref = context?.getSharedPreferences("mainconfig", MODE_PRIVATE)
+        sharedPref?.edit()?.putBoolean("isShowAutoJoinDialog", false)?.apply()
+        val isShowDialog = sharedPref?.getBoolean("isShowAutoJoinDialog", false)
+        if (!isShowDialog!!) {
+            showBottomSheetDialog()
+            sharedPref.edit().putBoolean("isShowAutoJoinDialog", true).apply()
+        }
     }
 
     override fun onFragmentDestroy() {
@@ -75,7 +89,7 @@ class AccountDetailsFragment(var selectedAccount: Int) : BaseFragment() {
                 LinearLayout.LayoutParams(LayoutHelper.MATCH_PARENT, LayoutHelper.MATCH_PARENT)
             gravity = Gravity.CENTER_VERTICAL
         }
-        val vipCountTextView = TextView(binding.root.context)
+        vipCountTextView = TextView(binding.root.context)
         val vipIcon = ImageView(binding.root.context)
         vipIcon.setImageResource(R.drawable.vip_svgrepo_com)
         vipCountTextView.textSize = 16f
@@ -117,24 +131,96 @@ class AccountDetailsFragment(var selectedAccount: Int) : BaseFragment() {
     }
 
     private fun configureUi() {
-        binding.tvChannelLink.setTextColor(Theme.getColor(Theme.key_chats_menuItemText))
-        binding.tvChannelName.setTextColor(Theme.getColor(Theme.key_chats_menuItemText))
-        binding.tvChannelName.text="Kun.uz | Расмий канал"
-        binding.tvChannelLink.text="kunuzoffical"
-        binding.root.setBackgroundColor(navigationBarColor)
-        binding.btnJoin.setTextColor(Theme.getColor(Theme.key_chats_menuName))
-        binding.btnNext.setTextColor(Theme.getColor(Theme.key_chats_menuItemText))
-        binding.btnNext.text = TgMemberStr.getStr(19)
-        binding.btnJoin.text = TgMemberStr.getStr(20)
-        binding.autoJoin.setTextColor(Theme.getColor(Theme.key_chats_menuItemText))
-        binding.autoJoin.text = TgMemberStr.getStr(21)
-        binding.logOut.text = TgMemberStr.getStr(23)
-        binding.logOut.setTextColor(Theme.getColor(Theme.key_chats_menuItemText))
-        binding.ivChannelImage.setBackgroundColor(Theme.getColor(Theme.keys_avatar_nameInMessage[abs((1001766948 % Theme.keys_avatar_background.size).toDouble()).toInt()]))
-        binding.tvChannelLabel.text="KU"
-        binding.tvChannelLabel.setTextColor(Color.WHITE)
-        binding.logOut.setOnClickListener {
-            makeLogOutDialog(context).show()
+        binding.apply {
+            tvChannelLink.setTextColor(Theme.getColor(Theme.key_chats_menuItemText))
+            tvChannelName.setTextColor(Theme.getColor(Theme.key_chats_menuItemText))
+            tvChannelName.text = "Kun.uz | Расмий канал"
+            tvChannelLink.text = "kunuzoffical"
+            root.setBackgroundColor(navigationBarColor)
+            btnJoin.setTextColor(Theme.getColor(Theme.key_chats_menuName))
+            btnNext.setTextColor(Theme.getColor(Theme.key_myColor))
+            btnNext.text = TgMemberStr.getStr(19)
+            btnJoin.text = TgMemberStr.getStr(20)
+            btnAutoJoin.setTextColor(Theme.getColor(Theme.key_myColor))
+            btnAutoJoin.text = TgMemberStr.getStr(21)
+            btnLogOut.text = TgMemberStr.getStr(23)
+            btnLogOut.setTextColor(Theme.getColor(Theme.key_chats_sentError))
+            ivChannelImage.setBackgroundColor(
+                Theme.getColor(
+                    Theme.keys_avatar_nameInMessage[abs(
+                        (1001766948 % Theme.keys_avatar_background.size).toDouble()
+                    ).toInt()]
+                )
+            )
+            btnStop.text = TgMemberStr.getStr(54)
+            btnStop.setTextColor(Theme.getColor(Theme.key_chats_sentError))
+            tvChannelLabel.text = "KU"
+            tvChannelLabel.setTextColor(Color.WHITE)
+            btnLogOut.setOnClickListener {
+                makeLogOutDialog(context).show()
+            }
+            btnAutoJoin.setOnClickListener {
+                needAutoJoinStart()
+            }
+            btnStop.setOnClickListener {
+                needAutoJoinStop()
+            }
+        }
+    }
+
+    private fun needAutoJoinStart() {
+        binding.apply {
+            btnJoin.isEnabled = false
+            btnJoin.background = TGMemberUtilities.getDrawableStateList(
+                R.drawable.transfer_btn,
+                context,
+                Theme.key_windowBackgroundWhiteGrayIcon
+            )
+            ivChannelImage.visibility = View.INVISIBLE
+            tvChannelName.text = TgMemberStr.getStr(53)
+            lottieView.visibility = View.VISIBLE
+            btnNext.isEnabled = false
+            btnStop.isEnabled = true
+            tvChannelLink.text = TgMemberStr.getStr(53)
+            tvChannelLabel.visibility = View.INVISIBLE
+            lottieView.playAnimation()
+            btnJoin.text = TgMemberStr.getStr(53)
+            btnStop.visibility = View.VISIBLE
+            btnNext.visibility = View.INVISIBLE
+            btnAutoJoin.isEnabled = false
+            btnAutoJoin.text = TgMemberStr.getStr(55)
+            btnAutoJoin.background = TGMemberUtilities.getDrawableStateList(
+                R.drawable.rounded_corners_background,
+                context,
+                Theme.key_windowBackgroundWhiteGrayIcon
+            )
+            btnAutoJoin.setTextColor(Theme.getColor(Theme.key_chats_menuName))
+        }
+    }
+
+    private fun needAutoJoinStop() {
+        binding.apply {
+            btnJoin.isEnabled = true
+            btnJoin.background = TGMemberUtilities.getDrawableStateList(
+                R.drawable.transfer_btn,
+                context,
+                Theme.key_myColor
+            )
+            ivChannelImage.visibility = View.VISIBLE
+            lottieView.visibility = View.GONE
+            lottieView.pauseAnimation()
+            btnNext.isEnabled = true
+            tvChannelName.text = "Kun.uz | Расмий канал"
+            tvChannelLink.text = "kunuzoffical"
+            btnStop.isEnabled = false
+            tvChannelLabel.visibility = View.VISIBLE
+            btnJoin.text = TgMemberStr.getStr(20)
+            btnAutoJoin.text = TgMemberStr.getStr(21)
+            btnStop.visibility = View.INVISIBLE
+            btnNext.visibility = View.VISIBLE
+            btnAutoJoin.isEnabled = true
+            btnAutoJoin.setBackgroundResource(R.drawable.rounded_corners_background)
+            btnAutoJoin.setTextColor(Theme.getColor(Theme.key_myColor))
         }
     }
 
@@ -142,11 +228,6 @@ class AccountDetailsFragment(var selectedAccount: Int) : BaseFragment() {
         binding.btnJoin.setOnClickListener {
             JoinChannels.join(UserConfig.selectedAccount, -1001766948, "kunuzofficial")
         }
-    }
-
-    override fun clearViews() {
-        super.clearViews()
-        _binding = null
     }
 
     private fun makeLogOutDialog(context: Context?): AlertDialog {
@@ -165,14 +246,14 @@ class AccountDetailsFragment(var selectedAccount: Int) : BaseFragment() {
         return alertDialog
     }
 
-    private fun createPopUpMenu(){
+    private fun createPopUpMenu() {
         popupMenu = object : CustomPopupMenu(context, resourceProvider, false) {
             override fun onCreate(popupLayout: ActionBarPopupWindowLayout) {
                 popupLayout.backgroundColor = ColorUtils.blendARGB(Color.WHITE, Color.WHITE, 0.18f)
                 var item = ActionBarMenuItem.addItem(
                     popupLayout,
-                  R.drawable.ic_open_in,
-                  TgMemberStr.getStr(46),
+                    R.drawable.ic_open_in,
+                    TgMemberStr.getStr(46),
                     false,
                     resourceProvider
                 )
@@ -185,7 +266,7 @@ class AccountDetailsFragment(var selectedAccount: Int) : BaseFragment() {
 
                 item = ActionBarMenuItem.addItem(
                     popupLayout,
-                   R.drawable.ic_report,
+                    R.drawable.ic_report,
                     TgMemberStr.getStr(47),
                     false,
                     resourceProvider
@@ -208,11 +289,11 @@ class AccountDetailsFragment(var selectedAccount: Int) : BaseFragment() {
         popupMenu?.show(
             binding.ivMenu,
             0,
-             - binding.ivMenu.measuredHeight+AndroidUtilities.dp(8f)
+            -binding.ivMenu.measuredHeight + AndroidUtilities.dp(8f)
         )
     }
 
-    private fun openChannelInTelegram(username:String="kunuzofficial"){
+    private fun openChannelInTelegram(username: String = "kunuzofficial") {
         var intent: Intent?
         try {
             try {
@@ -234,6 +315,30 @@ class AccountDetailsFragment(var selectedAccount: Int) : BaseFragment() {
                 Uri.parse("http://www.telegram.me/$username")
             )
         }
-        startActivity(context,intent!!,null)
+        startActivity(context, intent!!, null)
+    }
+//    private fun moveView() {
+//        val translateX = ObjectAnimator.ofFloat(binding.ivVip, "translationX", 0f, 500f)
+//        val translateY = ObjectAnimator.ofFloat(binding.ivVip, "translationY", 0f, -500f)
+//
+//        translateY.duration=2000
+//        translateX.duration=2000
+//        translateX.start()
+//        translateY.start()
+//
+//    }
+
+    private fun showBottomSheetDialog() {
+        val dialog = BottomSheetDialog(context, R.style.BottomSheetDialogStyle)
+        val dialogBinding =
+            DialogBottomAutoJoinBinding.inflate(LayoutInflater.from(context), null, false)
+        dialogBinding.tvTitle.setTextColor(Theme.getColor(Theme.key_chats_menuItemText))
+        dialogBinding.tvContent.setTextColor(Theme.getColor(Theme.key_chats_menuItemText))
+        dialogBinding.btnUnderstand.setTextColor(Theme.getColor(Theme.key_chats_menuName))
+        dialog.setContentView(dialogBinding.root)
+        dialogBinding.btnUnderstand.setOnClickListener {
+            dialog.hide()
+        }
+        dialog.show()
     }
 }
