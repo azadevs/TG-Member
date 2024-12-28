@@ -38,7 +38,7 @@
         android:id="@+id/rvViews"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="4dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tabPost"
         tools:listitem="@layout/item_vip_price" />

@@ -184,7 +184,8 @@ class OrdersFragment {
 
         invisibleBoxIfEmpty(binding, list)
 
-        binding.emptyCaseTv.text = TgMemberStr.getStr(4)
+        binding.tvEmpty.text = TgMemberStr.getStr(4)
+        binding.tvEmpty.setTextColor(Theme.getColor(Theme.key_chats_menuItemText))
     }
 
     private fun getOrdersByType(type: String): List<Order> {
@@ -210,10 +211,13 @@ class OrdersFragment {
     fun invisibleBoxIfEmpty(binding: FragmentOrdersBinding, currList: List<Order>) {
         if (currList.isEmpty()) {
             binding.rvOrders.visibility = View.GONE
-            binding.emptyCaseLl.visibility = View.VISIBLE
+            binding.lottieEmpty.visibility = View.VISIBLE
+            binding.tvEmpty.visibility=View.VISIBLE
         } else {
             binding.rvOrders.visibility = View.VISIBLE
-            binding.emptyCaseLl.visibility = View.GONE
+            binding.lottieEmpty.visibility = View.GONE
+
+            binding.tvEmpty.visibility=View.GONE
         }
     }
 

@@ -1,23 +1,18 @@
 package org.tg_member.core.utils
 
 import android.content.Context
-import android.graphics.Bitmap
-import android.graphics.BitmapFactory
-import android.graphics.Color
 import android.graphics.drawable.GradientDrawable
 import android.graphics.drawable.StateListDrawable
-import android.util.Log
+import android.text.TextUtils
+import android.util.Patterns
 import androidx.annotation.DrawableRes
 import androidx.core.content.ContextCompat
-import org.telegram.messenger.AndroidUtilities
-import org.telegram.messenger.FileLoader
 import org.telegram.messenger.R
 import org.telegram.tgnet.TLRPC
 import org.telegram.messenger.UserConfig
 import org.telegram.ui.ActionBar.Theme
 import org.tg_member.core.model.SpinnerTypeData
 import org.tg_member.features.free.model.AccountData
-import java.io.File
 
 /**
  * Created by : Azamat Kalmurzaev
@@ -163,6 +158,12 @@ object TGMemberUtilities {
                 R.drawable.ic_failed
             )
         )
+    }
+
+    fun isValidEmail(target: CharSequence?): Boolean {
+        return !TextUtils.isEmpty(target) && target?.let {
+            Patterns.EMAIL_ADDRESS.matcher(it).matches()
+        } == true
     }
 
 

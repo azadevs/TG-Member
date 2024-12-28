@@ -3,12 +3,16 @@ package org.tg_member.features.profile
 import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context.MODE_PRIVATE
+import android.text.Editable
+import android.text.TextWatcher
+import android.view.View
 import android.widget.Toast
 import androidx.core.content.ContextCompat.getSystemService
 import org.telegram.messenger.ApplicationLoader
 import org.telegram.messenger.databinding.FragmentProfileBinding
 import org.telegram.ui.ActionBar.Theme
 import org.telegram.ui.LaunchActivity
+import org.tg_member.core.utils.TGMemberUtilities.isValidEmail
 import org.tg_member.core.utils.TgMemberStr
 
 
@@ -23,20 +27,50 @@ class ProfileFragment(var binding: FragmentProfileBinding) {
         configureUi()
 
         binding.ivCopyEmail.setOnClickListener {
-            val clipboard = getSystemService(binding.root.context, ClipboardManager::class.java)
-            clipboard?.setPrimaryClip(ClipData.newPlainText("", binding.emailTv.text))
-            Toast.makeText(binding.root.context, TgMemberStr.getStr(22), Toast.LENGTH_SHORT).show()
+            copyUserEmail()
         }
 
         binding.languageCard.setOnClickListener {
             TgMemberStr.changeLanguageDialog(binding.root.context)
         }
 
+        binding.ivEditEmail.setOnClickListener {
+            enableEmailEditText()
+        }
+
+        binding.ivCheckEmail.setOnClickListener {
+            if(isValidEmail(binding.edtEmail.text.toString())){
+                disableEmailEditText()
+                updateUserEmail()
+                Toast.makeText(binding.root.context, TgMemberStr.getStr(57), Toast.LENGTH_SHORT).show()
+            }else{
+                Toast.makeText(binding.root.context, TgMemberStr.getStr(52), Toast.LENGTH_SHORT).show()
+            }
+
+        }
+
+    }
+
+    private fun updateUserEmail(){
+        ApplicationLoader.applicationContext.getSharedPreferences("mainconfig", MODE_PRIVATE)
+            .edit().putString("userEmail", binding.edtEmail.text.toString()).apply()
+        // Send to server userEmail...
+    }
+
+    private fun copyUserEmail(){
+        val clipboard = getSystemService(binding.root.context, ClipboardManager::class.java)
+        clipboard?.setPrimaryClip(ClipData.newPlainText("", binding.edtEmail.text.toString()))
+        Toast.makeText(binding.root.context, TgMemberStr.getStr(22), Toast.LENGTH_SHORT).show()
     }
 
     private fun configureUi() {
-        binding.emailTv.text =  ApplicationLoader.applicationContext.getSharedPreferences("mainconfig", MODE_PRIVATE).getString("userEmail","Not found")
-        binding.emailTv.setTextColor(Theme.getColor(Theme.key_chats_menuItemText))
+        binding.edtEmail.setText(
+            ApplicationLoader.applicationContext.getSharedPreferences(
+                "mainconfig",
+                MODE_PRIVATE
+            ).getString("userEmail", "Not found")
+        )
+        binding.edtEmail.setTextColor(Theme.getColor(Theme.key_chats_menuItemText))
         binding.contactUs.text = TgMemberStr.getStr(0)
         binding.root.setBackgroundColor(Theme.getColor(Theme.key_iv_navigationBackground))
         binding.contactUs.setTextColor(Theme.getColor(Theme.key_chats_menuItemText))
@@ -47,6 +81,29 @@ class ProfileFragment(var binding: FragmentProfileBinding) {
         binding.languageTv.text = TgMemberStr.getStr(24)
         binding.ivCopyEmail.setColorFilter(Theme.getColor(Theme.key_chats_menuItemText))
         binding.ivSupport.setColorFilter(Theme.getColor(Theme.key_chats_menuItemText))
+        binding.ivCheckEmail.setColorFilter(Theme.getColor(Theme.key_chats_menuItemText))
+        binding.ivEditEmail.setColorFilter(Theme.getColor(Theme.key_chats_menuItemText))
+        disableEmailEditText()
+    }
+
+    private fun disableEmailEditText() {
+        binding.apply {
+            edtEmail.isFocusable = false
+            edtEmail.isEnabled = false
+            ivCheckEmail.visibility = View.GONE
+            ivEditEmail.visibility = View.VISIBLE
+        }
+    }
+
+    private fun enableEmailEditText() {
+        binding.apply {
+            edtEmail.isFocusableInTouchMode = true
+            edtEmail.isEnabled = true
+            edtEmail.requestFocus()
+            edtEmail.setSelection(edtEmail.text.length)
+            ivEditEmail.visibility = View.GONE
+            ivCheckEmail.visibility = View.VISIBLE
+        }
     }
 
 

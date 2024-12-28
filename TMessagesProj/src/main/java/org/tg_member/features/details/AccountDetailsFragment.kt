@@ -1,5 +1,7 @@
 package org.tg_member.features.details
 
+import android.animation.AnimatorSet
+import android.animation.ObjectAnimator
 import android.content.Context
 import android.content.Context.MODE_PRIVATE
 import android.content.DialogInterface
@@ -37,7 +39,7 @@ import org.tg_member.core.utils.TgMemberStr
 import org.tg_member.features.free.FreeFragment
 import kotlin.math.abs
 
-class AccountDetailsFragment(var selectedAccount: Int) : BaseFragment() {
+class AccountDetailsFragment(var selectedAccount: Int) : BaseFragment(){
 
     private var _binding: FragmentAccountDetailsBinding? = null
     private val binding get() = _binding!!
@@ -54,9 +56,23 @@ class AccountDetailsFragment(var selectedAccount: Int) : BaseFragment() {
         configureSharedPreference()
 
         joinChannel()
+
         binding.ivMenu.setOnClickListener {
             createPopUpMenu()
         }
+
+        binding.btnLogOut.setOnClickListener {
+            makeLogOutDialog(context).show()
+        }
+        binding.btnAutoJoin.setOnClickListener {
+            needAutoJoinStart()
+        }
+        binding.btnStop.setOnClickListener {
+            needAutoJoinStop()
+        }
+
+        moveView(binding.tvPlusTwoVipFirst)
+        moveView(binding.tvPlusTwoVipSecond)
 
         fragmentView = binding.root
 
@@ -66,7 +82,7 @@ class AccountDetailsFragment(var selectedAccount: Int) : BaseFragment() {
 
     private fun configureSharedPreference(){
         val sharedPref = context?.getSharedPreferences("mainconfig", MODE_PRIVATE)
-        sharedPref?.edit()?.putBoolean("isShowAutoJoinDialog", false)?.apply()
+//        sharedPref?.edit()?.putBoolean("isShowAutoJoinDialog", false)?.apply()
         val isShowDialog = sharedPref?.getBoolean("isShowAutoJoinDialog", false)
         if (!isShowDialog!!) {
             showBottomSheetDialog()
@@ -154,17 +170,10 @@ class AccountDetailsFragment(var selectedAccount: Int) : BaseFragment() {
             )
             btnStop.text = TgMemberStr.getStr(54)
             btnStop.setTextColor(Theme.getColor(Theme.key_chats_sentError))
+            tvPlusTwoVipFirst.setTextColor(Theme.getColor(Theme.key_chats_menuName))
+            tvPlusTwoVipSecond.setTextColor(Theme.getColor(Theme.key_chats_menuName))
             tvChannelLabel.text = "KU"
             tvChannelLabel.setTextColor(Color.WHITE)
-            btnLogOut.setOnClickListener {
-                makeLogOutDialog(context).show()
-            }
-            btnAutoJoin.setOnClickListener {
-                needAutoJoinStart()
-            }
-            btnStop.setOnClickListener {
-                needAutoJoinStop()
-            }
         }
     }
 
@@ -317,16 +326,24 @@ class AccountDetailsFragment(var selectedAccount: Int) : BaseFragment() {
         }
         startActivity(context, intent!!, null)
     }
-//    private fun moveView() {
-//        val translateX = ObjectAnimator.ofFloat(binding.ivVip, "translationX", 0f, 500f)
-//        val translateY = ObjectAnimator.ofFloat(binding.ivVip, "translationY", 0f, -500f)
-//
-//        translateY.duration=2000
-//        translateX.duration=2000
-//        translateX.start()
-//        translateY.start()
-//
-//    }
+
+    private fun moveView(target:View) {
+        val translateX = ObjectAnimator.ofFloat(target, "translationX", 0f, 0f)
+        val translateY = ObjectAnimator.ofFloat(target, "translationY", 0f, -300f)
+        val alpha = ObjectAnimator.ofFloat(target, "alpha", 1f, 0f)
+        val scaleX = ObjectAnimator.ofFloat(target, "scaleX", 1f, 2f)
+        val scaleY = ObjectAnimator.ofFloat(target, "scaleY", 1f, 2f)
+        translateY.duration=5000
+        translateX.duration=5000
+        scaleX.duration = 5000
+        scaleY.duration = 5000
+        alpha.duration=5000
+        val animatorSet = AnimatorSet()
+        animatorSet.playTogether(translateX, translateY, alpha,scaleX,scaleY)
+
+        animatorSet.start()
+    }
+
 
     private fun showBottomSheetDialog() {
         val dialog = BottomSheetDialog(context, R.style.BottomSheetDialogStyle)

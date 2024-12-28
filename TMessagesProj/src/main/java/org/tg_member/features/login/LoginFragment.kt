@@ -5,7 +5,6 @@ import android.content.Context.MODE_PRIVATE
 import android.text.Editable
 import android.text.TextUtils
 import android.text.TextWatcher
-import android.util.Patterns
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.Toast
@@ -13,6 +12,7 @@ import org.telegram.messenger.ApplicationLoader
 import org.telegram.messenger.databinding.LoginFragmentBinding
 import org.telegram.ui.ActionBar.BaseFragment
 import org.telegram.ui.ActionBar.Theme
+import org.tg_member.core.utils.TGMemberUtilities.isValidEmail
 import org.tg_member.core.utils.TgMemberStr
 import org.tg_member.features.dashboard.DashboardFragment
 
@@ -42,7 +42,7 @@ class LoginFragment : BaseFragment() {
         } else {
             val inputEmail = binding.gmailEt.text.toString()
             email=inputEmail
-            if (inputEmail != "" && isValidEmail(inputEmail)) {
+            if (isValidEmail(inputEmail)) {
                 EmailCodeSender.sendEmail(inputEmail)
                 needInputCodeScreen()
             } else {
@@ -64,7 +64,7 @@ class LoginFragment : BaseFragment() {
         if (password != 0) {
             if (EmailCodeSender.checkCode(password)) {
                 editor.putBoolean("isLogged", true).apply()
-                editor.putString("userEmail", binding.gmailEt.text.toString())
+                editor.putString("userEmail", binding.gmailEt.text.toString()).apply()
                 presentFragment(DashboardFragment(), true)
                 finishFragment()
             } else {
@@ -83,12 +83,6 @@ class LoginFragment : BaseFragment() {
     private fun needInputCodeScreen() {
         binding.codeEt.visibility = View.VISIBLE
         binding.loginBtn.text = TgMemberStr.getStr(14)
-    }
-
-    private fun isValidEmail(target: CharSequence?): Boolean {
-        return !TextUtils.isEmpty(target) && target?.let {
-            Patterns.EMAIL_ADDRESS.matcher(it).matches()
-        } == true
     }
 
     override fun onFragmentDestroy() {

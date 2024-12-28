@@ -10,7 +10,7 @@
         android:id="@+id/cardEmail"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="8dp"
+        android:layout_marginHorizontal="4dp"
         app:cardCornerRadius="4dp"
         app:cardElevation="2dp"
         app:contentPadding="8dp"
@@ -25,26 +25,52 @@
             android:orientation="horizontal"
             tools:ignore="UseCompoundDrawables">
 
-            <TextView
-                android:id="@+id/email_tv"
-                android:layout_width="wrap_content"
+            <EditText
+                android:id="@+id/edtEmail"
+                android:layout_width="0dp"
+                android:paddingVertical="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:layout_marginEnd="4dp"
+                android:background="@android:color/transparent"
                 android:layout_weight="1"
                 android:ellipsize="end"
                 android:fontFamily="@font/poppins_medium"
                 android:gravity="start"
                 android:maxLines="1"
-                android:textSize="18sp"
+                android:textSize="16sp"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <ImageView
                 android:id="@+id/ivCopyEmail"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:clickable="true"
+                android:focusable="true"
+                android:background="?selectableItemBackground"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
                 android:padding="4dp"
                 android:src="@drawable/ic_copy" />
+
+            <ImageView
+                android:clickable="true"
+                android:focusable="true"
+                android:background="?selectableItemBackground"
+                android:id="@+id/ivEditEmail"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:padding="4dp"
+                android:src="@drawable/msg_edit" />
+
+            <ImageView
+                android:clickable="true"
+                android:focusable="true"
+                android:visibility="gone"
+                android:background="?selectableItemBackground"
+                android:id="@+id/ivCheckEmail"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:padding="4dp"
+                android:src="@drawable/account_check" />
         </LinearLayout>
 
     </androidx.cardview.widget.CardView>
@@ -52,7 +78,7 @@
         android:id="@+id/language_card"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="8dp"
+        android:layout_marginHorizontal="4dp"
         app:cardCornerRadius="4dp"
         app:cardElevation="2dp"
         app:contentPadding="8dp"
@@ -77,13 +103,13 @@
                 android:fontFamily="@font/poppins_medium"
                 android:gravity="start"
                 android:maxLines="1"
-                android:textSize="18sp"
+                android:textSize="16sp"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <ImageView
                 android:id="@+id/language_id"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
                 android:padding="4dp"
                 android:src="@drawable/msg2_language" />
         </LinearLayout>
@@ -114,7 +140,7 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.97" />
+        app:layout_constraintVertical_bias="0.98" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

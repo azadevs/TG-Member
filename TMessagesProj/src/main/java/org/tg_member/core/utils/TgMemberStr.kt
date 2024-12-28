@@ -76,7 +76,7 @@ object TgMemberStr {
         builder.show()
     }
 
-    var titlesLanguages = ArrayList<TitleLanguages>()
+    private var titlesLanguages = ArrayList<TitleLanguages>()
 
     init {
         titlesLanguages.add(TitleLanguages(0, "Contact us", "Biz bilan bog'lanish", "Связаться с нами"))
@@ -135,6 +135,8 @@ object TgMemberStr {
         titlesLanguages.add(TitleLanguages(53,"Joining...","Qoʻshilmoqda...", "Присоединяюсь..."))
         titlesLanguages.add(TitleLanguages(54,"Stop","Stop", "Стоп"))
         titlesLanguages.add(TitleLanguages(55,"Working...","Ishlamoqda...", "Работающий..."))
+        titlesLanguages.add(TitleLanguages(56,"You have no accounts","Hisoblaringiz yo'q", "У вас нет аккаунтов"))
+        titlesLanguages.add(TitleLanguages(57,"Your email has been changed","Sizning elektron pochta manzilingiz o'zgartirildi", "Ваш адрес электронной почты был изменен"))
     }
 
     fun getStr(code: Int): String {

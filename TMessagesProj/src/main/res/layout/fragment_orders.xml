@@ -4,14 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingHorizontal="16dp"
+    android:paddingHorizontal="12dp"
     android:paddingTop="12dp">
 
     <FrameLayout
         android:id="@+id/containerTypeSpinner"
         android:layout_width="0dp"
         android:layout_height="35dp"
-        android:layout_marginEnd="8dp"
+        android:layout_marginEnd="6dp"
         android:background="@drawable/cut_corners_background"
         app:layout_constraintEnd_toStartOf="@id/containerStatusSpinner"
         app:layout_constraintStart_toStartOf="parent"
@@ -28,7 +28,7 @@
     <FrameLayout
         android:id="@+id/containerStatusSpinner"
         android:layout_width="0dp"
-        android:layout_marginStart="8dp"
+        android:layout_marginStart="6dp"
         android:layout_height="35dp"
         android:background="@drawable/cut_corners_background"
         app:layout_constraintBottom_toBottomOf="@id/containerTypeSpinner"
@@ -54,33 +54,29 @@
         app:layout_constraintTop_toBottomOf="@id/containerTypeSpinner"
         tools:listitem="@layout/item_order" />
 
-    <LinearLayout
-        android:id="@+id/empty_case_ll"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_marginTop="8dp"
-        android:gravity="center"
-        android:orientation="vertical"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/containerTypeSpinner"
-        tools:ignore="UseCompoundDrawables">
+     <com.airbnb.lottie.LottieAnimationView
+         android:id="@+id/lottieEmpty"
+         app:layout_constraintTop_toTopOf="parent"
+         app:layout_constraintBottom_toBottomOf="parent"
+         app:layout_constraintStart_toStartOf="parent"
+         app:layout_constraintEnd_toEndOf="parent"
+         app:lottie_rawRes="@raw/utyan_empty"
+         app:lottie_autoPlay="true"
+         app:layout_constraintVertical_bias="0.45"
+         app:lottie_loop="true"
+         android:layout_width="120dp"
+         android:layout_height="120dp"/>
 
-        <ImageView
-            android:id="@+id/empty_case_iv"
-            android:layout_width="120dp"
-            android:layout_height="120dp"
-            android:contentDescription="Empty Box Image"
-            android:src="@drawable/ic_empty_box" />
-
-        <TextView
-            android:id="@+id/empty_case_tv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:fontFamily="@font/poppins_medium"
-            android:textColor="@color/widget_text"
-            android:textSize="18sp" />
-
-    </LinearLayout>
+    <TextView
+        android:id="@+id/tvEmpty"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="No Orders"
+        android:textSize="18sp"
+        app:layout_constraintTop_toBottomOf="@id/lottieEmpty"
+        app:layout_constraintStart_toStartOf="@id/lottieEmpty"
+        app:layout_constraintEnd_toEndOf="@id/lottieEmpty"
+        android:layout_marginTop="16dp"
+        android:fontFamily="@font/poppins_medium"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
