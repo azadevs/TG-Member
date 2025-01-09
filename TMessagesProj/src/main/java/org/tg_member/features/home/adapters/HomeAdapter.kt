@@ -37,10 +37,10 @@ class HomeAdapter(var list: ArrayList<OrderDisplayData>, var homeClick: HomeClic
                 }
                 price.apply {
                     text = "$${orderDisplayData.price}"
-                    setTextColor(Theme.getColor(Theme.key_myColor))
+                    setTextColor(Theme.getColor(Theme.key_chats_menuItemText))
                 }
                 ivTypeImage.setImageResource(list[adapterPosition].icon)
-                ivTypeImage.setColorFilter(Theme.getColor(Theme.key_myColor))
+                ivTypeImage.setColorFilter(root.context.resources.getColor(R.color.color_telegram_background))
             }
         }
     }

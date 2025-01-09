@@ -137,6 +137,8 @@ object TgMemberStr {
         titlesLanguages.add(TitleLanguages(55,"Working...","Ishlamoqda...", "Работающий..."))
         titlesLanguages.add(TitleLanguages(56,"You have no accounts","Hisoblaringiz yo'q", "У вас нет аккаунтов"))
         titlesLanguages.add(TitleLanguages(57,"Your email has been changed","Sizning elektron pochta manzilingiz o'zgartirildi", "Ваш адрес электронной почты был изменен"))
+        titlesLanguages.add(TitleLanguages(58,"Day Mode","Kunduzgi rejim", "Дневной режим"))
+        titlesLanguages.add(TitleLanguages(59,"Night Mode","Tungi rejim", "Ночной режим"))
     }
 
     fun getStr(code: Int): String {

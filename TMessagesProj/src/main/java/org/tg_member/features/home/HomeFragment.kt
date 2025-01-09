@@ -31,9 +31,9 @@ class HomeFragment(
         homePagerAdapter = HomePagerAdapter(pages)
         binding.tab.setSelectedTabIndicatorColor(Theme.getColor(Theme.key_actionBarTabActiveText))
         binding.viewPager.adapter = homePagerAdapter
-        binding.viewPager.setBackgroundColor(Theme.getColor(Theme.key_iv_navigationBackground))
+        binding.viewPager.setBackgroundColor(Theme.getColor(Theme.key_iv_background))
         binding.tab.setupWithViewPager(binding.viewPager)
-        binding.tab.setBackgroundColor(Theme.getColor(Theme.key_myColor))
+        binding.tab.setBackgroundColor(Theme.getColor(Theme.key_actionBarDefault))
 
         configureCustomTab()
 

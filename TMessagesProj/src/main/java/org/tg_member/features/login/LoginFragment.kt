@@ -131,7 +131,7 @@ class LoginFragment : BaseFragment() {
 
     private fun configureActionBar() {
         actionBar.setTitle(TgMemberStr.getStr(14))
-        actionBar.backgroundColor = Theme.getColor(Theme.key_myColor)
+        actionBar.backgroundColor = actionBar.backgroundColor
     }
 
 }

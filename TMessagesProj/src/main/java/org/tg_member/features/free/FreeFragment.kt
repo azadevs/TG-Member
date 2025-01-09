@@ -43,10 +43,10 @@ class FreeFragment(private val binding: FragmentFreeBinding) {
 
     private fun configureUi() {
         shouldVisibleEmptyViews()
-        binding.root.setBackgroundColor(Theme.getColor(Theme.key_iv_navigationBackground))
+        binding.root.setBackgroundColor(Theme.getColor(Theme.key_iv_background))
         binding.autoJoinBtn.setTextColor(Color.WHITE)
         binding.autoJoinBtn.text = TgMemberStr.getStr(21)
-        binding.containerBottomViews.setBackgroundColor(LaunchActivity.instance.navigationBarColor)
+        binding.containerBottomViews.setBackgroundColor(Theme.getColor(Theme.key_iv_navigationBackground))
         binding.addBtn.text = TgMemberStr.getStr(26)
         binding.addBtn.setTextColor(Color.WHITE)
         binding.tvEmpty.text = TgMemberStr.getStr(56)

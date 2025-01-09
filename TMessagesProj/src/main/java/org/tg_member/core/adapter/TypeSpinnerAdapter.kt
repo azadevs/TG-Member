@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
+import org.telegram.messenger.R
 import org.telegram.messenger.databinding.ItemTypeSpinnerBinding
 import org.telegram.ui.ActionBar.Theme
 import org.tg_member.core.model.SpinnerTypeData
@@ -32,8 +33,8 @@ class TypeSpinnerAdapter(
         }
         binding.tvTypeName.text = list[position].type
         binding.tvTypeName.setTextColor(Theme.getColor(Theme.key_chats_menuItemText))
-        binding.ivTypeImage.setColorFilter(Theme.getColor(Theme.key_myColor))
         binding.ivTypeImage.setImageResource(list[position].icon)
+        binding.ivTypeImage.setColorFilter(context.resources.getColor(R.color.color_telegram_background))
         return binding.root
     }
 }

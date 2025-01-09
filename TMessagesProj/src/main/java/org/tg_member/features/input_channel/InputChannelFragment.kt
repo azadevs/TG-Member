@@ -2,15 +2,9 @@ package org.tg_member.features.input_channel
 
 import android.content.Context
 import android.content.DialogInterface
-import android.graphics.Color
-import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
-import android.widget.ImageView
-import android.widget.LinearLayout
-import android.widget.TextView
 import android.widget.Toast
-import androidx.core.content.res.ResourcesCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import org.telegram.messenger.LocaleController
 import org.telegram.messenger.R
@@ -18,8 +12,8 @@ import org.telegram.messenger.databinding.InputChannelFragmentBinding
 import org.telegram.ui.ActionBar.AlertDialog
 import org.telegram.ui.ActionBar.BaseFragment
 import org.telegram.ui.ActionBar.Theme
-import org.telegram.ui.Components.LayoutHelper
 import org.tg_member.core.utils.LoadSelectedChannel
+import org.tg_member.core.utils.TGMemberUtilities
 import org.tg_member.core.utils.TGMemberUtilities.getAccounts
 import org.tg_member.core.utils.TgMemberStr
 import org.tg_member.features.home.model.OrderDisplayData
@@ -80,50 +74,12 @@ class InputChannelFragment(private val orderDisplayData: OrderDisplayData) : Bas
     private fun configureActionBar() {
         actionBar.setTitle(TgMemberStr.getStr(29))
         actionBar.setBackButtonImage(R.drawable.msg_arrow_back)
-        actionBar.backgroundColor = Theme.getColor(Theme.key_myColor)
+
         actionBar.backButtonImageView.setOnClickListener {
             _binding=null
-            finishFragment()
+            finishFragment(true)
         }
-        val menu= actionBar.createMenu()
-        val linearLayout= LinearLayout(binding.root.context).apply {
-            layoutParams= LinearLayout.LayoutParams(LayoutHelper.MATCH_PARENT, LayoutHelper.MATCH_PARENT)
-            gravity= Gravity.CENTER_VERTICAL
-        }
-        val vipCountTextView= TextView(binding.root.context)
-        val vipIcon= ImageView(binding.root.context)
-        vipIcon.setImageResource(R.drawable.vip_svgrepo_com)
-        vipCountTextView.textSize=16f
-        vipCountTextView.setTypeface(ResourcesCompat.getFont(context, R.font.poppins_semibold))
-        vipCountTextView.setTextColor(Theme.getColor(Theme.key_actionBarTabActiveText))
-        vipIcon.setColorFilter(Theme.getColor(Theme.key_actionBarTabActiveText))
-        vipCountTextView.text="2000"
-        linearLayout.addView(
-            vipCountTextView,
-            LayoutHelper.createLinear(
-                LayoutHelper.WRAP_CONTENT,
-                LayoutHelper.WRAP_CONTENT,
-                Gravity.RIGHT or Gravity.CENTER,
-                0,
-                0,
-                7,
-                0
-            )
-        )
-        linearLayout.addView(
-            vipIcon,
-            LayoutHelper.createLinear(
-                20,
-                20,
-                Gravity.RIGHT or Gravity.CENTER,
-                0,
-                0,
-                16,
-                0
-            )
-
-        )
-        menu.addView(linearLayout)
+       TGMemberUtilities.createActionbar(actionBar,context,"2000")
     }
 
     private fun checkChannelLink() {
@@ -174,7 +130,7 @@ class InputChannelFragment(private val orderDisplayData: OrderDisplayData) : Bas
             TgMemberStr.getStr(43)
         ) { _: DialogInterface?, _: Int ->
             Toast.makeText(binding.root.context, TgMemberStr.getStr(48), Toast.LENGTH_SHORT).show()
-            finishFragment()
+            finishFragment(true)
         }
         builder.setNegativeButton(LocaleController.getString(R.string.Cancel), null)
         val alertDialog = builder.create()

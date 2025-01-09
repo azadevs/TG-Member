@@ -52,28 +52,16 @@
     </FrameLayout>
 
     <TextView
-        android:id="@+id/tvPlusTwoVipFirst"
+        android:id="@+id/tvPlusTwoVip"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="4dp"
         android:fontFamily="@font/poppins_semibold"
         android:text="+2"
+        app:layout_constraintStart_toStartOf="@id/containerChannelImage"
         android:textSize="21sp"
         app:layout_constraintBottom_toBottomOf="@id/containerChannelImage"
         app:layout_constraintEnd_toEndOf="@id/containerChannelImage"
-        app:layout_constraintTop_toTopOf="@id/containerChannelImage"
-        app:layout_constraintVertical_bias="0.6" />
-
-    <TextView
-        android:id="@+id/tvPlusTwoVipSecond"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="4dp"
-        android:fontFamily="@font/poppins_semibold"
-        android:text="+2"
-        android:textSize="21sp"
-        app:layout_constraintBottom_toBottomOf="@id/containerChannelImage"
-        app:layout_constraintStart_toStartOf="@id/containerChannelImage"
         app:layout_constraintTop_toTopOf="@id/containerChannelImage"
         app:layout_constraintVertical_bias="0.6" />
 

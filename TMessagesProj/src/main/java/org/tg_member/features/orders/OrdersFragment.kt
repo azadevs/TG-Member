@@ -180,7 +180,7 @@ class OrdersFragment {
     private fun configureUi(binding: FragmentOrdersBinding) {
         binding.spinnerStatus.setSelection(0)
         binding.spinnerType.setSelection(0)
-        binding.root.setBackgroundColor(Theme.getColor(Theme.key_iv_navigationBackground))
+        binding.root.setBackgroundColor(Theme.getColor(Theme.key_iv_background))
 
         invisibleBoxIfEmpty(binding, list)
 

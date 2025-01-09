@@ -2,11 +2,15 @@ package org.tg_member.features.details
 
 import android.animation.AnimatorSet
 import android.animation.ObjectAnimator
+import android.animation.ValueAnimator
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Context.MODE_PRIVATE
 import android.content.DialogInterface
 import android.content.Intent
 import android.graphics.Color
+import android.graphics.drawable.GradientDrawable
+import android.graphics.drawable.StateListDrawable
 import android.net.Uri
 import android.view.Gravity
 import android.view.LayoutInflater
@@ -14,6 +18,9 @@ import android.view.View
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.core.animation.addListener
+import androidx.core.animation.doOnEnd
+import androidx.core.content.ContextCompat
 import androidx.core.content.ContextCompat.startActivity
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.graphics.ColorUtils
@@ -39,12 +46,15 @@ import org.tg_member.core.utils.TgMemberStr
 import org.tg_member.features.free.FreeFragment
 import kotlin.math.abs
 
-class AccountDetailsFragment(var selectedAccount: Int) : BaseFragment(){
+class AccountDetailsFragment(var selectedAccount: Int) : BaseFragment() {
 
     private var _binding: FragmentAccountDetailsBinding? = null
     private val binding get() = _binding!!
     private var popupMenu: CustomPopupMenu? = null
-    private lateinit var vipCountTextView: TextView
+    private var animatorSet: AnimatorSet? = null
+    private val vipCountTextView by lazy {
+        TextView(context)
+    }
 
     override fun createView(context: Context?): View {
         _binding = FragmentAccountDetailsBinding.inflate(LayoutInflater.from(context), null, false)
@@ -71,8 +81,7 @@ class AccountDetailsFragment(var selectedAccount: Int) : BaseFragment(){
             needAutoJoinStop()
         }
 
-        moveView(binding.tvPlusTwoVipFirst)
-        moveView(binding.tvPlusTwoVipSecond)
+        moveView(binding.tvPlusTwoVip)
 
         fragmentView = binding.root
 
@@ -80,7 +89,7 @@ class AccountDetailsFragment(var selectedAccount: Int) : BaseFragment(){
 
     }
 
-    private fun configureSharedPreference(){
+    private fun configureSharedPreference() {
         val sharedPref = context?.getSharedPreferences("mainconfig", MODE_PRIVATE)
 //        sharedPref?.edit()?.putBoolean("isShowAutoJoinDialog", false)?.apply()
         val isShowDialog = sharedPref?.getBoolean("isShowAutoJoinDialog", false)
@@ -92,26 +101,25 @@ class AccountDetailsFragment(var selectedAccount: Int) : BaseFragment(){
 
     override fun onFragmentDestroy() {
         _binding = null
+        popupMenu = null
         super.onFragmentDestroy()
     }
 
     private fun configureActionBar() {
         actionBar.setTitle(TgMemberStr.getStr(45))
         actionBar.setBackButtonImage(R.drawable.msg_arrow_back)
-        actionBar.backgroundColor = Theme.getColor(Theme.key_myColor)
         val menu = actionBar.createMenu()
-        val linearLayout = LinearLayout(binding.root.context).apply {
+        val linearLayout = LinearLayout(context).apply {
             layoutParams =
                 LinearLayout.LayoutParams(LayoutHelper.MATCH_PARENT, LayoutHelper.MATCH_PARENT)
             gravity = Gravity.CENTER_VERTICAL
         }
-        vipCountTextView = TextView(binding.root.context)
-        val vipIcon = ImageView(binding.root.context)
+        val vipIcon = ImageView(context)
         vipIcon.setImageResource(R.drawable.vip_svgrepo_com)
         vipCountTextView.textSize = 16f
         vipCountTextView.setTypeface(ResourcesCompat.getFont(context, R.font.poppins_semibold))
-        vipCountTextView.setTextColor(Theme.getColor(Theme.key_actionBarTabActiveText))
-        vipIcon.setColorFilter(Theme.getColor(Theme.key_actionBarTabActiveText))
+        vipCountTextView.setTextColor(Theme.getColor(Theme.key_actionBarDefaultTitle))
+        vipIcon.setColorFilter(Theme.getColor(Theme.key_actionBarDefaultIcon))
         vipCountTextView.text = "2000"
         linearLayout.addView(
             vipCountTextView,
@@ -140,9 +148,11 @@ class AccountDetailsFragment(var selectedAccount: Int) : BaseFragment(){
         )
         menu.addView(linearLayout)
         actionBar.backButtonImageView.setOnClickListener {
-            finishFragment()
-            clearViews()
+            animatorSet?.pause()
+            animatorSet?.removeAllListeners()
+            animatorSet = null
             _binding = null
+            finishFragment(true)
         }
     }
 
@@ -152,12 +162,12 @@ class AccountDetailsFragment(var selectedAccount: Int) : BaseFragment(){
             tvChannelName.setTextColor(Theme.getColor(Theme.key_chats_menuItemText))
             tvChannelName.text = "Kun.uz | Расмий канал"
             tvChannelLink.text = "kunuzoffical"
-            root.setBackgroundColor(navigationBarColor)
+            root.setBackgroundColor(Theme.getColor(Theme.key_iv_background))
             btnJoin.setTextColor(Theme.getColor(Theme.key_chats_menuName))
-            btnNext.setTextColor(Theme.getColor(Theme.key_myColor))
+            btnNext.setTextColor(context.resources.getColor(R.color.color_telegram_background))
             btnNext.text = TgMemberStr.getStr(19)
             btnJoin.text = TgMemberStr.getStr(20)
-            btnAutoJoin.setTextColor(Theme.getColor(Theme.key_myColor))
+            btnAutoJoin.setTextColor(context.resources.getColor(R.color.color_telegram_background))
             btnAutoJoin.text = TgMemberStr.getStr(21)
             btnLogOut.text = TgMemberStr.getStr(23)
             btnLogOut.setTextColor(Theme.getColor(Theme.key_chats_sentError))
@@ -170,8 +180,7 @@ class AccountDetailsFragment(var selectedAccount: Int) : BaseFragment(){
             )
             btnStop.text = TgMemberStr.getStr(54)
             btnStop.setTextColor(Theme.getColor(Theme.key_chats_sentError))
-            tvPlusTwoVipFirst.setTextColor(Theme.getColor(Theme.key_chats_menuName))
-            tvPlusTwoVipSecond.setTextColor(Theme.getColor(Theme.key_chats_menuName))
+            tvPlusTwoVip.setTextColor(Theme.getColor(Theme.key_chats_menuName))
             tvChannelLabel.text = "KU"
             tvChannelLabel.setTextColor(Color.WHITE)
         }
@@ -210,11 +219,11 @@ class AccountDetailsFragment(var selectedAccount: Int) : BaseFragment(){
     private fun needAutoJoinStop() {
         binding.apply {
             btnJoin.isEnabled = true
-            btnJoin.background = TGMemberUtilities.getDrawableStateList(
-                R.drawable.transfer_btn,
-                context,
-                Theme.key_myColor
-            )
+            val stateListDrawablePopup = ContextCompat.getDrawable(
+                context, R.drawable.transfer_btn
+            ) as StateListDrawable
+            stateListDrawablePopup.current as GradientDrawable
+            btnJoin.background = stateListDrawablePopup
             ivChannelImage.visibility = View.VISIBLE
             lottieView.visibility = View.GONE
             lottieView.pauseAnimation()
@@ -229,7 +238,7 @@ class AccountDetailsFragment(var selectedAccount: Int) : BaseFragment(){
             btnNext.visibility = View.VISIBLE
             btnAutoJoin.isEnabled = true
             btnAutoJoin.setBackgroundResource(R.drawable.rounded_corners_background)
-            btnAutoJoin.setTextColor(Theme.getColor(Theme.key_myColor))
+            btnAutoJoin.setTextColor(context.resources.getColor(R.color.color_telegram_background))
         }
     }
 
@@ -327,23 +336,31 @@ class AccountDetailsFragment(var selectedAccount: Int) : BaseFragment(){
         startActivity(context, intent!!, null)
     }
 
-    private fun moveView(target:View) {
+    @SuppressLint("SetTextI18n")
+    private fun moveView(target: View) {
         val translateX = ObjectAnimator.ofFloat(target, "translationX", 0f, 0f)
         val translateY = ObjectAnimator.ofFloat(target, "translationY", 0f, -300f)
         val alpha = ObjectAnimator.ofFloat(target, "alpha", 1f, 0f)
         val scaleX = ObjectAnimator.ofFloat(target, "scaleX", 1f, 2f)
         val scaleY = ObjectAnimator.ofFloat(target, "scaleY", 1f, 2f)
-        translateY.duration=5000
-        translateX.duration=5000
-        scaleX.duration = 5000
-        scaleY.duration = 5000
-        alpha.duration=5000
-        val animatorSet = AnimatorSet()
-        animatorSet.playTogether(translateX, translateY, alpha,scaleX,scaleY)
-
-        animatorSet.start()
+        translateY.duration = 4000
+        translateX.duration = 4000
+        scaleX.duration = 4000
+        scaleY.duration = 4000
+        alpha.duration = 4000
+        animatorSet = AnimatorSet()
+        animatorSet?.playTogether(translateX, translateY, alpha, scaleX, scaleY)
+        animatorSet?.addListener {
+            val animator = ValueAnimator.ofInt(2000, 2002)
+            animator.duration = 400
+            animator.addUpdateListener {
+                val value = it.animatedValue as Int
+                vipCountTextView.text=value.toString()
+            }
+            animator.start()
+        }
+        animatorSet?.start()
     }
-
 
     private fun showBottomSheetDialog() {
         val dialog = BottomSheetDialog(context, R.style.BottomSheetDialogStyle)

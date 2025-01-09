@@ -87,7 +87,7 @@ class PremiumFragment(
                     R.drawable.cut_corners_filled_background
                 ) as StateListDrawable
                 val gradientDrawable = stateListDrawable.current as GradientDrawable
-                gradientDrawable.setColor(Theme.getColor(Theme.key_myColor))
+                gradientDrawable.setColor(Theme.getColor(Theme.key_actionBarDefault))
                 tabBinding.indicator.background = stateListDrawable
                 tabBinding.tvCountryName.setTextColor(Theme.getColor(Theme.key_actionBarTabActiveText))
             } else {
@@ -104,7 +104,7 @@ class PremiumFragment(
                     R.drawable.cut_corners_filled_background
                 ) as StateListDrawable
                 val gradientDrawable = stateListDrawable.current as GradientDrawable
-                gradientDrawable.setColor(Theme.getColor(Theme.key_myColor))
+                gradientDrawable.setColor(Theme.getColor(Theme.key_actionBarDefault))
                 indicator?.background = stateListDrawable
                 tab?.customView?.findViewById<TextView>(R.id.tvCountryName)
                     ?.setTextColor(Theme.getColor(Theme.key_actionBarTabActiveText))

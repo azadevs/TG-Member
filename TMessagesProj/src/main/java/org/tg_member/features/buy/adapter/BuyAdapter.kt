@@ -22,14 +22,14 @@ class BuyAdapter(private var vipPriceList: ArrayList<VipDisplayData>) :
         fun onBind(vipDisplayData: VipDisplayData) {
             buyVipItemBinding.apply {
                 ivTypeImage.setImageResource(R.drawable.vip_svgrepo_com)
-                ivTypeImage.setColorFilter(Theme.getColor(Theme.key_myColor))
+                ivTypeImage.setColorFilter(root.context.resources.getColor(R.color.color_telegram_background))
                 tvMemberCount.apply {
                     text = vipDisplayData.vipCount.toString()
                     setTextColor(Theme.getColor(Theme.key_chats_menuItemText))
                 }
                 price.apply {
                     text = "$${vipDisplayData.price}"
-                    setTextColor(Theme.getColor(Theme.key_myColor))
+                    setTextColor(Theme.getColor(Theme.key_chats_menuItemText))
                 }
                 discount.apply {
                     if (vipDisplayData.discount != 0) {

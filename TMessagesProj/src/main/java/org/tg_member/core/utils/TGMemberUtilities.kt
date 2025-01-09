@@ -5,12 +5,22 @@ import android.graphics.drawable.GradientDrawable
 import android.graphics.drawable.StateListDrawable
 import android.text.TextUtils
 import android.util.Patterns
+import android.view.Gravity
+import android.view.View
+import android.widget.ImageView
+import android.widget.LinearLayout
+import android.widget.TextView
 import androidx.annotation.DrawableRes
 import androidx.core.content.ContextCompat
+import androidx.core.content.res.ResourcesCompat
+import org.telegram.messenger.NotificationCenter
 import org.telegram.messenger.R
 import org.telegram.tgnet.TLRPC
 import org.telegram.messenger.UserConfig
+import org.telegram.ui.ActionBar.ActionBar
 import org.telegram.ui.ActionBar.Theme
+import org.telegram.ui.ActionBar.Theme.ThemeInfo
+import org.telegram.ui.Components.LayoutHelper
 import org.tg_member.core.model.SpinnerTypeData
 import org.tg_member.features.free.model.AccountData
 
@@ -165,6 +175,82 @@ object TGMemberUtilities {
             Patterns.EMAIL_ADDRESS.matcher(it).matches()
         } == true
     }
+
+    fun changeTheme(view: View,themeInfo: ThemeInfo, toDark:Boolean) {
+//        val dayThemeName = "Blue"
+//        val nightThemeName = "Night"
+//
+//        val themeInfo: ThemeInfo
+//        var toDark: Boolean
+//        if (!Theme.isCurrentThemeDark().also { toDark = it }) {
+//            themeInfo = Theme.getTheme(nightThemeName)
+//        } else {
+//            themeInfo = Theme.getTheme(dayThemeName)
+//        }
+
+        Theme.selectedAutoNightType = Theme.AUTO_NIGHT_TYPE_NONE
+        Theme.saveAutoNightThemeConfig()
+        Theme.cancelAutoNightThemeCallbacks()
+
+
+        val pos = IntArray(2)
+
+        NotificationCenter.getGlobalInstance().postNotificationName(
+            NotificationCenter.needSetDayNightTheme,
+            themeInfo,
+            false,
+            pos,
+            -1,
+            toDark,
+            view
+        )
+    }
+
+    fun createActionbar(actionBar: ActionBar, context: Context, countVip:String) {
+        actionBar.setTitle(TgMemberStr.getStr(27))
+        actionBar.title
+        val menu = actionBar.createMenu()
+        val linearLayout = LinearLayout(context).apply {
+            layoutParams =
+                LinearLayout.LayoutParams(LayoutHelper.MATCH_PARENT, LayoutHelper.MATCH_PARENT)
+            gravity = Gravity.CENTER_VERTICAL
+        }
+        val vipCountTextView = TextView(context)
+        val vipIcon = ImageView(context)
+        vipIcon.setImageResource(R.drawable.vip_svgrepo_com)
+        vipCountTextView.textSize = 16f
+        vipCountTextView.setTypeface(ResourcesCompat.getFont(context, R.font.poppins_semibold))
+        vipCountTextView.setTextColor(Theme.getColor(Theme.key_actionBarDefaultTitle))
+        vipIcon.setColorFilter(Theme.getColor(Theme.key_actionBarDefaultIcon))
+        vipCountTextView.text = countVip
+        linearLayout.addView(
+            vipCountTextView,
+            LayoutHelper.createLinear(
+                LayoutHelper.WRAP_CONTENT,
+                LayoutHelper.WRAP_CONTENT,
+                Gravity.RIGHT or Gravity.CENTER,
+                0,
+                0,
+                7,
+                0
+            )
+        )
+        linearLayout.addView(
+            vipIcon,
+            LayoutHelper.createLinear(
+                20,
+                20,
+                Gravity.RIGHT or Gravity.CENTER,
+                0,
+                0,
+                16,
+                0
+            )
+
+        )
+        menu.addView(linearLayout)
+    }
+
 
 
 }

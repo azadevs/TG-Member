@@ -18,6 +18,7 @@ import org.telegram.ui.ActionBar.BaseFragment
 import org.telegram.ui.ActionBar.Theme
 import org.telegram.ui.Components.LayoutHelper
 import org.telegram.ui.LaunchActivity
+import org.tg_member.core.utils.TGMemberUtilities
 import org.tg_member.core.utils.TgMemberStr
 import org.tg_member.features.dashboard.adapter.DashboardPagerAdapter
 import org.tg_member.features.dashboard.model.DashboardItem
@@ -29,6 +30,7 @@ import org.tg_member.features.dashboard.model.DashboardItem
 class DashboardFragment : BaseFragment() {
     private var _binding: FragmentDashboardBinding? = null
     private val binding get() = _binding!!
+
     companion object {
         @SuppressLint("StaticFieldLeak")
         lateinit var instance: DashboardFragment
@@ -90,7 +92,8 @@ class DashboardFragment : BaseFragment() {
                 position: Int,
                 positionOffset: Float,
                 positionOffsetPixels: Int
-            ) {}
+            ) {
+            }
 
             override fun onPageSelected(position: Int) {
                 var item = binding.bottomNavigationView.menu.getItem(position)
@@ -105,48 +108,7 @@ class DashboardFragment : BaseFragment() {
     }
 
     private fun configureActionBar() {
-        actionBar.setTitle(TgMemberStr.getStr(27))
-        actionBar.backgroundColor=Theme.getColor(Theme.key_myColor)
-        actionBar.title
-        val menu = actionBar.createMenu()
-        val linearLayout=LinearLayout(binding.root.context).apply {
-            layoutParams=LinearLayout.LayoutParams(LayoutHelper.MATCH_PARENT,LayoutHelper.MATCH_PARENT)
-            gravity=Gravity.CENTER_VERTICAL
-        }
-        val vipCountTextView=TextView(binding.root.context)
-        val vipIcon=ImageView(binding.root.context)
-        vipIcon.setImageResource(R.drawable.vip_svgrepo_com)
-        vipCountTextView.textSize=16f
-        vipCountTextView.setTypeface(ResourcesCompat.getFont(context, R.font.poppins_semibold))
-        vipCountTextView.setTextColor(Theme.getColor(Theme.key_actionBarTabActiveText))
-        vipIcon.setColorFilter(Theme.getColor(Theme.key_actionBarTabActiveText))
-        vipCountTextView.text="2000"
-        linearLayout.addView(
-            vipCountTextView,
-            LayoutHelper.createLinear(
-                LayoutHelper.WRAP_CONTENT,
-                LayoutHelper.WRAP_CONTENT,
-                Gravity.RIGHT or Gravity.CENTER,
-                0,
-                0,
-                7,
-                0
-            )
-        )
-        linearLayout.addView(
-            vipIcon,
-            LayoutHelper.createLinear(
-                20,
-                20,
-                Gravity.RIGHT or Gravity.CENTER,
-                0,
-                0,
-                16,
-                0
-            )
-
-        )
-        menu.addView(linearLayout)
+        TGMemberUtilities.createActionbar(actionBar, context, countVip = "2000")
     }
 
     private fun configureBottomNavigation() {

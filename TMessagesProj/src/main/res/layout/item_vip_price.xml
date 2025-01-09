@@ -14,7 +14,7 @@
         app:layout_constraintBottom_toBottomOf="@id/price"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@id/price"
-        app:tint="@color/widget_time" />
+        app:tint="@color/color_telegram_background" />
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/tvMemberCount"
@@ -57,9 +57,9 @@
         android:includeFontPadding="false"
         android:gravity="center"
         android:textAlignment="center"
-        android:minWidth="100dp"
+        android:minWidth="90dp"
         android:paddingVertical="8dp"
-        android:textSize="14sp"
+        android:textSize="13sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         android:text="0.49$"/>

@@ -14,7 +14,7 @@
         android:importantForAccessibility="no"
         android:scaleType="centerCrop"
         android:src="@drawable/vip_svgrepo_com"
-        app:tint="@color/widget_name" />
+        app:tint="@color/color_telegram_background" />
 
     <TextView
         android:id="@+id/tvTypeName"

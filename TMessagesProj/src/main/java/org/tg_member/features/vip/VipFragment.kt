@@ -28,7 +28,7 @@ class VipFragment(
     private fun configureViewPagerAndTab() {
         vipVPAdapter = VipPagerAdapter(pages)
         binding.vipVp.adapter = vipVPAdapter
-        binding.root.setBackgroundColor(LaunchActivity.instance.navigationBarColor)
+        binding.root.setBackgroundColor(Theme.getColor(Theme.key_iv_background))
         binding.vipTab.setBackgroundColor(actionBarColor)
         binding.vipTab.setupWithViewPager(binding.vipVp)
         binding.vipTab.setSelectedTabIndicatorColor(Theme.getColor(Theme.key_actionBarTabActiveText))
