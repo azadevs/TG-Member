@@ -1,5 +1,6 @@
 package org.tg_member.features.home.pager.member
 
+import android.content.Context
 import android.graphics.drawable.GradientDrawable
 import android.graphics.drawable.StateListDrawable
 import android.view.LayoutInflater
@@ -7,12 +8,20 @@ import android.view.View
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.bumptech.glide.Glide
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.tabs.TabLayout
 import org.telegram.messenger.R
+import org.telegram.messenger.databinding.DialogBottomAutoJoinBinding
+import org.telegram.messenger.databinding.DialogNeedVipBinding
 import org.telegram.messenger.databinding.FragmentMemberBinding
 import org.telegram.messenger.databinding.ItemTabCountryBinding
 import org.telegram.ui.ActionBar.Theme
 import org.telegram.ui.LaunchActivity
+import org.tg_member.core.utils.TGMemberUtilities
+import org.tg_member.core.utils.TGMemberUtilities.showNotEnoughMoneyDialog
+import org.tg_member.features.dashboard.DashboardFragment
+import org.tg_member.features.home.HomeFragment
 import org.tg_member.features.home.adapters.HomeAdapter
 import org.tg_member.features.home.model.OrderDisplayData
 import org.tg_member.features.home.pager.member.model.CountryDisplayData
@@ -47,19 +56,24 @@ class MemberFragment(
     private fun configureAdapter() {
         homeAdapter = HomeAdapter(orderDisplayDataList, object : HomeAdapter.HomeClick {
             override fun click(orderDisplayData: OrderDisplayData) {
-                LaunchActivity.instance.presentFragment(InputChannelFragment(orderDisplayData))
+                if(HomeFragment.instance.getVipCount()<orderDisplayData.priceVip){
+                    showNotEnoughMoneyDialog(binding.root.context)
+                }else {
+                    LaunchActivity.instance.presentFragment(InputChannelFragment(orderDisplayData))
+                }
             }
         })
         binding.rvMembers.layoutManager = LinearLayoutManager(binding.root.context)
         binding.rvMembers.adapter = homeAdapter
     }
 
+
     private fun setFakeData() {
         orderDisplayDataList = ArrayList()
-        orderDisplayDataList.add(OrderDisplayData(100, 0.99f, 0, R.drawable.ic_person))
-        orderDisplayDataList.add(OrderDisplayData(200, 1.50F, 10, R.drawable.ic_person))
-        orderDisplayDataList.add(OrderDisplayData(300, 2.50F, 0, R.drawable.ic_person))
-        orderDisplayDataList.add(OrderDisplayData(400, 4.0F, 30, R.drawable.ic_person))
+        orderDisplayDataList.add(OrderDisplayData(100, 100, 0, R.drawable.ic_person))
+        orderDisplayDataList.add(OrderDisplayData(200, 200, 10, R.drawable.ic_person))
+        orderDisplayDataList.add(OrderDisplayData(300, 400, 0, R.drawable.ic_person))
+        orderDisplayDataList.add(OrderDisplayData(400, 500, 30, R.drawable.ic_person))
     }
 
     private fun configureCustomTab() {

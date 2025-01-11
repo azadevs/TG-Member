@@ -10,6 +10,8 @@ import org.telegram.messenger.databinding.ItemTypeTabBinding
 import org.telegram.ui.ActionBar.Theme
 import org.telegram.ui.LaunchActivity
 import org.tg_member.core.utils.TgMemberStr
+import org.tg_member.features.dashboard.DashboardFragment
+import org.tg_member.features.dashboard.DashboardFragment.Companion
 import org.tg_member.features.home.adapters.HomePagerAdapter
 import org.tg_member.features.home.model.HomeItem
 
@@ -23,7 +25,12 @@ class HomeFragment(
     private lateinit var homePagerAdapter: HomePagerAdapter
     var pages = arrayListOf(HomeItem.Member, HomeItem.View, HomeItem.Reaction, HomeItem.Premium)
 
+    companion object{
+        lateinit var instance:HomeFragment
+    }
+
     fun createView() {
+        instance = this
         configureViewPagerAndTab()
     }
 
@@ -94,6 +101,10 @@ class HomeFragment(
                 tabBinding.tvTitle.setTextColor(Theme.getColor(Theme.key_actionBarTabUnactiveText))
             }
         }
+    }
+
+    fun getVipCount() : Int{
+        return 200
     }
 }
 

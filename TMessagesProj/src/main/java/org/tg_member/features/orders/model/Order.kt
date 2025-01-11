@@ -10,7 +10,7 @@ import org.tg_member.core.utils.TGMemberUtilities.Types
 
 data class Order(
     val id: String? = null,
-    val type: Types? = null,
-    val status: Status? = null,
-    val count: String? = null
+    val type: String? = null,
+    val status: String? = null,
+    val count: Int? = null
 )

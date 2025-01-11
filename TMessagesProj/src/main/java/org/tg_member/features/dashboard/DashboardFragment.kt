@@ -2,21 +2,12 @@ package org.tg_member.features.dashboard
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.graphics.Typeface
-import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
-import android.widget.ImageView
-import android.widget.LinearLayout
-import android.widget.TextView
-import androidx.core.content.res.ResourcesCompat
 import androidx.viewpager.widget.ViewPager.OnPageChangeListener
-import org.intellij.lang.annotations.JdkConstants.FontStyle
 import org.telegram.messenger.R
 import org.telegram.messenger.databinding.FragmentDashboardBinding
 import org.telegram.ui.ActionBar.BaseFragment
-import org.telegram.ui.ActionBar.Theme
-import org.telegram.ui.Components.LayoutHelper
 import org.telegram.ui.LaunchActivity
 import org.tg_member.core.utils.TGMemberUtilities
 import org.tg_member.core.utils.TgMemberStr
@@ -57,7 +48,7 @@ class DashboardFragment : BaseFragment() {
         LaunchActivity.instance.rebuildAllFragments(true)
 
         val item = binding.bottomNavigationView.menu.getItem(uiPosition)
-        binding.bottomNavigationView.selectedItemId = item.itemId
+        binding.bottomNavigationView.selectedItemId=item.itemId
     }
 
     override fun onBackPressed(): Boolean {
@@ -74,6 +65,13 @@ class DashboardFragment : BaseFragment() {
     override fun onFragmentDestroy() {
         _binding = null
         super.onFragmentDestroy()
+    }
+
+    fun changeBottomNavigationPosition(position:Int){
+        LaunchActivity.instance.rebuildAllFragments(true)
+
+        val item = binding.bottomNavigationView.menu.getItem(position)
+        binding.bottomNavigationView.selectedItemId = item.itemId
     }
 
     private fun configureViewPager() {
@@ -96,7 +94,7 @@ class DashboardFragment : BaseFragment() {
             }
 
             override fun onPageSelected(position: Int) {
-                var item = binding.bottomNavigationView.menu.getItem(position)
+                val item = binding.bottomNavigationView.menu.getItem(position)
                 binding.bottomNavigationView.selectedItemId = item.itemId
             }
 
@@ -108,6 +106,7 @@ class DashboardFragment : BaseFragment() {
     }
 
     private fun configureActionBar() {
+        actionBar.setTitle(TgMemberStr.getStr(27))
         TGMemberUtilities.createActionbar(actionBar, context, countVip = "2000")
     }
 

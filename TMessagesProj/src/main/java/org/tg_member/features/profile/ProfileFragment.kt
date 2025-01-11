@@ -3,11 +3,16 @@ package org.tg_member.features.profile
 import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context.MODE_PRIVATE
+import android.content.Intent
 import android.content.SharedPreferences
+import android.net.Uri
+import android.text.InputType
+import android.text.TextUtils
 import android.view.View
 import android.widget.CompoundButton
 import android.widget.Toast
 import androidx.core.content.ContextCompat.getSystemService
+import androidx.core.content.ContextCompat.startActivity
 import org.telegram.messenger.ApplicationLoader
 import org.telegram.messenger.LocaleController
 import org.telegram.messenger.NotificationCenter
@@ -37,7 +42,13 @@ class ProfileFragment(var binding: FragmentProfileBinding) {
         }
 
         binding.languageCard.setOnClickListener {
-            TgMemberStr.changeLanguageDialog(binding.root.context)
+            TgMemberStr.changeLanguageDialog(binding.root.context) {
+                DashboardFragment.instance.recreate(4)
+            }
+        }
+
+        binding.contactUs.setOnClickListener {
+            openSupporterChatInTelegram()
         }
 
         binding.ivEditEmail.setOnClickListener {
@@ -72,7 +83,8 @@ class ProfileFragment(var binding: FragmentProfileBinding) {
                 toDark = true
             )
             binding.themeSwitch.text = TgMemberStr.getStr(59)
-            ApplicationLoader.applicationContext.getSharedPreferences("mainconfig", MODE_PRIVATE).edit().putBoolean("isSwitch", true).apply()
+            ApplicationLoader.applicationContext.getSharedPreferences("mainconfig", MODE_PRIVATE)
+                .edit().putBoolean("isSwitch", true).apply()
             DashboardFragment.instance.recreate(4)
         } else {
             changeTheme(
@@ -81,12 +93,14 @@ class ProfileFragment(var binding: FragmentProfileBinding) {
                 toDark = false
             )
             binding.themeSwitch.text = TgMemberStr.getStr(58)
-            ApplicationLoader.applicationContext.getSharedPreferences("mainconfig", MODE_PRIVATE).edit().putBoolean("isSwitch", false).apply()
+            ApplicationLoader.applicationContext.getSharedPreferences("mainconfig", MODE_PRIVATE)
+                .edit().putBoolean("isSwitch", false).apply()
             DashboardFragment.instance.recreate(4)
         }
     }
 
     private fun updateUserEmail() {
+        binding.edtEmail.setSelection(0)
         ApplicationLoader.applicationContext.getSharedPreferences("mainconfig", MODE_PRIVATE)
             .edit().putString("userEmail", binding.edtEmail.text.toString()).apply()
         // Send to server userEmail...
@@ -99,12 +113,17 @@ class ProfileFragment(var binding: FragmentProfileBinding) {
     }
 
     private fun configureUi() {
-
         binding.apply {
             edtEmail.setText(
-                ApplicationLoader.applicationContext.getSharedPreferences("mainconfig", MODE_PRIVATE).getString("userEmail", "")
+                ApplicationLoader.applicationContext.getSharedPreferences(
+                    "mainconfig",
+                    MODE_PRIVATE
+                ).getString("userEmail", "")
             )
-            themeSwitch.isChecked = ApplicationLoader.applicationContext.getSharedPreferences("mainconfig", MODE_PRIVATE).getBoolean("isSwitch", false)
+            themeSwitch.isChecked = ApplicationLoader.applicationContext.getSharedPreferences(
+                "mainconfig",
+                MODE_PRIVATE
+            ).getBoolean("isSwitch", false)
             edtEmail.setTextColor(Theme.getColor(Theme.key_chats_menuItemText))
             contactUs.text = TgMemberStr.getStr(0)
             root.setBackgroundColor(Theme.getColor(Theme.key_iv_background))
@@ -120,7 +139,8 @@ class ProfileFragment(var binding: FragmentProfileBinding) {
             ivEditEmail.setColorFilter(Theme.getColor(Theme.key_chats_menuItemText))
             cardTheme.setCardBackgroundColor(Theme.getColor(Theme.key_windowBackgroundWhite))
             themeSwitch.setTextColor(Theme.getColor(Theme.key_chats_menuItemText))
-            themeSwitch.text=if(themeSwitch.isChecked) TgMemberStr.getStr(58) else TgMemberStr.getStr(59)
+            themeSwitch.text =
+                if (themeSwitch.isChecked) TgMemberStr.getStr(58) else TgMemberStr.getStr(59)
         }
         disableEmailEditText()
     }
@@ -129,6 +149,11 @@ class ProfileFragment(var binding: FragmentProfileBinding) {
         binding.apply {
             edtEmail.isFocusable = false
             edtEmail.isEnabled = false
+            edtEmail.isActivated = false
+            edtEmail.isFocusableInTouchMode = false
+            edtEmail.isSingleLine = true
+            edtEmail.keyListener = null
+            edtEmail.ellipsize = TextUtils.TruncateAt.END
             ivCheckEmail.visibility = View.GONE
             ivEditEmail.visibility = View.VISIBLE
         }
@@ -136,13 +161,41 @@ class ProfileFragment(var binding: FragmentProfileBinding) {
 
     private fun enableEmailEditText() {
         binding.apply {
+            edtEmail.inputType = InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS
             edtEmail.isFocusableInTouchMode = true
             edtEmail.isEnabled = true
+            edtEmail.isActivated = true
+            edtEmail.ellipsize = null
             edtEmail.requestFocus()
             edtEmail.setSelection(edtEmail.text.length)
             ivEditEmail.visibility = View.GONE
             ivCheckEmail.visibility = View.VISIBLE
         }
+    }
+
+    private fun openSupporterChatInTelegram(username: String = "Habibullohedu") {
+        var intent: Intent?
+        try {
+            try {
+                binding.root.context.packageManager.getPackageInfo(
+                    "org.telegram.messenger",
+                    0
+                )
+            } catch (e: Exception) {
+                binding.root.context.packageManager.getPackageInfo(
+                    "org.thunderdog.challegram",
+                    0
+                )
+            }
+            intent =
+                Intent(Intent.ACTION_VIEW, Uri.parse("tg://resolve?domain=$username"))
+        } catch (e: Exception) {
+            intent = Intent(
+                Intent.ACTION_VIEW,
+                Uri.parse("http://t.me/$username")
+            )
+        }
+        startActivity(binding.root.context, intent!!, null)
     }
 
 

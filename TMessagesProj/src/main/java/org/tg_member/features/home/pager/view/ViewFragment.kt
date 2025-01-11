@@ -14,6 +14,8 @@ import org.telegram.messenger.databinding.ItemTabCountryBinding
 import org.telegram.messenger.databinding.ItemTabViewBinding
 import org.telegram.ui.ActionBar.Theme
 import org.telegram.ui.LaunchActivity
+import org.tg_member.core.utils.TGMemberUtilities.showNotEnoughMoneyDialog
+import org.tg_member.features.home.HomeFragment
 import org.tg_member.features.home.adapters.HomeAdapter
 import org.tg_member.features.home.model.OrderDisplayData
 import org.tg_member.features.home.pager.member.model.CountryDisplayData
@@ -55,7 +57,11 @@ class ViewFragment(
     private fun configureAdapter() {
         homeAdapter = HomeAdapter(postsPrice, object : HomeAdapter.HomeClick {
             override fun click(orderDisplayData: OrderDisplayData) {
-                LaunchActivity.instance.presentFragment(InputChannelFragment(orderDisplayData))
+                if(HomeFragment.instance.getVipCount()<orderDisplayData.priceVip){
+                    showNotEnoughMoneyDialog(binding.root.context)
+                }else {
+                    LaunchActivity.instance.presentFragment(InputChannelFragment(orderDisplayData))
+                }
             }
         })
         binding.rvViews.layoutManager = LinearLayoutManager(binding.root.context)
@@ -184,10 +190,10 @@ class ViewFragment(
 
     private fun setFakeData() {
         postsPrice = ArrayList()
-        postsPrice.add(OrderDisplayData(100, 200F, 0,R.drawable.ic_view))
-        postsPrice.add(OrderDisplayData(200, 300F, 10,R.drawable.ic_view))
-        postsPrice.add(OrderDisplayData(300, 400F, 0,R.drawable.ic_view))
-        postsPrice.add(OrderDisplayData(400, 500F, 30,R.drawable.ic_view))
+        postsPrice.add(OrderDisplayData(100, 200, 0,R.drawable.ic_view))
+        postsPrice.add(OrderDisplayData(200, 300, 10,R.drawable.ic_view))
+        postsPrice.add(OrderDisplayData(300, 400, 0,R.drawable.ic_view))
+        postsPrice.add(OrderDisplayData(400, 500, 30,R.drawable.ic_view))
     }
 
 }

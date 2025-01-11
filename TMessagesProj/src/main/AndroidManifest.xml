@@ -94,6 +94,13 @@
         </intent>
     </queries>
 
+    <queries>
+        <intent>
+            <action android:name="android.intent.action.VIEW"/>
+            <data android:scheme="tg"/>
+        </intent>
+    </queries>
+
     <application
         android:name="org.telegram.messenger.ApplicationLoader"
         android:allowBackup="true"

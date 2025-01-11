@@ -7197,7 +7197,7 @@ public class Theme {
 
         // changed false because we don't need dark theme yet...
 
-        if (night) {
+        if (false) {
             if (currentTheme != currentNightTheme && (currentTheme == null || currentNightTheme != null &&  currentTheme.isDark() != currentNightTheme.isDark())) {
                 isInNigthMode = true;
                 lastThemeSwitchTime = SystemClock.elapsedRealtime();

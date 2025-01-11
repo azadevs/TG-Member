@@ -9,9 +9,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.widget.Toast
 import org.telegram.messenger.ApplicationLoader
+import org.telegram.messenger.R
 import org.telegram.messenger.databinding.LoginFragmentBinding
+import org.telegram.ui.ActionBar.ActionBar
 import org.telegram.ui.ActionBar.BaseFragment
 import org.telegram.ui.ActionBar.Theme
+import org.telegram.ui.LaunchActivity
 import org.tg_member.core.utils.TGMemberUtilities.isValidEmail
 import org.tg_member.core.utils.TgMemberStr
 import org.tg_member.features.dashboard.DashboardFragment
@@ -63,7 +66,7 @@ class LoginFragment : BaseFragment() {
         }
         if (password != 0) {
             if (EmailCodeSender.checkCode(password)) {
-                editor.putBoolean("isLogged", true).apply()
+//                editor.putBoolean("isLogged", true).apply()
                 editor.putString("userEmail", binding.gmailEt.text.toString()).apply()
                 presentFragment(DashboardFragment(), true)
                 finishFragment()
@@ -107,8 +110,9 @@ class LoginFragment : BaseFragment() {
         binding.loginBtn.setTextColor(Theme.getColor(Theme.key_chats_menuName))
 
         binding.loginBtn.setOnClickListener {
-            checkUserCredentials()
-            observerEmailEditText()
+//            checkUserCredentials()
+//            observerEmailEditText()
+            presentFragment(DashboardFragment(), true)
         }
     }
 
@@ -132,6 +136,19 @@ class LoginFragment : BaseFragment() {
     private fun configureActionBar() {
         actionBar.setTitle(TgMemberStr.getStr(14))
         actionBar.backgroundColor = actionBar.backgroundColor
+        val menu = actionBar.createMenu()
+         menu.addItem(
+            1, R.drawable.msg_language
+        )
+        actionBar.setActionBarMenuOnItemClick(object : ActionBar.ActionBarMenuOnItemClick() {
+            override fun onItemClick(id: Int) {
+                if(id==1){
+                    TgMemberStr.changeLanguageDialog(binding.root.context) {
+                        LaunchActivity.instance.rebuildAllFragments(true)
+                    }
+                }
+            }
+        })
     }
 
 }

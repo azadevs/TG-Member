@@ -4,10 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="12dp">
+    android:padding="16dp">
 
     <ImageView
-        android:id="@+id/vip"
+        android:id="@+id/ivVipImage"
         android:layout_width="22dp"
         android:layout_height="22dp"
         android:src="@drawable/vip_svgrepo_com"
@@ -16,7 +16,7 @@
         app:layout_constraintTop_toTopOf="@id/vip_price" />
 
     <TextView
-        android:id="@+id/vip_count"
+        android:id="@+id/tvVipCount"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -25,20 +25,21 @@
         android:text="0"
         android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="@id/vip_price"
-        app:layout_constraintStart_toEndOf="@id/vip"
+        app:layout_constraintStart_toEndOf="@id/ivVipImage"
         app:layout_constraintTop_toTopOf="@id/vip_price" />
 
     <TextView
-        android:id="@+id/discount"
+        android:id="@+id/tvDiscount"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginRight="15dp"
+        android:layout_marginRight="12dp"
         android:background="@drawable/transfer_btn"
         android:fontFamily="@font/poppins_medium"
         android:gravity="center"
+        android:paddingVertical="1dp"
         android:includeFontPadding="false"
-        android:minWidth="60dp"
-        android:paddingHorizontal="16dp"
+        android:minWidth="48dp"
+        android:textSize="12sp"
         android:text="18%"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="@id/vip_price"
@@ -49,16 +50,15 @@
         android:id="@+id/vip_price"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@drawable/cut_corners_background"
+        android:background="@drawable/rounded_corners_background"
         android:fontFamily="@font/poppins_medium"
         android:gravity="center"
         android:includeFontPadding="false"
-        android:minWidth="80dp"
-        android:paddingHorizontal="16dp"
-        android:paddingVertical="4dp"
-        android:textSize="16sp"
+        android:minWidth="75dp"
+        android:paddingVertical="6dp"
+        android:textSize="14sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:text="@tools:sample/us_zipcodes" />
+        tools:text="$200.0" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

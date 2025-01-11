@@ -26,7 +26,7 @@
         android:fontFamily="@font/poppins_regular"
         android:background="@drawable/cut_corners_background"
         android:paddingHorizontal="16dp"
-        android:textSize="16sp"
+        android:textSize="15sp"
         app:layout_constraintTop_toBottomOf="@id/gift_info_tv" />
 
     <androidx.appcompat.widget.AppCompatButton

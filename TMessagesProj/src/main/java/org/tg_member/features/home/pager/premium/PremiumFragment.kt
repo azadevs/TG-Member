@@ -13,6 +13,8 @@ import org.telegram.messenger.databinding.FragmentPremiumBinding
 import org.telegram.messenger.databinding.ItemTabCountryBinding
 import org.telegram.ui.ActionBar.Theme
 import org.telegram.ui.LaunchActivity
+import org.tg_member.core.utils.TGMemberUtilities.showNotEnoughMoneyDialog
+import org.tg_member.features.home.HomeFragment
 import org.tg_member.features.home.adapters.HomeAdapter
 import org.tg_member.features.home.model.OrderDisplayData
 import org.tg_member.features.home.pager.member.model.CountryDisplayData
@@ -46,7 +48,11 @@ class PremiumFragment(
     private fun configureAdapter() {
         homeAdapter = HomeAdapter(orderDisplayDataList, object : HomeAdapter.HomeClick {
             override fun click(orderDisplayData: OrderDisplayData) {
-                LaunchActivity.instance.presentFragment(InputChannelFragment(orderDisplayData))
+                if(HomeFragment.instance.getVipCount()<orderDisplayData.priceVip){
+                    showNotEnoughMoneyDialog(binding.root.context)
+                }else {
+                    LaunchActivity.instance.presentFragment(InputChannelFragment(orderDisplayData))
+                }
             }
         })
         binding.rvPremiumMembers.layoutManager = LinearLayoutManager(binding.root.context)
@@ -55,10 +61,10 @@ class PremiumFragment(
 
     private fun setFakeData() {
         orderDisplayDataList = ArrayList()
-        orderDisplayDataList.add(OrderDisplayData(100, 200F, 0, R.drawable.ic_person))
-        orderDisplayDataList.add(OrderDisplayData(200, 300F, 10, R.drawable.ic_person))
-        orderDisplayDataList.add(OrderDisplayData(300, 400F, 0, R.drawable.ic_person))
-        orderDisplayDataList.add(OrderDisplayData(400, 500F, 30, R.drawable.ic_person))
+        orderDisplayDataList.add(OrderDisplayData(100, 100, 0, R.drawable.ic_person))
+        orderDisplayDataList.add(OrderDisplayData(200, 300, 10, R.drawable.ic_person))
+        orderDisplayDataList.add(OrderDisplayData(300, 400, 0, R.drawable.ic_person))
+        orderDisplayDataList.add(OrderDisplayData(400, 500, 30, R.drawable.ic_person))
     }
 
     private fun configureCustomTab() {

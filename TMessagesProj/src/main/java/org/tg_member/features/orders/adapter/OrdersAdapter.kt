@@ -7,6 +7,7 @@ import org.telegram.messenger.R
 import org.telegram.messenger.databinding.ItemOrderBinding
 import org.telegram.ui.ActionBar.Theme
 import org.tg_member.core.utils.TGMemberUtilities.Types
+import org.tg_member.core.utils.TgMemberStr
 import org.tg_member.features.orders.model.Order
 
 /**
@@ -14,8 +15,7 @@ import org.tg_member.features.orders.model.Order
  * 2024/12/06
  */
 
-class OrdersAdapter(
-) : RecyclerView.Adapter<OrdersAdapter.OrdersViewHolder>() {
+class OrdersAdapter : RecyclerView.Adapter<OrdersAdapter.OrdersViewHolder>() {
 
     val items : MutableList<Order> = mutableListOf()
     override fun onCreateViewHolder(
@@ -23,10 +23,10 @@ class OrdersAdapter(
         viewType: Int
     ): OrdersViewHolder {
         val binding = ItemOrderBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        binding.orderIconIv.setColorFilter(Theme.getColor(Theme.key_chats_menuItemIcon))
+        binding.orderIconIv.setColorFilter(binding.root.context.resources.getColor(R.color.color_telegram_background))
         binding.orderCountTv.setTextColor(Theme.getColor(Theme.key_chats_menuItemText))
         binding.orderStatusTv.setTextColor(Theme.getColor(Theme.key_chats_menuItemText))
-        binding.root.setCardBackgroundColor(Theme.getColor(Theme.key_dialogBackground))
+        binding.horizontalLine.setBackgroundColor(Theme.getColor(Theme.key_dialogGrayLine))
         return OrdersViewHolder(binding)
     }
 
@@ -42,31 +42,32 @@ class OrdersAdapter(
     inner class OrdersViewHolder(val binding: ItemOrderBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun onBind(order: Order) {
-            binding.orderCountTv.text = order.count
-            binding.orderStatusTv.text = order.status?.name
+            binding.orderCountTv.text = order.count.toString()
+            binding.orderStatusTv.text = order.status
             binding.orderIconIv.setImageResource(
                 when (order.type) {
-                    Types.AllTypes -> {
+                    TgMemberStr.getStr(32) -> {
                         R.drawable.ic_list
                     }
 
-                    Types.Premium -> {
-                        R.drawable.vip_svgrepo_com
+                    TgMemberStr.getStr(33) -> {
+                        R.drawable.ic_premium_member
                     }
 
-                    Types.Member -> {
+                    TgMemberStr.getStr(34) -> {
                         R.drawable.ic_person
                     }
 
-                    Types.View -> {
+                    TgMemberStr.getStr(35) -> {
                         R.drawable.ic_view
                     }
 
-                    Types.Reaction -> {
+                    TgMemberStr.getStr(36) -> {
                         R.drawable.ic_reaction
                     }
-
-                    null -> R.drawable.ic_failed
+                    else -> {
+                        R.drawable.ic_failed
+                    }
                 }
             )
         }

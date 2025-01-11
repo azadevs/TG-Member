@@ -67,6 +67,7 @@ class InputChannelFragment(private val orderDisplayData: OrderDisplayData) : Bas
         binding.sendBtn.setTextColor(Theme.getColor(Theme.key_chats_menuName))
         binding.sendBtn.text = TgMemberStr.getStr(43)
         binding.edtInputLink.hint = TgMemberStr.getStr(41)
+        binding.tvRule.text=TgMemberStr.getStr(60)
         binding.edtInputLink.setHintTextColor(Theme.getColor(Theme.key_chats_menuItemText))
         progressDialog = AlertDialog(context, AlertDialog.ALERT_TYPE_SPINNER)
     }

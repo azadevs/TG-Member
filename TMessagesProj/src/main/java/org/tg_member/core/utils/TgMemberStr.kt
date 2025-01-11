@@ -14,6 +14,7 @@ import org.telegram.ui.ActionBar.AlertDialog
 import org.telegram.ui.ActionBar.Theme
 import org.telegram.ui.ActionBar.Theme.ResourcesProvider
 import org.telegram.ui.Cells.RadioColorCell
+import org.telegram.ui.LaunchActivity
 import org.tg_member.features.dashboard.DashboardFragment
 import javax.inject.Singleton
 
@@ -25,18 +26,18 @@ object TgMemberStr {
     var sharedPreferences = ApplicationLoader.applicationContext.getSharedPreferences("db", Context.MODE_PRIVATE)
     var editor = sharedPreferences.edit()
 
-    fun changeLanguage(code:String) {
+    private fun changeLanguage(code:String) {
         val info =
             LocaleController.getInstance().languages.find { it.shortName == code }
         if (info != null) {
             LocaleController.getInstance().applyLanguage(
                 info, true, false, false, true, 0
-            ) {}
+            ) {
+            }
         }
-        DashboardFragment.instance.recreate(4)
     }
 
-    fun changeLanguageDialog(context: Context){
+    fun changeLanguageDialog(context: Context, onSelectedItem:() ->Unit){
         val selected: Int = when (languageCode) {
             "en" -> 0
             "uz" -> 1
@@ -70,6 +71,7 @@ object TgMemberStr {
                 builder.dismissRunnable.run()
                 val which = v.tag as Int
                 changeLanguage(items[which])
+                onSelectedItem()
             }
         }
         builder.setNegativeButton(getString(R.string.Cancel), null)
@@ -85,7 +87,7 @@ object TgMemberStr {
         titlesLanguages.add(TitleLanguages(3, "Gift", "Sovg'a", "Подарок"))
         titlesLanguages.add(TitleLanguages(4, "There is no orders", "Buyurtmalar yo'q", "Нет заказов"))
         titlesLanguages.add(TitleLanguages(5, "Enter email and VIP number for transfer", "Ko'chirish uchun electron pochta va VIP lar sonini kiriting", "Введите адрес электронной почты и количество VIP-персон для переноса."))
-        titlesLanguages.add(TitleLanguages(6, "Enter email", "Electron pochta kiriting", "Введите адрес электронной почты"))
+        titlesLanguages.add(TitleLanguages(6, "Enter email", "Elektron pochta kiriting", "Введите адрес электронной почты"))
         titlesLanguages.add(TitleLanguages(7, "Enter VIP number", "VIP lar sonini kiriting", "Введите количество VIP-персон"))
         titlesLanguages.add(TitleLanguages(8, "Transfer", "Ko'chirish", "Передача"))
         titlesLanguages.add(TitleLanguages(9, "Transfer history", "Ko'chirishlar tarixi", "История переводов"))
@@ -106,7 +108,7 @@ object TgMemberStr {
         titlesLanguages.add(TitleLanguages(24,"Language","Til","Язык"))
         titlesLanguages.add(TitleLanguages(25,"Select Language","Tilni Tanlang","Выберите язык"))
         titlesLanguages.add(TitleLanguages(26,"Add Account","Account qo'shish","Добавить аккаунт"))
-        titlesLanguages.add(TitleLanguages(27,"Home","Bosh oyna","Главный"))
+        titlesLanguages.add(TitleLanguages(27,"Home","Bosh sahifa","Главный"))
         titlesLanguages.add(TitleLanguages(28,"Free","Ishlash","Работа"))
         titlesLanguages.add(TitleLanguages(29,"Order","Buyurtma","Заказ"))
         titlesLanguages.add(TitleLanguages(30,"VIP","VIP","ВИП"))
@@ -139,6 +141,10 @@ object TgMemberStr {
         titlesLanguages.add(TitleLanguages(57,"Your email has been changed","Sizning elektron pochta manzilingiz o'zgartirildi", "Ваш адрес электронной почты был изменен"))
         titlesLanguages.add(TitleLanguages(58,"Day Mode","Kunduzgi rejim", "Дневной режим"))
         titlesLanguages.add(TitleLanguages(59,"Night Mode","Tungi rejim", "Ночной режим"))
+        titlesLanguages.add(TitleLanguages(60,"Enter your channel link or username. Please check carefully and enter without errors.","Kanalingiz havolasini yoki nomini kiriting. Iltimos yaxshilab tekshirib, xatosiz kiriting.", "Введите ссылку или название вашего канала. Пожалуйста, проверьте внимательно и введите без ошибок."))
+        titlesLanguages.add(TitleLanguages(61,"You don't have enough vips to buy this packet. Please go to the vip store to increase your vips number.","Ushbu paketni sotib olish uchun sizda yetarli vip yo‘q. Iltimos, vip raqamingizni ko'paytirish uchun vip do'koniga o'ting.", "У вас недостаточно VIP-ов для покупки этого пакета. Пожалуйста, перейдите в магазин VIP-ов, чтобы увеличить количество VIP-ов."))
+        titlesLanguages.add(TitleLanguages(62,"Vip Store","Vip Do'koni", "VIP Магазин"))
+        titlesLanguages.add(TitleLanguages(63,"Insuffieint Balance","Balans yetarli emas", "Недостаточный баланс"))
     }
 
     fun getStr(code: Int): String {

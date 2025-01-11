@@ -14,6 +14,8 @@ import org.telegram.messenger.databinding.ItemTabCountryBinding
 import org.telegram.messenger.databinding.ItemTabViewBinding
 import org.telegram.ui.ActionBar.Theme
 import org.telegram.ui.LaunchActivity
+import org.tg_member.core.utils.TGMemberUtilities.showNotEnoughMoneyDialog
+import org.tg_member.features.home.HomeFragment
 import org.tg_member.features.home.adapters.HomeAdapter
 import org.tg_member.features.home.model.OrderDisplayData
 import org.tg_member.features.home.pager.member.model.CountryDisplayData
@@ -62,7 +64,11 @@ class ReactionFragment(
     private fun configureAdapter() {
         homeAdapter = HomeAdapter(reactions, object : HomeAdapter.HomeClick {
             override fun click(orderDisplayData: OrderDisplayData) {
-                LaunchActivity.instance.presentFragment(InputChannelFragment(orderDisplayData))
+                if(HomeFragment.instance.getVipCount()<orderDisplayData.priceVip){
+                    showNotEnoughMoneyDialog(binding.root.context)
+                }else {
+                    LaunchActivity.instance.presentFragment(InputChannelFragment(orderDisplayData))
+                }
             }
         })
         binding.rvReactions.layoutManager = LinearLayoutManager(binding.root.context)
@@ -192,10 +198,10 @@ class ReactionFragment(
 
     private fun setFakeData() {
         reactions = ArrayList()
-        reactions.add(OrderDisplayData(100, 200F, 0, R.drawable.ic_reaction))
-        reactions.add(OrderDisplayData(200, 300F, 10, R.drawable.ic_reaction))
-        reactions.add(OrderDisplayData(300, 400F, 0, R.drawable.ic_reaction))
-        reactions.add(OrderDisplayData(400, 500F, 30, R.drawable.ic_reaction))
+        reactions.add(OrderDisplayData(100, 200, 0, R.drawable.ic_reaction))
+        reactions.add(OrderDisplayData(200, 300, 10, R.drawable.ic_reaction))
+        reactions.add(OrderDisplayData(300, 400, 0, R.drawable.ic_reaction))
+        reactions.add(OrderDisplayData(400, 500, 30, R.drawable.ic_reaction))
     }
 
 }

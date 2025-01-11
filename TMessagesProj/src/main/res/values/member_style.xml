@@ -22,4 +22,20 @@
     <style name="bottomSheetBackground" parent="Widget.Design.BottomSheet.Modal">
         <item name="android:background">@drawable/rounded_top_corners</item>
     </style>
+
+    <style name="CustomTabText">
+        <item name="textAllCaps">false</item>
+        <item name="android:textSize">15sp</item>
+        <item name="android:fontFamily">@font/poppins_medium</item>
+    </style>
+
+    <style name="activeBottomBar">
+        <item name="android:textSize">13sp</item>
+        <item name="android:fontFamily">@font/poppins_medium</item>
+    </style>
+
+    <style name="inActiveBottomBar">
+        <item name="android:fontFamily">@font/poppins_regular</item>
+    </style>
+
 </resources>

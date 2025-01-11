@@ -16,29 +16,29 @@ import org.tg_member.features.vip.model.VipDisplayData
 class BuyAdapter(private var vipPriceList: ArrayList<VipDisplayData>) :
     RecyclerView.Adapter<BuyAdapter.BuyVH>() {
 
-    inner class BuyVH(private var buyVipItemBinding: ItemVipPriceBinding) :
+    inner class BuyVH(private var buyVipItemBinding: BuyVipItemBinding) :
         RecyclerView.ViewHolder(buyVipItemBinding.root) {
         @SuppressLint("SetTextI18n")
         fun onBind(vipDisplayData: VipDisplayData) {
             buyVipItemBinding.apply {
-                ivTypeImage.setImageResource(R.drawable.vip_svgrepo_com)
-                ivTypeImage.setColorFilter(root.context.resources.getColor(R.color.color_telegram_background))
-                tvMemberCount.apply {
+                ivVipImage.setImageResource(R.drawable.vip_svgrepo_com)
+                ivVipImage.setColorFilter(root.context.resources.getColor(R.color.color_telegram_background))
+                tvVipCount.apply {
                     text = vipDisplayData.vipCount.toString()
                     setTextColor(Theme.getColor(Theme.key_chats_menuItemText))
                 }
-                price.apply {
+                vipPrice.apply {
                     text = "$${vipDisplayData.price}"
                     setTextColor(Theme.getColor(Theme.key_chats_menuItemText))
                 }
-                discount.apply {
+                tvDiscount.apply {
                     if (vipDisplayData.discount != 0) {
-                        discount.visibility = View.VISIBLE
-                        text = "${vipDisplayData.discount} %"
+                        tvDiscount.visibility = View.VISIBLE
+                        text = "${vipDisplayData.discount}%"
                         background = TGMemberUtilities.getDrawableStateList(
                             R.drawable.transfer_btn,
                             root.context,
-                            Theme.key_item_discount
+                            Theme.getColor(Theme.key_item_discount)
                         )
                         setTextColor(Theme.getColor(Theme.key_chats_sentError))
                     }
@@ -49,7 +49,7 @@ class BuyAdapter(private var vipPriceList: ArrayList<VipDisplayData>) :
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BuyVH {
         return BuyVH(
-            ItemVipPriceBinding.inflate(
+            BuyVipItemBinding.inflate(
                 LayoutInflater.from(parent.context),
                 parent,
                 false

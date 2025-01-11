@@ -8,6 +8,7 @@ import android.content.Context
 import android.content.Context.MODE_PRIVATE
 import android.content.DialogInterface
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.graphics.Color
 import android.graphics.drawable.GradientDrawable
 import android.graphics.drawable.StateListDrawable
@@ -15,8 +16,10 @@ import android.net.Uri
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
+import android.widget.ArrayAdapter
 import android.widget.ImageView
 import android.widget.LinearLayout
+import android.widget.ListView
 import android.widget.TextView
 import androidx.core.animation.addListener
 import androidx.core.animation.doOnEnd
@@ -192,7 +195,7 @@ class AccountDetailsFragment(var selectedAccount: Int) : BaseFragment() {
             btnJoin.background = TGMemberUtilities.getDrawableStateList(
                 R.drawable.transfer_btn,
                 context,
-                Theme.key_windowBackgroundWhiteGrayIcon
+                Theme.getColor(Theme.key_windowBackgroundWhiteGrayIcon)
             )
             ivChannelImage.visibility = View.INVISIBLE
             tvChannelName.text = TgMemberStr.getStr(53)
@@ -210,7 +213,7 @@ class AccountDetailsFragment(var selectedAccount: Int) : BaseFragment() {
             btnAutoJoin.background = TGMemberUtilities.getDrawableStateList(
                 R.drawable.rounded_corners_background,
                 context,
-                Theme.key_windowBackgroundWhiteGrayIcon
+                Theme.getColor(Theme.key_windowBackgroundWhiteGrayIcon)
             )
             btnAutoJoin.setTextColor(Theme.getColor(Theme.key_chats_menuName))
         }
@@ -320,10 +323,10 @@ class AccountDetailsFragment(var selectedAccount: Int) : BaseFragment() {
                     0
                 )
             } catch (e: Exception) {
-                context.packageManager.getPackageInfo(
-                    "org.thunderdog.challegram",
-                    0
-                )
+//                context.packageManager.getPackageInfo(
+//                    "org.thunderdog.challegram",
+//                    0
+//                )
             }
             intent =
                 Intent(Intent.ACTION_VIEW, Uri.parse("tg://resolve?domain=$username"))
@@ -333,13 +336,13 @@ class AccountDetailsFragment(var selectedAccount: Int) : BaseFragment() {
                 Uri.parse("http://www.telegram.me/$username")
             )
         }
-        startActivity(context, intent!!, null)
+        startActivity(context, Intent.createChooser(intent,null),null)
     }
 
     @SuppressLint("SetTextI18n")
     private fun moveView(target: View) {
         val translateX = ObjectAnimator.ofFloat(target, "translationX", 0f, 0f)
-        val translateY = ObjectAnimator.ofFloat(target, "translationY", 0f, -300f)
+        val translateY = ObjectAnimator.ofFloat(target, "translationY", 0f, -400f)
         val alpha = ObjectAnimator.ofFloat(target, "alpha", 1f, 0f)
         val scaleX = ObjectAnimator.ofFloat(target, "scaleX", 1f, 2f)
         val scaleY = ObjectAnimator.ofFloat(target, "scaleY", 1f, 2f)
@@ -350,12 +353,13 @@ class AccountDetailsFragment(var selectedAccount: Int) : BaseFragment() {
         alpha.duration = 4000
         animatorSet = AnimatorSet()
         animatorSet?.playTogether(translateX, translateY, alpha, scaleX, scaleY)
-        animatorSet?.addListener {
-            val animator = ValueAnimator.ofInt(2000, 2002)
+        animatorSet?.doOnEnd {
+            val vipCount = vipCountTextView.text.toString().toInt()
+            val animator = ValueAnimator.ofInt(vipCount, vipCount + 2)
             animator.duration = 400
             animator.addUpdateListener {
                 val value = it.animatedValue as Int
-                vipCountTextView.text=value.toString()
+                vipCountTextView.text = value.toString()
             }
             animator.start()
         }

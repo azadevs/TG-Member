@@ -6,6 +6,7 @@ import android.graphics.drawable.StateListDrawable
 import android.text.TextUtils
 import android.util.Patterns
 import android.view.Gravity
+import android.view.LayoutInflater
 import android.view.View
 import android.widget.ImageView
 import android.widget.LinearLayout
@@ -13,15 +14,20 @@ import android.widget.TextView
 import androidx.annotation.DrawableRes
 import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
+import com.bumptech.glide.Glide
+import com.google.android.material.bottomsheet.BottomSheetDialog
+import org.telegram.messenger.LocaleController.getString
 import org.telegram.messenger.NotificationCenter
 import org.telegram.messenger.R
 import org.telegram.tgnet.TLRPC
 import org.telegram.messenger.UserConfig
+import org.telegram.messenger.databinding.DialogNeedVipBinding
 import org.telegram.ui.ActionBar.ActionBar
 import org.telegram.ui.ActionBar.Theme
 import org.telegram.ui.ActionBar.Theme.ThemeInfo
 import org.telegram.ui.Components.LayoutHelper
 import org.tg_member.core.model.SpinnerTypeData
+import org.tg_member.features.dashboard.DashboardFragment
 import org.tg_member.features.free.model.AccountData
 
 /**
@@ -101,7 +107,7 @@ object TGMemberUtilities {
             context, drawable
         ) as StateListDrawable
         val gradientDrawablePopup = stateListDrawablePopup.current as GradientDrawable
-        gradientDrawablePopup.setColor(Theme.getColor(color))
+        gradientDrawablePopup.setColor(color)
         return stateListDrawablePopup
     }
 
@@ -176,7 +182,7 @@ object TGMemberUtilities {
         } == true
     }
 
-    fun changeTheme(view: View,themeInfo: ThemeInfo, toDark:Boolean) {
+    fun changeTheme(view: View, themeInfo: ThemeInfo, toDark: Boolean) {
 //        val dayThemeName = "Blue"
 //        val nightThemeName = "Night"
 //
@@ -206,9 +212,7 @@ object TGMemberUtilities {
         )
     }
 
-    fun createActionbar(actionBar: ActionBar, context: Context, countVip:String) {
-        actionBar.setTitle(TgMemberStr.getStr(27))
-        actionBar.title
+    fun createActionbar(actionBar: ActionBar, context: Context, countVip: String) {
         val menu = actionBar.createMenu()
         val linearLayout = LinearLayout(context).apply {
             layoutParams =
@@ -251,6 +255,37 @@ object TGMemberUtilities {
         menu.addView(linearLayout)
     }
 
+
+    fun showNotEnoughMoneyDialog(context: Context) {
+        val dialog = BottomSheetDialog(context, R.style.BottomSheetDialogStyle)
+        val dialogBinding =
+            DialogNeedVipBinding.inflate(LayoutInflater.from(context), null, false)
+        dialogBinding.tvBuyVipDescription.setTextColor(Theme.getColor(Theme.key_chats_menuItemText))
+        dialogBinding.btnCancel.setTextColor(context.resources.getColor(R.color.color_telegram_background))
+        dialogBinding.btnCancel.text= getString(R.string.Cancel)
+        dialogBinding.tvNotEnoughMoneyTitle.text=TgMemberStr.getStr(63)
+        dialogBinding.tvNotEnoughMoneyTitle.setTextColor(Theme.getColor(Theme.key_chats_menuItemText))
+        dialogBinding.btnVipStore.text=TgMemberStr.getStr(62)
+        dialogBinding.tvBuyVipDescription.text=TgMemberStr.getStr(61)
+        dialogBinding.btnVipStore.setTextColor(Theme.getColor(Theme.key_chats_menuName))
+        dialogBinding.btnVipStore.setBackgroundDrawable(
+            getDrawableStateList(
+                R.drawable.transfer_btn,
+                context,
+                context.resources.getColor(R.color.color_telegram_background)
+            )
+        )
+        Glide.with(context).asGif().load(R.raw.no_money).into(dialogBinding.ivNoMoney)
+        dialog.setContentView(dialogBinding.root)
+        dialogBinding.btnCancel.setOnClickListener {
+            dialog.hide()
+        }
+        dialogBinding.btnVipStore.setOnClickListener {
+            dialog.hide()
+            DashboardFragment.instance.changeBottomNavigationPosition(3)
+        }
+        dialog.show()
+    }
 
 
 }

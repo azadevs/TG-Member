@@ -7,8 +7,6 @@ import org.telegram.messenger.R
 import org.telegram.messenger.databinding.FragmentOrdersBinding
 import org.telegram.ui.ActionBar.Theme
 import org.tg_member.core.adapter.TypeSpinnerAdapter
-import org.tg_member.core.utils.TGMemberUtilities.Status
-import org.tg_member.core.utils.TGMemberUtilities.Types
 import org.tg_member.core.utils.TGMemberUtilities.getDrawableStateList
 import org.tg_member.core.utils.TGMemberUtilities.getStatus
 import org.tg_member.core.utils.TGMemberUtilities.getTypes
@@ -22,11 +20,11 @@ import org.tg_member.features.orders.model.Order
  */
 class OrdersFragment {
 
-    private lateinit var list: List<Order>
+    private lateinit var list: MutableList<Order>
     private lateinit var adapter: OrdersAdapter
 
-    private var lastStatus: Status = Status.AllStatus
-    private var lastType: Types = Types.AllTypes
+    private var lastStatus: String = TgMemberStr.getStr(37)
+    private var lastType: String = TgMemberStr.getStr(32)
 
     fun createView(binding: FragmentOrdersBinding) {
 
@@ -38,9 +36,9 @@ class OrdersFragment {
 
         configureOrderAdapter(binding)
 
+        loadData()
+
     }
-
-
 
     private fun configureOrderAdapter(binding: FragmentOrdersBinding) {
         adapter = OrdersAdapter()
@@ -55,13 +53,13 @@ class OrdersFragment {
         binding.containerTypeSpinner.background = getDrawableStateList(
             R.drawable.cut_corners_background,
             binding.root.context,
-            Theme.key_iv_navigationBackground
+            Theme.getColor(Theme.key_iv_background)
         )
         binding.spinnerType.setPopupBackgroundDrawable(
             getDrawableStateList(
                 R.drawable.cut_corners_background,
                 binding.root.context,
-                Theme.key_iv_navigationBackground
+                Theme.getColor(Theme.key_iv_background)
             )
         )
 
@@ -70,13 +68,13 @@ class OrdersFragment {
         binding.containerStatusSpinner.background = getDrawableStateList(
             R.drawable.cut_corners_background,
             binding.root.context,
-            Theme.key_iv_navigationBackground
+            Theme.getColor(Theme.key_iv_background)
         )
         binding.spinnerStatus.setPopupBackgroundDrawable(
             getDrawableStateList(
                 R.drawable.cut_corners_background,
                 binding.root.context,
-                Theme.key_iv_navigationBackground
+                Theme.getColor(Theme.key_iv_background)
             )
         )
 
@@ -88,17 +86,17 @@ class OrdersFragment {
                 id: Long
             ) {
                 lastType = when (position) {
-                    0 -> Types.AllTypes
-                    1 -> Types.Premium
-                    2 -> Types.Member
-                    3 -> Types.View
-                    4 -> Types.Reaction
+                    0 -> TgMemberStr.getStr(32)
+                    1 -> TgMemberStr.getStr(33)
+                    2 -> TgMemberStr.getStr(34)
+                    3 -> TgMemberStr.getStr(35)
+                    4 -> TgMemberStr.getStr(36)
                     else -> {
-                        Types.AllTypes
+                        TgMemberStr.getStr(32)
                     }
 
                 }
-                val currList = getOrdersByStatusAndType(lastStatus.name, lastType.name)
+                val currList = getOrdersByStatusAndType(lastStatus, lastType)
                 when (position) {
                     0 -> {
                         adapter.submitList(currList)
@@ -106,22 +104,22 @@ class OrdersFragment {
                     }
 
                     1 -> {
-                        adapter.submitList(getOrdersByStatusAndType(lastStatus.name, lastType.name))
+                        adapter.submitList(getOrdersByStatusAndType(lastStatus, lastType))
                         invisibleBoxIfEmpty(binding, currList)
                     }
 
                     2 -> {
-                        adapter.submitList(getOrdersByStatusAndType(lastStatus.name, lastType.name))
+                        adapter.submitList(getOrdersByStatusAndType(lastStatus, lastType))
                         invisibleBoxIfEmpty(binding, currList)
                     }
 
                     3 -> {
-                        adapter.submitList(getOrdersByStatusAndType(lastStatus.name, lastType.name))
+                        adapter.submitList(getOrdersByStatusAndType(lastStatus, lastType))
                         invisibleBoxIfEmpty(binding, currList)
                     }
 
                     4 -> {
-                        adapter.submitList(getOrdersByStatusAndType(lastStatus.name, lastType.name))
+                        adapter.submitList(getOrdersByStatusAndType(lastStatus, lastType))
                         invisibleBoxIfEmpty(binding, currList)
                     }
                 }
@@ -139,16 +137,16 @@ class OrdersFragment {
                 id: Long
             ) {
                 lastStatus = when (position) {
-                    0 -> Status.AllStatus
-                    1 -> Status.Pending
-                    2 -> Status.Completed
-                    3 -> Status.Failed
+                    0 -> TgMemberStr.getStr(37)
+                    1 -> TgMemberStr.getStr(38)
+                    2 -> TgMemberStr.getStr(39)
+                    3 -> TgMemberStr.getStr(40)
                     else -> {
-                        Status.AllStatus
+                        TgMemberStr.getStr(37)
                     }
                 }
 
-                var currList = getOrdersByStatusAndType(lastStatus.name, lastType.name)
+                val currList = getOrdersByStatusAndType(lastStatus, lastType)
                 when (position) {
                     0 -> {
                         adapter.submitList(currList)
@@ -156,17 +154,17 @@ class OrdersFragment {
                     }
 
                     1 -> {
-                        adapter.submitList(getOrdersByStatusAndType(lastStatus.name, lastType.name))
+                        adapter.submitList(getOrdersByStatusAndType(lastStatus, lastType))
                         invisibleBoxIfEmpty(binding, currList)
                     }
 
                     2 -> {
-                        adapter.submitList(getOrdersByStatusAndType(lastStatus.name, lastType.name))
+                        adapter.submitList(getOrdersByStatusAndType(lastStatus, lastType))
                         invisibleBoxIfEmpty(binding, currList)
                     }
 
                     3 -> {
-                        adapter.submitList(getOrdersByStatusAndType(lastStatus.name, lastType.name))
+                        adapter.submitList(getOrdersByStatusAndType(lastStatus, lastType))
                         invisibleBoxIfEmpty(binding, currList)
                     }
                 }
@@ -189,22 +187,22 @@ class OrdersFragment {
     }
 
     private fun getOrdersByType(type: String): List<Order> {
-        return list.filter { it.type?.name == type }
+        return list.filter { it.type == type }
     }
 
     private fun getOrdersByStatus(status: String): List<Order> {
-        return list.filter { it.status?.name == status }
+        return list.filter { it.status == status }
     }
 
     private fun getOrdersByStatusAndType(status: String, type: String): List<Order> {
-        return if (status == Status.AllStatus.name && type == Types.AllTypes.name) {
+        return if (status == TgMemberStr.getStr(37) && type == TgMemberStr.getStr(32)) {
             list
-        } else if (status == Status.AllStatus.name) {
+        } else if (status == TgMemberStr.getStr(37)) {
             getOrdersByType(type)
-        } else if (type == Types.AllTypes.name) {
+        } else if (type == TgMemberStr.getStr(32)) {
             getOrdersByStatus(status)
         } else {
-            list.filter { it.status?.name == status && it.type?.name == type }
+            list.filter { it.status == status && it.type == type }
         }
     }
 
@@ -212,12 +210,23 @@ class OrdersFragment {
         if (currList.isEmpty()) {
             binding.rvOrders.visibility = View.GONE
             binding.lottieEmpty.visibility = View.VISIBLE
-            binding.tvEmpty.visibility=View.VISIBLE
+            binding.tvEmpty.visibility = View.VISIBLE
         } else {
             binding.rvOrders.visibility = View.VISIBLE
             binding.lottieEmpty.visibility = View.GONE
+            binding.tvEmpty.visibility = View.GONE
+        }
+    }
 
-            binding.tvEmpty.visibility=View.GONE
+    private fun loadData() {
+        for (i in 0 until 10) {
+            list.add(
+                Order(
+                    type = TgMemberStr.getStr(33),
+                    status = TgMemberStr.getStr(38),
+                    count = 100 * (i + 1)
+                )
+            )
         }
     }
 
