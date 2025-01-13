@@ -99,7 +99,7 @@ object TgMemberStr {
         titlesLanguages.add(TitleLanguages(15, "Send verification code", "Tasdiqlash kodini yuborish", "Отправить код подтверждения"))
         titlesLanguages.add(TitleLanguages(16, "Enter your email address", "E-mail addressinginzni kiriting", "Введите свой адрес электронной почты"))
         titlesLanguages.add(TitleLanguages(17, "Enter verification code", "Tasdiqlash kodini kiriting", "Введите код подтверждения"))
-        titlesLanguages.add(TitleLanguages(18, "Enter your email address then click on a button below then you will receive a verification code to your email account. Then you need to enter verification code. Then you will be successfully registered", "Elektron pochta manzilingizni kiriting, so'ng quyidagi tugmani bosing, keyin siz elektron pochta hisobingizga tasdiqlash kodini olasiz. Keyin tasdiqlash kodini kiritishingiz kerak. Keyin siz muvaffaqiyatli ro'yxatdan o'tasiz", "Введите свой адрес электронной почты, затем нажмите на кнопку ниже, после чего вы получите проверочный код на свой адрес электронной почты. Затем вам нужно ввести проверочный код. После этого вы будете успешно зарегистрированы."))
+        titlesLanguages.add(TitleLanguages(18, "Enter your email address, then click the button. A verification code will be sent to your email, which you will then need to enter.", "Elektron pochta manzilingizni kiriting, so'ng tugmani bosing. Tasdiqlash kodi elektron pochtangizga yuboriladi, keyin uni kiritishingiz kerak bo'ladi.", "Введите свой адрес электронной почты, затем нажмите кнопку. На вашу электронную почту будет отправлен код подтверждения, который вам затем нужно будет ввести."))
         titlesLanguages.add(TitleLanguages(19,"Next","Keyingi","Следующий"))
         titlesLanguages.add(TitleLanguages(20,"Join + 2 \uD83D\uDD37","Qo'shish + 2 \uD83D\uDD37", "Присоединяйтесь + 2 \uD83D\uDD37"))
         titlesLanguages.add(TitleLanguages(21,"Auto Join", "Avto qo'shish", "Автоприсоединение"))
@@ -145,6 +145,18 @@ object TgMemberStr {
         titlesLanguages.add(TitleLanguages(61,"You don't have enough vips to buy this packet. Please go to the vip store to increase your vips number.","Ushbu paketni sotib olish uchun sizda yetarli vip yo‘q. Iltimos, vip raqamingizni ko'paytirish uchun vip do'koniga o'ting.", "У вас недостаточно VIP-ов для покупки этого пакета. Пожалуйста, перейдите в магазин VIP-ов, чтобы увеличить количество VIP-ов."))
         titlesLanguages.add(TitleLanguages(62,"Vip Store","Vip Do'koni", "VIP Магазин"))
         titlesLanguages.add(TitleLanguages(63,"Insuffieint Balance","Balans yetarli emas", "Недостаточный баланс"))
+        titlesLanguages.add(TitleLanguages(64,"Auto-join rule","Avtomatik qo'shilish qoidasi", "Правило автоматического присоединения"))
+        titlesLanguages.add(TitleLanguages(65,"If you want to use the auto-join feature, you should not do the following while auto-join is running:\n" +
+                "* Exit and close the program;\n" +
+                "* Exit the program and log in to another program;\n" +
+                "* Delete your account;","Agar siz avtomatik qo'shilish funksiyasidan foydalanmoqchi bo'lsangiz, u holda siz avtomatik qo'shilish ishlab turganida quyidagi harakatlarni qilmasliginiz kerak:\n" +
+                " * Dasturdan chiqib ketish va uni yopib qo'yish;\n" +
+                " * Dasturdan chiqib boshqa dasturga kirish;\n" +
+                " * Hisobingizni o'chirib tashlash;", "Если вы хотите использовать функцию автоматического присоединения, во время работы автоматического присоединения не следует выполнять следующие действия:\n" +
+                " * Выйдите из программы и закройте ее;\n" +
+                " * Выход из программы и вход в другую программу;\n" +
+                " * Удалить свой аккаунт;"))
+        titlesLanguages.add(TitleLanguages(66, "I Understand", "Tushundim","Я понимаю"))
     }
 
     fun getStr(code: Int): String {

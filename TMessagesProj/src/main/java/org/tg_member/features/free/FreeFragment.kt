@@ -37,12 +37,12 @@ class FreeFragment(private val binding: FragmentFreeBinding) {
     }
 
     fun updateAccountAdapter() {
-        shouldVisibleEmptyViews()
+        needVisibleEmptyViews()
         adapter.submitList(getAccounts())
     }
 
     private fun configureUi() {
-        shouldVisibleEmptyViews()
+        needVisibleEmptyViews()
         binding.root.setBackgroundColor(Theme.getColor(Theme.key_iv_background))
         binding.autoJoinBtn.setTextColor(Color.WHITE)
         binding.autoJoinBtn.text = TgMemberStr.getStr(21)
@@ -75,7 +75,7 @@ class FreeFragment(private val binding: FragmentFreeBinding) {
         }
     }
 
-    private fun shouldVisibleEmptyViews() {
+    private fun needVisibleEmptyViews() {
         if (getAccounts().isEmpty()) {
             binding.lottieEmpty.visibility = View.VISIBLE
             binding.tvEmpty.visibility = View.VISIBLE

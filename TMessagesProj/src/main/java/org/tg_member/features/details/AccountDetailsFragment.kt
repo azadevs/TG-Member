@@ -8,7 +8,6 @@ import android.content.Context
 import android.content.Context.MODE_PRIVATE
 import android.content.DialogInterface
 import android.content.Intent
-import android.content.pm.PackageManager
 import android.graphics.Color
 import android.graphics.drawable.GradientDrawable
 import android.graphics.drawable.StateListDrawable
@@ -16,13 +15,10 @@ import android.net.Uri
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
-import android.widget.ArrayAdapter
 import android.widget.ImageView
 import android.widget.LinearLayout
-import android.widget.ListView
 import android.widget.TextView
-import androidx.core.animation.addListener
-import androidx.core.animation.doOnEnd
+import androidx.core.animation.doOnStart
 import androidx.core.content.ContextCompat
 import androidx.core.content.ContextCompat.startActivity
 import androidx.core.content.res.ResourcesCompat
@@ -323,10 +319,10 @@ class AccountDetailsFragment(var selectedAccount: Int) : BaseFragment() {
                     0
                 )
             } catch (e: Exception) {
-//                context.packageManager.getPackageInfo(
-//                    "org.thunderdog.challegram",
-//                    0
-//                )
+                context.packageManager.getPackageInfo(
+                    "org.thunderdog.challegram",
+                    0
+                )
             }
             intent =
                 Intent(Intent.ACTION_VIEW, Uri.parse("tg://resolve?domain=$username"))
@@ -336,24 +332,21 @@ class AccountDetailsFragment(var selectedAccount: Int) : BaseFragment() {
                 Uri.parse("http://www.telegram.me/$username")
             )
         }
-        startActivity(context, Intent.createChooser(intent,null),null)
+        startActivity(context, intent!!, null)
     }
 
     @SuppressLint("SetTextI18n")
     private fun moveView(target: View) {
-        val translateX = ObjectAnimator.ofFloat(target, "translationX", 0f, 0f)
-        val translateY = ObjectAnimator.ofFloat(target, "translationY", 0f, -400f)
-        val alpha = ObjectAnimator.ofFloat(target, "alpha", 1f, 0f)
-        val scaleX = ObjectAnimator.ofFloat(target, "scaleX", 1f, 2f)
-        val scaleY = ObjectAnimator.ofFloat(target, "scaleY", 1f, 2f)
-        translateY.duration = 4000
-        translateX.duration = 4000
-        scaleX.duration = 4000
-        scaleY.duration = 4000
-        alpha.duration = 4000
+        val translateX =
+            ObjectAnimator.ofFloat(target, "translationX", 0f, 0f).apply { duration = 4000 }
+        val translateY =
+            ObjectAnimator.ofFloat(target, "translationY", 0f, -400f).apply { duration = 4000 }
+        val alpha = ObjectAnimator.ofFloat(target, "alpha", 1f, 0f).apply { duration = 4000 }
+        val scaleX = ObjectAnimator.ofFloat(target, "scaleX", 1f, 2f).apply { duration = 4000 }
+        val scaleY = ObjectAnimator.ofFloat(target, "scaleY", 1f, 2f).apply { duration = 4000 }
         animatorSet = AnimatorSet()
         animatorSet?.playTogether(translateX, translateY, alpha, scaleX, scaleY)
-        animatorSet?.doOnEnd {
+        animatorSet?.doOnStart {
             val vipCount = vipCountTextView.text.toString().toInt()
             val animator = ValueAnimator.ofInt(vipCount, vipCount + 2)
             animator.duration = 400
@@ -368,15 +361,19 @@ class AccountDetailsFragment(var selectedAccount: Int) : BaseFragment() {
 
     private fun showBottomSheetDialog() {
         val dialog = BottomSheetDialog(context, R.style.BottomSheetDialogStyle)
-        val dialogBinding =
-            DialogBottomAutoJoinBinding.inflate(LayoutInflater.from(context), null, false)
-        dialogBinding.tvTitle.setTextColor(Theme.getColor(Theme.key_chats_menuItemText))
-        dialogBinding.tvContent.setTextColor(Theme.getColor(Theme.key_chats_menuItemText))
-        dialogBinding.btnUnderstand.setTextColor(Theme.getColor(Theme.key_chats_menuName))
-        dialog.setContentView(dialogBinding.root)
-        dialogBinding.btnUnderstand.setOnClickListener {
-            dialog.hide()
+        DialogBottomAutoJoinBinding.inflate(LayoutInflater.from(context), null, false).apply {
+            tvTitle.setTextColor(Theme.getColor(Theme.key_chats_menuItemText))
+            tvTitle.text = TgMemberStr.getStr(64)
+            tvContent.setTextColor(Theme.getColor(Theme.key_chats_menuItemText))
+            tvContent.text=TgMemberStr.getStr(65)
+            btnUnderstand.setTextColor(Theme.getColor(Theme.key_chats_menuName))
+            btnUnderstand.text = TgMemberStr.getStr(66)
+            dialog.setContentView(root)
+            btnUnderstand.setOnClickListener {
+                dialog.hide()
+            }
         }
+
         dialog.show()
     }
 }
