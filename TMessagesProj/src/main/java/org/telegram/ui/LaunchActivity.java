@@ -6101,14 +6101,17 @@ public class LaunchActivity extends BasePermissionsActivity implements INavigati
         if (lastFragment == null || lastFragment instanceof LiteModeSettingsActivity) {
             return;
         }
-        int percent = LiteMode.getBatteryLevel();
-        BulletinFactory.of(lastFragment).createSimpleBulletin(
-            new BatteryDrawable(percent / 100F, Color.WHITE, lastFragment.getThemedColor(Theme.key_dialogSwipeRemove), 1.3f),
-            LocaleController.getString(R.string.LowPowerEnabledTitle),
-            LocaleController.formatString("LowPowerEnabledSubtitle", R.string.LowPowerEnabledSubtitle, String.format("%d%%", percent)),
-            LocaleController.getString(R.string.Disable),
-            () -> presentFragment(new LiteModeSettingsActivity())
-        ).setDuration(Bulletin.DURATION_PROLONG).show();
+
+        // I did comment these codes. Because I didn't want to show low battery snackbar...
+
+//        int percent = LiteMode.getBatteryLevel();
+//        BulletinFactory.of(lastFragment).createSimpleBulletin(
+//            new BatteryDrawable(percent / 100F, Color.WHITE, lastFragment.getThemedColor(Theme.key_dialogSwipeRemove), 1.3f),
+//            LocaleController.getString(R.string.LowPowerEnabledTitle),
+//            LocaleController.formatString("LowPowerEnabledSubtitle", R.string.LowPowerEnabledSubtitle, String.format("%d%%", percent)),
+//            LocaleController.getString(R.string.Disable),
+//            () -> presentFragment(new LiteModeSettingsActivity())
+//        ).setDuration(Bulletin.DURATION_PROLONG).show();
     }
 
     public void presentFragment(INavigationLayout.NavigationParams params) {

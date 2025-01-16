@@ -107,7 +107,7 @@ class DashboardFragment : BaseFragment() {
 
     private fun configureActionBar() {
         actionBar.setTitle(TgMemberStr.getStr(27))
-        TGMemberUtilities.createActionbar(actionBar, context, countVip = "2000")
+        TGMemberUtilities.createActionbar(actionBar, context, countVip = "200")
     }
 
     private fun configureBottomNavigation() {

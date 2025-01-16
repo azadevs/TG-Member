@@ -28,8 +28,8 @@
     <FrameLayout
         android:id="@+id/containerStatusSpinner"
         android:layout_width="0dp"
-        android:layout_marginStart="5dp"
         android:layout_height="35dp"
+        android:layout_marginStart="5dp"
         android:background="@drawable/cut_corners_background"
         app:layout_constraintBottom_toBottomOf="@id/containerTypeSpinner"
         app:layout_constraintEnd_toEndOf="parent"
@@ -54,28 +54,39 @@
         app:layout_constraintTop_toBottomOf="@id/containerTypeSpinner"
         tools:listitem="@layout/item_order" />
 
-     <com.airbnb.lottie.LottieAnimationView
-         android:id="@+id/lottieEmpty"
-         app:layout_constraintTop_toTopOf="parent"
-         app:layout_constraintBottom_toBottomOf="parent"
-         app:layout_constraintStart_toStartOf="parent"
-         app:layout_constraintEnd_toEndOf="parent"
-         app:lottie_rawRes="@raw/utyan_empty"
-         app:lottie_autoPlay="true"
-         app:layout_constraintVertical_bias="0.45"
-         android:layout_width="120dp"
-         android:layout_height="120dp"/>
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/lottieEmpty"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.45"
+        app:lottie_autoPlay="true"
+        app:lottie_rawRes="@raw/utyan_empty" />
 
     <TextView
         android:id="@+id/tvEmpty"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="No Orders"
-        android:textSize="18sp"
-        app:layout_constraintTop_toBottomOf="@id/lottieEmpty"
-        app:layout_constraintStart_toStartOf="@id/lottieEmpty"
-        app:layout_constraintEnd_toEndOf="@id/lottieEmpty"
         android:layout_marginTop="16dp"
-        android:fontFamily="@font/poppins_medium"/>
+        android:fontFamily="@font/poppins_medium"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="@id/lottieEmpty"
+        app:layout_constraintStart_toStartOf="@id/lottieEmpty"
+        app:layout_constraintTop_toBottomOf="@id/lottieEmpty" />
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

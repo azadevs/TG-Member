@@ -5,15 +5,21 @@ import android.content.Context.MODE_PRIVATE
 import android.text.Editable
 import android.text.TextUtils
 import android.text.TextWatcher
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
+import android.widget.ImageView
+import android.widget.LinearLayout
+import android.widget.TextView
 import android.widget.Toast
+import androidx.core.content.res.ResourcesCompat
 import org.telegram.messenger.ApplicationLoader
 import org.telegram.messenger.R
 import org.telegram.messenger.databinding.LoginFragmentBinding
 import org.telegram.ui.ActionBar.ActionBar
 import org.telegram.ui.ActionBar.BaseFragment
 import org.telegram.ui.ActionBar.Theme
+import org.telegram.ui.Components.LayoutHelper
 import org.telegram.ui.LaunchActivity
 import org.tg_member.core.utils.TGMemberUtilities.isValidEmail
 import org.tg_member.core.utils.TgMemberStr
@@ -137,18 +143,50 @@ class LoginFragment : BaseFragment() {
         actionBar.setTitle(TgMemberStr.getStr(14))
         actionBar.backgroundColor = actionBar.backgroundColor
         val menu = actionBar.createMenu()
-         menu.addItem(
-            1, R.drawable.msg_language
+        val linearLayout = LinearLayout(context).apply {
+            layoutParams =
+                LinearLayout.LayoutParams(LayoutHelper.MATCH_PARENT, LayoutHelper.MATCH_PARENT)
+            gravity = Gravity.CENTER_VERTICAL
+        }
+        val languageIcon = ImageView(context)
+        val languageTextView=TextView(context)
+        languageIcon.setImageResource(R.drawable.msg_language)
+        languageTextView.textSize = 16f
+        languageTextView.setTypeface(ResourcesCompat.getFont(context, R.font.poppins_medium))
+        languageTextView.setTextColor(Theme.getColor(Theme.key_actionBarDefaultTitle))
+        languageIcon.setColorFilter(Theme.getColor(Theme.key_actionBarDefaultIcon))
+        languageTextView.text = TgMemberStr.languageCode
+        linearLayout.addView(
+            languageTextView,
+            LayoutHelper.createLinear(
+                LayoutHelper.WRAP_CONTENT,
+                LayoutHelper.WRAP_CONTENT,
+                Gravity.RIGHT or Gravity.CENTER,
+                0,
+                0,
+                7,
+                0
+            )
         )
-        actionBar.setActionBarMenuOnItemClick(object : ActionBar.ActionBarMenuOnItemClick() {
-            override fun onItemClick(id: Int) {
-                if(id==1){
-                    TgMemberStr.changeLanguageDialog(binding.root.context) {
-                        LaunchActivity.instance.rebuildAllFragments(true)
-                    }
-                }
+        linearLayout.addView(
+            languageIcon,
+            LayoutHelper.createLinear(
+                20,
+                20,
+                Gravity.RIGHT or Gravity.CENTER,
+                0,
+                0,
+                16,
+                0
+            )
+
+        )
+        menu.addView(linearLayout)
+        linearLayout.setOnClickListener {
+            TgMemberStr.changeLanguageDialog(binding.root.context) {
+                LaunchActivity.instance.rebuildAllFragments(true)
             }
-        })
+        }
     }
 
 }

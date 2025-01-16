@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -10,6 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:elevation="0dp"
+        android:layout_alignParentTop="true"
         android:layout_marginTop="8dp"
         app:tabPaddingStart="6dp"
         app:tabPaddingEnd="6dp"
@@ -24,6 +25,7 @@
         android:id="@+id/tabPost"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@id/tabCountry"
         android:elevation="0dp"
         app:tabPaddingStart="6dp"
         app:tabPaddingEnd="6dp"
@@ -36,10 +38,18 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvViews"
+        android:layout_below="@id/tabPost"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="match_parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tabPost"
         tools:listitem="@layout/item_vip_price" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:visibility="gone" />
+
+</RelativeLayout>

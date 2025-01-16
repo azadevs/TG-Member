@@ -90,7 +90,6 @@ class AccountDetailsFragment(var selectedAccount: Int) : BaseFragment() {
 
     private fun configureSharedPreference() {
         val sharedPref = context?.getSharedPreferences("mainconfig", MODE_PRIVATE)
-//        sharedPref?.edit()?.putBoolean("isShowAutoJoinDialog", false)?.apply()
         val isShowDialog = sharedPref?.getBoolean("isShowAutoJoinDialog", false)
         if (!isShowDialog!!) {
             showBottomSheetDialog()
@@ -119,7 +118,7 @@ class AccountDetailsFragment(var selectedAccount: Int) : BaseFragment() {
         vipCountTextView.setTypeface(ResourcesCompat.getFont(context, R.font.poppins_semibold))
         vipCountTextView.setTextColor(Theme.getColor(Theme.key_actionBarDefaultTitle))
         vipIcon.setColorFilter(Theme.getColor(Theme.key_actionBarDefaultIcon))
-        vipCountTextView.text = "2000"
+        vipCountTextView.text = "200"
         linearLayout.addView(
             vipCountTextView,
             LayoutHelper.createLinear(

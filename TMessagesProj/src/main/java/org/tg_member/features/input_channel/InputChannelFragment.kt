@@ -80,7 +80,7 @@ class InputChannelFragment(private val orderDisplayData: OrderDisplayData) : Bas
             _binding=null
             finishFragment(true)
         }
-       TGMemberUtilities.createActionbar(actionBar,context,"2000")
+       TGMemberUtilities.createActionbar(actionBar,context,"200")
     }
 
     private fun checkChannelLink() {

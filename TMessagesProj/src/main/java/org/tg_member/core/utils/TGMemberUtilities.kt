@@ -264,6 +264,7 @@ object TGMemberUtilities {
         dialogBinding.btnCancel.setTextColor(context.resources.getColor(R.color.color_telegram_background))
         dialogBinding.btnCancel.text= getString(R.string.Cancel)
         dialogBinding.tvNotEnoughMoneyTitle.text=TgMemberStr.getStr(63)
+        dialogBinding.root.setBackgroundColor(Theme.getColor(Theme.key_iv_background))
         dialogBinding.tvNotEnoughMoneyTitle.setTextColor(Theme.getColor(Theme.key_chats_menuItemText))
         dialogBinding.btnVipStore.text=TgMemberStr.getStr(62)
         dialogBinding.tvBuyVipDescription.text=TgMemberStr.getStr(61)
@@ -275,13 +276,13 @@ object TGMemberUtilities {
                 context.resources.getColor(R.color.color_telegram_background)
             )
         )
-        Glide.with(context).asGif().load(R.raw.no_money).into(dialogBinding.ivNoMoney)
+        Glide.with(context).load(R.drawable.no_money_background).into(dialogBinding.ivNoMoney)
         dialog.setContentView(dialogBinding.root)
         dialogBinding.btnCancel.setOnClickListener {
-            dialog.hide()
+            dialog.dismiss()
         }
         dialogBinding.btnVipStore.setOnClickListener {
-            dialog.hide()
+            dialog.dismiss()
             DashboardFragment.instance.changeBottomNavigationPosition(3)
         }
         dialog.show()
