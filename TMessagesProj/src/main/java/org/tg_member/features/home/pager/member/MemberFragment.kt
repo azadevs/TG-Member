@@ -1,6 +1,5 @@
 package org.tg_member.features.home.pager.member
 
-import android.content.Context
 import android.graphics.drawable.GradientDrawable
 import android.graphics.drawable.StateListDrawable
 import android.view.LayoutInflater
@@ -8,24 +7,18 @@ import android.view.View
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.bumptech.glide.Glide
-import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.tabs.TabLayout
 import org.telegram.messenger.R
-import org.telegram.messenger.databinding.DialogBottomAutoJoinBinding
-import org.telegram.messenger.databinding.DialogNeedVipBinding
 import org.telegram.messenger.databinding.FragmentMemberBinding
 import org.telegram.messenger.databinding.ItemTabCountryBinding
 import org.telegram.ui.ActionBar.Theme
 import org.telegram.ui.LaunchActivity
-import org.tg_member.core.utils.TGMemberUtilities
 import org.tg_member.core.utils.TGMemberUtilities.showNotEnoughMoneyDialog
-import org.tg_member.features.dashboard.DashboardFragment
 import org.tg_member.features.home.HomeFragment
 import org.tg_member.features.home.adapters.HomeAdapter
 import org.tg_member.features.home.model.OrderDisplayData
 import org.tg_member.features.home.pager.member.model.CountryDisplayData
-import org.tg_member.features.input_channel.InputChannelFragment
+import org.tg_member.features.input.channel.InputChannelFragment
 
 
 class MemberFragment(

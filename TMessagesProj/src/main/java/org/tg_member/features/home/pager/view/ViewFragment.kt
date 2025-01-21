@@ -19,7 +19,7 @@ import org.tg_member.features.home.HomeFragment
 import org.tg_member.features.home.adapters.HomeAdapter
 import org.tg_member.features.home.model.OrderDisplayData
 import org.tg_member.features.home.pager.member.model.CountryDisplayData
-import org.tg_member.features.input_channel.InputChannelFragment
+import org.tg_member.features.input.post.InputPostFragment
 
 class ViewFragment(
     val binding: FragmentViewBinding
@@ -57,15 +57,24 @@ class ViewFragment(
     private fun configureAdapter() {
         homeAdapter = HomeAdapter(postsPrice, object : HomeAdapter.HomeClick {
             override fun click(orderDisplayData: OrderDisplayData) {
-                if(HomeFragment.instance.getVipCount()<orderDisplayData.priceVip){
+                if (HomeFragment.instance.getVipCount() < orderDisplayData.priceVip) {
                     showNotEnoughMoneyDialog(binding.root.context)
-                }else {
-                    LaunchActivity.instance.presentFragment(InputChannelFragment(orderDisplayData))
+                } else {
+                    LaunchActivity.instance.presentFragment(InputPostFragment(getSelectedPostCount()))
                 }
             }
         })
         binding.rvViews.layoutManager = LinearLayoutManager(binding.root.context)
         binding.rvViews.adapter = homeAdapter
+    }
+
+    private fun getSelectedPostCount(): Int {
+        return when (posts[binding.tabPost.selectedTabPosition]) {
+            "One post" -> 1
+            "5 Posts" -> 5
+            "10 Posts" -> 10
+            else -> 1
+        }
     }
 
 
@@ -190,10 +199,10 @@ class ViewFragment(
 
     private fun setFakeData() {
         postsPrice = ArrayList()
-        postsPrice.add(OrderDisplayData(100, 200, 0,R.drawable.ic_view))
-        postsPrice.add(OrderDisplayData(200, 300, 10,R.drawable.ic_view))
-        postsPrice.add(OrderDisplayData(300, 400, 0,R.drawable.ic_view))
-        postsPrice.add(OrderDisplayData(400, 500, 30,R.drawable.ic_view))
+        postsPrice.add(OrderDisplayData(100, 200, 0, R.drawable.ic_view))
+        postsPrice.add(OrderDisplayData(200, 300, 10, R.drawable.ic_view))
+        postsPrice.add(OrderDisplayData(300, 400, 0, R.drawable.ic_view))
+        postsPrice.add(OrderDisplayData(400, 500, 30, R.drawable.ic_view))
     }
 
 }

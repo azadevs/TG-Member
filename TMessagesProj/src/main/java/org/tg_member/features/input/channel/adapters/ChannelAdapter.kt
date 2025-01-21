@@ -1,4 +1,4 @@
-package org.tg_member.features.input_channel.adapters
+package org.tg_member.features.input.channel.adapters
 
 import android.view.LayoutInflater
 import android.view.ViewGroup

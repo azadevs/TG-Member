@@ -19,7 +19,6 @@ import com.google.android.material.bottomsheet.BottomSheetDialog
 import org.telegram.messenger.LocaleController.getString
 import org.telegram.messenger.NotificationCenter
 import org.telegram.messenger.R
-import org.telegram.tgnet.TLRPC
 import org.telegram.messenger.UserConfig
 import org.telegram.messenger.databinding.DialogNeedVipBinding
 import org.telegram.ui.ActionBar.ActionBar
@@ -183,21 +182,9 @@ object TGMemberUtilities {
     }
 
     fun changeTheme(view: View, themeInfo: ThemeInfo, toDark: Boolean) {
-//        val dayThemeName = "Blue"
-//        val nightThemeName = "Night"
-//
-//        val themeInfo: ThemeInfo
-//        var toDark: Boolean
-//        if (!Theme.isCurrentThemeDark().also { toDark = it }) {
-//            themeInfo = Theme.getTheme(nightThemeName)
-//        } else {
-//            themeInfo = Theme.getTheme(dayThemeName)
-//        }
-
         Theme.selectedAutoNightType = Theme.AUTO_NIGHT_TYPE_NONE
         Theme.saveAutoNightThemeConfig()
         Theme.cancelAutoNightThemeCallbacks()
-
 
         val pos = IntArray(2)
 
@@ -255,19 +242,18 @@ object TGMemberUtilities {
         menu.addView(linearLayout)
     }
 
-
     fun showNotEnoughMoneyDialog(context: Context) {
         val dialog = BottomSheetDialog(context, R.style.BottomSheetDialogStyle)
         val dialogBinding =
             DialogNeedVipBinding.inflate(LayoutInflater.from(context), null, false)
         dialogBinding.tvBuyVipDescription.setTextColor(Theme.getColor(Theme.key_chats_menuItemText))
         dialogBinding.btnCancel.setTextColor(context.resources.getColor(R.color.color_telegram_background))
-        dialogBinding.btnCancel.text= getString(R.string.Cancel)
-        dialogBinding.tvNotEnoughMoneyTitle.text=TgMemberStr.getStr(63)
+        dialogBinding.btnCancel.text = getString(R.string.Cancel)
+        dialogBinding.tvNotEnoughMoneyTitle.text = TgMemberStr.getStr(63)
         dialogBinding.root.setBackgroundColor(Theme.getColor(Theme.key_iv_background))
         dialogBinding.tvNotEnoughMoneyTitle.setTextColor(Theme.getColor(Theme.key_chats_menuItemText))
-        dialogBinding.btnVipStore.text=TgMemberStr.getStr(62)
-        dialogBinding.tvBuyVipDescription.text=TgMemberStr.getStr(61)
+        dialogBinding.btnVipStore.text = TgMemberStr.getStr(62)
+        dialogBinding.tvBuyVipDescription.text = TgMemberStr.getStr(61)
         dialogBinding.btnVipStore.setTextColor(Theme.getColor(Theme.key_chats_menuName))
         dialogBinding.btnVipStore.setBackgroundDrawable(
             getDrawableStateList(
@@ -287,6 +273,5 @@ object TGMemberUtilities {
         }
         dialog.show()
     }
-
 
 }

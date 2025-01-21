@@ -38,4 +38,9 @@
         <item name="android:fontFamily">@font/poppins_regular</item>
     </style>
 
+    <style name="CustomTextStyle">
+        <item name="android:textSize">13sp</item>
+        <item name="android:fontFamily">@font/poppins_medium</item>
+    </style>
+
 </resources>

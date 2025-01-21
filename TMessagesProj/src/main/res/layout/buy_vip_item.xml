@@ -21,9 +21,9 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:fontFamily="@font/poppins_medium"
-        android:includeFontPadding="false"
+        android:includeFontPadding="true"
         android:text="0"
-        android:textSize="16sp"
+        android:textSize="15sp"
         app:layout_constraintBottom_toBottomOf="@id/vip_price"
         app:layout_constraintStart_toEndOf="@id/ivVipImage"
         app:layout_constraintTop_toTopOf="@id/vip_price" />

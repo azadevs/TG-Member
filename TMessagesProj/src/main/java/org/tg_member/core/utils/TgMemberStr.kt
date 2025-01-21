@@ -157,6 +157,12 @@ object TgMemberStr {
                 " * Выход из программы и вход в другую программу;\n" +
                 " * Удалить свой аккаунт;"))
         titlesLanguages.add(TitleLanguages(66, "I Understand", "Tushundim","Я понимаю"))
+        titlesLanguages.add(TitleLanguages(67, "Do you want to log out?", "Hisobingizdan chiqishni xohlaysizmi?","Вы хотите выйти из своей учетной записи?"))
+        titlesLanguages.add(TitleLanguages(68,"Enter your post link","Xabaringiz havolasini kiriting","Введите ссылку на ваш пост"))
+        titlesLanguages.add(TitleLanguages(69,"Fill in all fields!","Barcha maydonlarni to'ldiring!","Заполните все поля!"))
+        titlesLanguages.add(TitleLanguages(70,"Please ensure the following before placing an order:","Iltimos, buyurtma berishdan oldin quyidagilarga ishonch hosil qiling:","Перед размещением заказа убедитесь, что выполнены следующие условия:"))
+        titlesLanguages.add(TitleLanguages(71,"• The channel must be public","• Kanal ochiq bo'lishi kerak","• Канал должен быть публичным"))
+
     }
 
     fun getStr(code: Int): String {

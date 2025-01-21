@@ -48,7 +48,7 @@ class DashboardFragment : BaseFragment() {
         LaunchActivity.instance.rebuildAllFragments(true)
 
         val item = binding.bottomNavigationView.menu.getItem(uiPosition)
-        binding.bottomNavigationView.selectedItemId=item.itemId
+        binding.bottomNavigationView.selectedItemId = item.itemId
     }
 
     override fun onBackPressed(): Boolean {
@@ -67,7 +67,7 @@ class DashboardFragment : BaseFragment() {
         super.onFragmentDestroy()
     }
 
-    fun changeBottomNavigationPosition(position:Int){
+    fun changeBottomNavigationPosition(position: Int) {
         LaunchActivity.instance.rebuildAllFragments(true)
 
         val item = binding.bottomNavigationView.menu.getItem(position)

@@ -19,17 +19,17 @@ import org.tg_member.features.home.HomeFragment
 import org.tg_member.features.home.adapters.HomeAdapter
 import org.tg_member.features.home.model.OrderDisplayData
 import org.tg_member.features.home.pager.member.model.CountryDisplayData
-import org.tg_member.features.input_channel.InputChannelFragment
+import org.tg_member.features.input.post.InputPostFragment
 
 class ReactionFragment(
-    val binding:FragmentReactionBinding
+    val binding: FragmentReactionBinding
 ) {
 
     private lateinit var reactions: ArrayList<OrderDisplayData>
     private lateinit var homeAdapter: HomeAdapter
 
     private val reactionType = mutableListOf(
-        "One post",
+        "One Post",
         "5 Posts",
         "10 Posts"
     )
@@ -50,7 +50,7 @@ class ReactionFragment(
     )
 
 
-    fun createView(){
+    fun createView() {
 
         setFakeData()
 
@@ -64,10 +64,10 @@ class ReactionFragment(
     private fun configureAdapter() {
         homeAdapter = HomeAdapter(reactions, object : HomeAdapter.HomeClick {
             override fun click(orderDisplayData: OrderDisplayData) {
-                if(HomeFragment.instance.getVipCount()<orderDisplayData.priceVip){
+                if (HomeFragment.instance.getVipCount() < orderDisplayData.priceVip) {
                     showNotEnoughMoneyDialog(binding.root.context)
-                }else {
-                    LaunchActivity.instance.presentFragment(InputChannelFragment(orderDisplayData))
+                } else {
+                    LaunchActivity.instance.presentFragment(InputPostFragment(postCount = getSelectedPostCount()))
                 }
             }
         })
@@ -75,6 +75,14 @@ class ReactionFragment(
         binding.rvReactions.adapter = homeAdapter
     }
 
+    private fun getSelectedPostCount(): Int {
+        return when (reactionType[binding.tabReaction.selectedTabPosition]) {
+            "One post" -> 1
+            "5 Posts" -> 5
+            "10 Posts" -> 10
+            else -> 1
+        }
+    }
 
     private fun configureCustomReactionTab() {
         for (i in 0 until reactionType.size) {

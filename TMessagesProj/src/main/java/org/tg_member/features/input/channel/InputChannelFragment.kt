@@ -1,4 +1,4 @@
-package org.tg_member.features.input_channel
+package org.tg_member.features.input.channel
 
 import android.content.Context
 import android.content.DialogInterface
@@ -17,7 +17,7 @@ import org.tg_member.core.utils.TGMemberUtilities
 import org.tg_member.core.utils.TGMemberUtilities.getAccounts
 import org.tg_member.core.utils.TgMemberStr
 import org.tg_member.features.home.model.OrderDisplayData
-import org.tg_member.features.input_channel.adapters.ChannelAdapter
+import org.tg_member.features.input.channel.adapters.ChannelAdapter
 
 class InputChannelFragment(private val orderDisplayData: OrderDisplayData) : BaseFragment() {
 
@@ -37,6 +37,7 @@ class InputChannelFragment(private val orderDisplayData: OrderDisplayData) : Bas
 
         configureUi()
 
+
         binding.sendBtn.setOnClickListener {
             checkChannelLink()
         }
@@ -54,7 +55,7 @@ class InputChannelFragment(private val orderDisplayData: OrderDisplayData) : Bas
 
     private fun configureAdapter() {
         adapter = ChannelAdapter(LoadSelectedChannel.channels) {
-           sureDialog(binding.root.context).show()
+            sureDialog(binding.root.context).show()
         }
         binding.rvChannels.layoutManager = LinearLayoutManager(context)
         binding.rvChannels.adapter = adapter
@@ -67,9 +68,12 @@ class InputChannelFragment(private val orderDisplayData: OrderDisplayData) : Bas
         binding.sendBtn.setTextColor(Theme.getColor(Theme.key_chats_menuName))
         binding.sendBtn.text = TgMemberStr.getStr(43)
         binding.edtInputLink.hint = TgMemberStr.getStr(41)
-        binding.tvRule.text=TgMemberStr.getStr(60)
-        binding.edtInputLink.setHintTextColor(Theme.getColor(Theme.key_chats_menuItemText))
+        binding.tvRule.text = TgMemberStr.getStr(60)
         progressDialog = AlertDialog(context, AlertDialog.ALERT_TYPE_SPINNER)
+        binding.tvFirstRule.setTextColor(Theme.getColor(Theme.key_chats_menuItemText))
+        binding.tvFollowingOrder.setTextColor(Theme.getColor(Theme.key_chats_menuItemText))
+        binding.tvFirstRule.text=TgMemberStr.getStr(71)
+        binding.tvFollowingOrder.text=TgMemberStr.getStr(70)
     }
 
     private fun configureActionBar() {
@@ -77,27 +81,27 @@ class InputChannelFragment(private val orderDisplayData: OrderDisplayData) : Bas
         actionBar.setBackButtonImage(R.drawable.msg_arrow_back)
 
         actionBar.backButtonImageView.setOnClickListener {
-            _binding=null
+            _binding = null
             finishFragment(true)
         }
-       TGMemberUtilities.createActionbar(actionBar,context,"200")
+        TGMemberUtilities.createActionbar(actionBar, context, "200")
     }
 
     private fun checkChannelLink() {
         val channelLink = binding.edtInputLink.text.toString()
         progressDialog.setCancelDialog(true)
         if (channelLink.isNotEmpty()) {
-            val userName: String = if(channelLink.contains("https")){
+            val userName: String = if (channelLink.contains("https")) {
                 channelLink.substring(channelLink.lastIndexOf('/') + 1, channelLink.length)
-            }else if(channelLink.contains("@")){
-                channelLink.replace("@","")
-            }else{
+            } else if (channelLink.contains("@")) {
+                channelLink.replace("@", "")
+            } else {
                 channelLink
             }
             progressDialog.show()
             // https://t.me/kunuzofficial
 
-            val accounts= getAccounts()
+            val accounts = getAccounts()
             if (accounts.isEmpty()) {
                 sureDialog(binding.root.context).show()
             } else {
@@ -142,7 +146,6 @@ class InputChannelFragment(private val orderDisplayData: OrderDisplayData) : Bas
         progressDialog.dismiss()
         super.onPause()
     }
-
 
 
 }

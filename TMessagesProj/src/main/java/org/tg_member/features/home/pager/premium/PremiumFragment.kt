@@ -18,7 +18,7 @@ import org.tg_member.features.home.HomeFragment
 import org.tg_member.features.home.adapters.HomeAdapter
 import org.tg_member.features.home.model.OrderDisplayData
 import org.tg_member.features.home.pager.member.model.CountryDisplayData
-import org.tg_member.features.input_channel.InputChannelFragment
+import org.tg_member.features.input.channel.InputChannelFragment
 
 class PremiumFragment(
     val binding:FragmentPremiumBinding

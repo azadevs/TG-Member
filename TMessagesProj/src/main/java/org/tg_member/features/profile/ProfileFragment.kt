@@ -2,7 +2,9 @@ package org.tg_member.features.profile
 
 import android.content.ClipData
 import android.content.ClipboardManager
+import android.content.Context
 import android.content.Context.MODE_PRIVATE
+import android.content.DialogInterface
 import android.content.Intent
 import android.content.SharedPreferences
 import android.net.Uri
@@ -15,16 +17,16 @@ import androidx.core.content.ContextCompat.getSystemService
 import androidx.core.content.ContextCompat.startActivity
 import org.telegram.messenger.ApplicationLoader
 import org.telegram.messenger.LocaleController
-import org.telegram.messenger.NotificationCenter
+import org.telegram.messenger.R
 import org.telegram.messenger.databinding.FragmentProfileBinding
+import org.telegram.ui.ActionBar.AlertDialog
 import org.telegram.ui.ActionBar.Theme
-import org.telegram.ui.ActionBar.Theme.ThemeInfo
-import org.telegram.ui.Cells.DrawerProfileCell
+import org.telegram.ui.LaunchActivity
 import org.tg_member.core.utils.TGMemberUtilities.changeTheme
 import org.tg_member.core.utils.TGMemberUtilities.isValidEmail
 import org.tg_member.core.utils.TgMemberStr
-import org.tg_member.core.utils.TgMemberStr.sharedPreferences
 import org.tg_member.features.dashboard.DashboardFragment
+import org.tg_member.features.login.LoginFragment
 
 
 /**
@@ -53,6 +55,10 @@ class ProfileFragment(var binding: FragmentProfileBinding) {
 
         binding.ivEditEmail.setOnClickListener {
             enableEmailEditText()
+        }
+
+        binding.cardLogOut.setOnClickListener {
+            logOutDialog(binding.root.context).show()
         }
 
         binding.ivCheckEmail.setOnClickListener {
@@ -138,6 +144,10 @@ class ProfileFragment(var binding: FragmentProfileBinding) {
             ivCheckEmail.setColorFilter(Theme.getColor(Theme.key_chats_menuItemText))
             ivEditEmail.setColorFilter(Theme.getColor(Theme.key_chats_menuItemText))
             cardTheme.setCardBackgroundColor(Theme.getColor(Theme.key_windowBackgroundWhite))
+            cardLogOut.setCardBackgroundColor(Theme.getColor(Theme.key_windowBackgroundWhite))
+            tvLogOut.setTextColor(Theme.getColor(Theme.key_color_red))
+            tvLogOut.text=TgMemberStr.getStr(23)
+            ivLogOut.setColorFilter(Theme.getColor(Theme.key_chats_menuItemText))
             themeSwitch.setTextColor(Theme.getColor(Theme.key_chats_menuItemText))
             themeSwitch.text =
                 if (themeSwitch.isChecked) TgMemberStr.getStr(58) else TgMemberStr.getStr(59)
@@ -196,6 +206,24 @@ class ProfileFragment(var binding: FragmentProfileBinding) {
             )
         }
         startActivity(binding.root.context, intent!!, null)
+    }
+
+    private fun logOutDialog(context: Context?): AlertDialog {
+        val builder = AlertDialog.Builder(context)
+        builder.setMessage(TgMemberStr.getStr(67))
+        builder.setTitle(LocaleController.getString(R.string.LogOut))
+        builder.setPositiveButton(
+           TgMemberStr.getStr(23)
+        ) { _: DialogInterface?, _: Int ->
+            ApplicationLoader.applicationContext.getSharedPreferences("mainconfig", MODE_PRIVATE)
+                .edit().putBoolean("isLogged", false).apply()
+            ApplicationLoader.applicationContext.getSharedPreferences("mainconfig", MODE_PRIVATE)
+                .edit().putString("userEmail", "").apply()
+            LaunchActivity.instance.presentFragment(LoginFragment(), true,false)
+        }
+        builder.setNegativeButton(LocaleController.getString(R.string.Cancel), null)
+        val alertDialog = builder.create()
+        return alertDialog
     }
 
 

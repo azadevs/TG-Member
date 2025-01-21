@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         android:fontFamily="@font/poppins_medium"
         android:gravity="center"
-        android:textSize="15sp"
+        android:textSize="14sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -25,12 +25,33 @@
         android:layout_height="50dp"
         android:layout_marginTop="16dp"
         android:background="@drawable/cut_corners_background"
-        android:fontFamily="@font/poppins_regular"
-        android:textSize="15sp"
+        android:fontFamily="@font/poppins_medium"
         android:paddingHorizontal="12dp"
+        android:textSize="14sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tvRule" />
+
+    <TextView
+        android:id="@+id/tvFollowingOrder"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:fontFamily="@font/poppins_medium"
+        android:textSize="14sp"
+        app:layout_constraintStart_toStartOf="@id/edtInputLink"
+        app:layout_constraintTop_toBottomOf="@id/edtInputLink" />
+
+    <TextView
+        android:id="@+id/tvFirstRule"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="16dp"
+        android:fontFamily="@font/poppins_medium"
+        android:textSize="14sp"
+        app:layout_constraintStart_toStartOf="@id/edtInputLink"
+        app:layout_constraintTop_toBottomOf="@id/tvFollowingOrder" />
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/sendBtn"
@@ -38,21 +59,20 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:background="@drawable/transfer_btn"
-        android:minWidth="100dp"
-        android:textSize="15sp"
         android:fontFamily="@font/poppins_medium"
-        android:text="Send"
+        android:minWidth="120dp"
         android:textAllCaps="false"
+        android:textSize="15sp"
         app:layout_constraintEnd_toEndOf="@id/edtInputLink"
-        app:layout_constraintTop_toBottomOf="@id/edtInputLink" />
+        app:layout_constraintTop_toBottomOf="@id/tvFirstRule" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvChannels"
         android:layout_width="match_parent"
-        tools:listitem="@layout/item_channel"
         android:layout_height="0dp"
         android:layout_marginTop="16dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/sendBtn" />
+        app:layout_constraintTop_toBottomOf="@id/sendBtn"
+        tools:listitem="@layout/item_channel" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
