@@ -826,10 +826,10 @@ public class LaunchActivity extends BasePermissionsActivity implements INavigati
                 actionBarLayout.addFragmentToStack(getClientNotActivatedFragment());
                 drawerLayoutContainer.setAllowOpenDrawer(false, false);
             } else {
-                DialogsActivity dialogsActivity = new DialogsActivity(null);
-                dialogsActivity.setSideMenu(sideMenu);
-                actionBarLayout.addFragmentToStack(dialogsActivity);
-                drawerLayoutContainer.setAllowOpenDrawer(true, false);
+//                DialogsActivity dialogsActivity = new DialogsActivity(null);
+//                dialogsActivity.setSideMenu(sideMenu);
+//                actionBarLayout.addFragmentToStack(dialogsActivity);
+//                drawerLayoutContainer.setAllowOpenDrawer(true, false);
             }
 
             try {

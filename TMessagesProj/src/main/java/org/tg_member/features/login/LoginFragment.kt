@@ -33,7 +33,6 @@ class LoginFragment : BaseFragment() {
     override fun createView(context: Context?): View {
         _binding = LoginFragmentBinding.inflate(LayoutInflater.from(context), null, false)
 
-
         configureUi()
 
         configureActionBar()
@@ -43,9 +42,7 @@ class LoginFragment : BaseFragment() {
         return fragmentView
     }
 
-
     private fun checkUserCredentials() {
-
         if (binding.codeEt.visibility == View.VISIBLE) {
             checkInputCode()
         } else {

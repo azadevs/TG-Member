@@ -7,6 +7,7 @@ import android.content.Context.MODE_PRIVATE
 import android.content.DialogInterface
 import android.content.Intent
 import android.content.SharedPreferences
+import android.content.res.ColorStateList
 import android.net.Uri
 import android.text.InputType
 import android.text.TextUtils
@@ -198,7 +199,7 @@ class ProfileFragment(var binding: FragmentProfileBinding) {
                 )
             }
             intent =
-                Intent(Intent.ACTION_VIEW, Uri.parse("tg://resolve?domain=$username"))
+                Intent.createChooser(Intent(Intent.ACTION_VIEW, Uri.parse("tg://resolve?domain=$username")),"Open")
         } catch (e: Exception) {
             intent = Intent(
                 Intent.ACTION_VIEW,

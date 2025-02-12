@@ -114,21 +114,6 @@ object TGMemberUtilities {
      * ---------------------------------------------------------------------------------------------
      */
 
-    enum class Types {
-        AllTypes,
-        Premium,
-        Member,
-        View,
-        Reaction
-    }
-
-    enum class Status {
-        AllStatus,
-        Pending,
-        Completed,
-        Failed
-    }
-
     fun getTypes(): List<SpinnerTypeData> {
         return listOf(
             SpinnerTypeData(

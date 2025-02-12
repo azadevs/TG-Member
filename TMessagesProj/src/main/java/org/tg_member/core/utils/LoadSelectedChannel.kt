@@ -11,7 +11,7 @@ object LoadSelectedChannel {
     var channels = ArrayList<TLRPC.Chat?>()
 
     fun loadChannel(username: String, currentAccount: Int, callback: (Boolean) -> Unit) {
-        var req: TLRPC.TL_contacts_resolveUsername = TLRPC.TL_contacts_resolveUsername()
+        val req: TLRPC.TL_contacts_resolveUsername = TLRPC.TL_contacts_resolveUsername()
         req.username = username.lowercase(Locale.getDefault()).trim()
         ConnectionsManager.getInstance(currentAccount).sendRequest(
             req

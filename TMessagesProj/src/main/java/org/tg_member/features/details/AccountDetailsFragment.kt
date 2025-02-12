@@ -1,9 +1,5 @@
 package org.tg_member.features.details
 
-import android.animation.AnimatorSet
-import android.animation.ObjectAnimator
-import android.animation.ValueAnimator
-import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Context.MODE_PRIVATE
 import android.content.DialogInterface
@@ -18,7 +14,6 @@ import android.view.View
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
-import androidx.core.animation.doOnStart
 import androidx.core.content.ContextCompat
 import androidx.core.content.ContextCompat.startActivity
 import androidx.core.content.res.ResourcesCompat
@@ -41,19 +36,25 @@ import org.telegram.ui.Components.CustomPopupMenu
 import org.telegram.ui.Components.LayoutHelper
 import org.tg_member.core.utils.JoinChannels
 import org.tg_member.core.utils.TGMemberUtilities
+import org.tg_member.core.utils.TGMemberUtilities.getAccounts
 import org.tg_member.core.utils.TgMemberStr
 import org.tg_member.features.free.FreeFragment
 import kotlin.math.abs
 
-class AccountDetailsFragment(var selectedAccount: Int) : BaseFragment() {
+class AccountDetailsFragment(
+    private val accountPosition: Int
+) : BaseFragment() {
 
     private var _binding: FragmentAccountDetailsBinding? = null
     private val binding get() = _binding!!
     private var popupMenu: CustomPopupMenu? = null
-    private var animatorSet: AnimatorSet? = null
     private val vipCountTextView by lazy {
         TextView(context)
     }
+
+    private var bottomSheetDialog: BottomSheetDialog? = null
+
+    private var animatorManager: AnimatorManager? = null
 
     override fun createView(context: Context?): View {
         _binding = FragmentAccountDetailsBinding.inflate(LayoutInflater.from(context), null, false)
@@ -79,8 +80,7 @@ class AccountDetailsFragment(var selectedAccount: Int) : BaseFragment() {
         binding.btnStop.setOnClickListener {
             needAutoJoinStop()
         }
-
-        moveView(binding.tvPlusTwoVip)
+        animatorManager?.moveView(binding.tvPlusTwoVip, vipCountTextView)
 
         fragmentView = binding.root
 
@@ -98,9 +98,13 @@ class AccountDetailsFragment(var selectedAccount: Int) : BaseFragment() {
     }
 
     override fun onFragmentDestroy() {
+        super.onFragmentDestroy()
         _binding = null
         popupMenu = null
-        super.onFragmentDestroy()
+        animatorManager?.clearAnimation()
+        animatorManager = null
+        bottomSheetDialog?.hide()
+        bottomSheetDialog = null
     }
 
     private fun configureActionBar() {
@@ -146,15 +150,18 @@ class AccountDetailsFragment(var selectedAccount: Int) : BaseFragment() {
         )
         menu.addView(linearLayout)
         actionBar.backButtonImageView.setOnClickListener {
-            animatorSet?.pause()
-            animatorSet?.removeAllListeners()
-            animatorSet = null
+            animatorManager?.clearAnimation()
+            animatorManager = null
             _binding = null
+            popupMenu = null
+            bottomSheetDialog?.hide()
+            bottomSheetDialog = null
             finishFragment(true)
         }
     }
 
     private fun configureUi() {
+        animatorManager= AnimatorManager()
         binding.apply {
             tvChannelLink.setTextColor(Theme.getColor(Theme.key_chats_menuItemText))
             tvChannelName.setTextColor(Theme.getColor(Theme.key_chats_menuItemText))
@@ -181,6 +188,9 @@ class AccountDetailsFragment(var selectedAccount: Int) : BaseFragment() {
             tvPlusTwoVip.setTextColor(Theme.getColor(Theme.key_chats_menuName))
             tvChannelLabel.text = "KU"
             tvChannelLabel.setTextColor(Color.WHITE)
+            btnAutoJoin.setOnClickListener {
+                joinChannel()
+            }
         }
     }
 
@@ -248,12 +258,19 @@ class AccountDetailsFragment(var selectedAccount: Int) : BaseFragment() {
 
     private fun makeLogOutDialog(context: Context?): AlertDialog {
         val builder = AlertDialog.Builder(context)
-        builder.setMessage(LocaleController.getString(R.string.AreYouSureLogout))
+        builder.setMessage(TgMemberStr.getStr(72))
         builder.setTitle(LocaleController.getString(R.string.LogOut))
         builder.setPositiveButton(
-            LocaleController.getString(R.string.LogOut)
+            TgMemberStr.getStr(73)
         ) { _: DialogInterface?, _: Int ->
-            MessagesController.getInstance(selectedAccount).performLogout(1)
+            UserConfig.selectedAccount = if (getAccounts().size > 1) {
+                getAccounts().first {
+                    it.accountPosition != accountPosition
+                }.accountPosition
+            } else {
+                0
+            }
+            MessagesController.getInstance(accountPosition).performLogout(1)
             FreeFragment.instance.updateAccountAdapter()
             finishFragment()
         }
@@ -265,7 +282,8 @@ class AccountDetailsFragment(var selectedAccount: Int) : BaseFragment() {
     private fun createPopUpMenu() {
         popupMenu = object : CustomPopupMenu(context, resourceProvider, false) {
             override fun onCreate(popupLayout: ActionBarPopupWindowLayout) {
-                popupLayout.backgroundColor = ColorUtils.blendARGB(Color.WHITE, Color.WHITE, 0.18f)
+                popupLayout.backgroundColor =
+                    ColorUtils.blendARGB(Color.WHITE, Color.WHITE, 0.18f)
                 var item = ActionBarMenuItem.addItem(
                     popupLayout,
                     R.drawable.ic_open_in,
@@ -323,8 +341,12 @@ class AccountDetailsFragment(var selectedAccount: Int) : BaseFragment() {
                     0
                 )
             }
-            intent =
-                Intent(Intent.ACTION_VIEW, Uri.parse("tg://resolve?domain=$username"))
+            intent = Intent.createChooser(
+                Intent(
+                    Intent.ACTION_VIEW,
+                    Uri.parse("tg://resolve?domain=$username")
+                ), "Open"
+            )
         } catch (e: Exception) {
             intent = Intent(
                 Intent.ACTION_VIEW,
@@ -334,45 +356,22 @@ class AccountDetailsFragment(var selectedAccount: Int) : BaseFragment() {
         startActivity(context, intent!!, null)
     }
 
-    @SuppressLint("SetTextI18n")
-    private fun moveView(target: View) {
-        val translateX =
-            ObjectAnimator.ofFloat(target, "translationX", 0f, 0f).apply { duration = 4000 }
-        val translateY =
-            ObjectAnimator.ofFloat(target, "translationY", 0f, -400f).apply { duration = 4000 }
-        val alpha = ObjectAnimator.ofFloat(target, "alpha", 1f, 0f).apply { duration = 4000 }
-        val scaleX = ObjectAnimator.ofFloat(target, "scaleX", 1f, 2f).apply { duration = 4000 }
-        val scaleY = ObjectAnimator.ofFloat(target, "scaleY", 1f, 2f).apply { duration = 4000 }
-        animatorSet = AnimatorSet()
-        animatorSet?.playTogether(translateX, translateY, alpha, scaleX, scaleY)
-        animatorSet?.doOnStart {
-            val vipCount = vipCountTextView.text.toString().toInt()
-            val animator = ValueAnimator.ofInt(vipCount, vipCount + 2)
-            animator.duration = 400
-            animator.addUpdateListener {
-                val value = it.animatedValue as Int
-                vipCountTextView.text = value.toString()
-            }
-            animator.start()
-        }
-        animatorSet?.start()
-    }
-
     private fun showBottomSheetDialog() {
-        val dialog = BottomSheetDialog(context, R.style.BottomSheetDialogStyle)
+        bottomSheetDialog = BottomSheetDialog(context, R.style.BottomSheetDialogStyle)
         DialogBottomAutoJoinBinding.inflate(LayoutInflater.from(context), null, false).apply {
             tvTitle.setTextColor(Theme.getColor(Theme.key_chats_menuItemText))
             tvTitle.text = TgMemberStr.getStr(64)
             tvContent.setTextColor(Theme.getColor(Theme.key_chats_menuItemText))
-            tvContent.text=TgMemberStr.getStr(65)
+            tvContent.text = TgMemberStr.getStr(65)
             btnUnderstand.setTextColor(Theme.getColor(Theme.key_chats_menuName))
             btnUnderstand.text = TgMemberStr.getStr(66)
-            dialog.setContentView(root)
+            bottomSheetDialog?.setCancelable(false)
+            bottomSheetDialog?.setContentView(root)
             btnUnderstand.setOnClickListener {
-                dialog.hide()
+                bottomSheetDialog?.hide()
             }
         }
 
-        dialog.show()
+        bottomSheetDialog?.show()
     }
 }
