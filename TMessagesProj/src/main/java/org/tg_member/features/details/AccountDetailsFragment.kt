@@ -92,8 +92,8 @@ class AccountDetailsFragment(
         val sharedPref = context?.getSharedPreferences("mainconfig", MODE_PRIVATE)
         val isShowDialog = sharedPref?.getBoolean("isShowAutoJoinDialog", false)
         if (!isShowDialog!!) {
-            showBottomSheetDialog()
             sharedPref.edit().putBoolean("isShowAutoJoinDialog", true).apply()
+            showBottomSheetDialog()
         }
     }
 
@@ -368,10 +368,9 @@ class AccountDetailsFragment(
             bottomSheetDialog?.setCancelable(false)
             bottomSheetDialog?.setContentView(root)
             btnUnderstand.setOnClickListener {
-                bottomSheetDialog?.hide()
+                bottomSheetDialog?.dismiss()
             }
         }
-
-        bottomSheetDialog?.show()
+         bottomSheetDialog?.show()
     }
 }

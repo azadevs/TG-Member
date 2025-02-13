@@ -20,9 +20,11 @@ class TransferFragment(private var transferFragmentBinding: TransferFragmentBind
 
         transferFragmentBinding.transferGmailEt.hint = TgMemberStr.getStr(6)
         transferFragmentBinding.transferGmailEt.setTextColor(Theme.getColor(Theme.key_chats_menuItemText))
+        transferFragmentBinding.transferGmailEt.setHintTextColor(Theme.getColor(Theme.key_dialogTextHint))
 
         transferFragmentBinding.vipCountEt.hint = TgMemberStr.getStr(7)
         transferFragmentBinding.vipCountEt.setTextColor(Theme.getColor(Theme.key_chats_menuItemText))
+        transferFragmentBinding.vipCountEt.setHintTextColor(Theme.getColor(Theme.key_dialogTextHint))
 
         transferFragmentBinding.transferBtn.text = TgMemberStr.getStr(8)
         transferFragmentBinding.transferBtn.setTextColor(Color.WHITE)

@@ -91,6 +91,7 @@ class InputPostFragment(private val postCount: Int) : BaseFragment() {
         )
         edittext.setTextAppearance(context,R.style.CustomTextStyle)
         edittext.setTextColor(Theme.getColor(Theme.key_chats_menuItemText))
+        edittext.setHintTextColor(Theme.getColor(Theme.key_dialogTextHint))
         edittext.hint = TgMemberStr.getStr(68)
         edittext.setPadding(convertDpToPx(12), 0, convertDpToPx(12), 0)
         binding.constraint.addView(edittext)
@@ -134,12 +135,10 @@ class InputPostFragment(private val postCount: Int) : BaseFragment() {
         button.setTextAppearance(context,R.style.CustomTextStyle)
         button.textSize=15f
         button.setTextColor(Theme.getColor(Theme.key_chats_menuName))
-        button.setBackgroundColor(Theme.getColor(Theme.key_actionBarDefault))
         button.background = TGMemberUtilities.getDrawableStateList(
             R.drawable.transfer_btn,
             context,
-            Theme.getColor(Theme.key_actionBarDefault)
-        )
+            Theme.getColor(Theme.key_telegramColor))
         button.text = TgMemberStr.getStr(43)
         binding.constraint.addView(button)
         button.id = View.generateViewId()

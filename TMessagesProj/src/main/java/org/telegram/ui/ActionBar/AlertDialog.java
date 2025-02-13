@@ -104,7 +104,7 @@ public class AlertDialog extends Dialog implements Drawable.Callback, Notificati
     private int customViewOffset = 12;
     private boolean withCancelDialog;
 
-    private int dialogButtonColorKey = Theme.key_dialogButton;
+    private int dialogButtonColorKey = Theme.key_myColor;
 
     private OnCancelListener onCancelListener;
 
@@ -228,7 +228,7 @@ public class AlertDialog extends Dialog implements Drawable.Callback, Notificati
 
             imageView = new ImageView(context);
             imageView.setScaleType(ImageView.ScaleType.CENTER);
-            imageView.setColorFilter(new PorterDuffColorFilter(getThemedColor(Theme.key_dialogIcon), PorterDuff.Mode.MULTIPLY));
+            imageView.setColorFilter(new PorterDuffColorFilter(getThemedColor(Theme.key_myColor), PorterDuff.Mode.MULTIPLY));
             addView(imageView, LayoutHelper.createFrame(LayoutHelper.WRAP_CONTENT, 40, Gravity.CENTER_VERTICAL | (LocaleController.isRTL ? Gravity.RIGHT : Gravity.LEFT)));
 
             textView = new TextView(context);

@@ -16,6 +16,7 @@ class GiftFragment(var giftFragmentBinding: GiftFragmentBinding) {
 
         giftFragmentBinding.giftCode.hint = TgMemberStr.getStr(10)
         giftFragmentBinding.giftCode.setTextColor(Theme.getColor(Theme.key_chats_menuItemText))
+        giftFragmentBinding.giftCode.setHintTextColor(Theme.getColor(Theme.key_dialogTextHint))
 
         giftFragmentBinding.enter.text = TgMemberStr.getStr(11)
         giftFragmentBinding.enter.setTextColor(Color.WHITE)

@@ -3439,6 +3439,7 @@ public class Theme {
     public static final int key_windowBackgroundWhiteBlackText = colorsCount++;
     public static final int key_windowBackgroundWhiteHintText = colorsCount++;
     public static final int key_myColor = colorsCount++;
+    public static final int key_telegramColor= colorsCount++;
     public static final int key_windowBackgroundWhiteValueText = colorsCount++;
     public static final int key_windowBackgroundWhiteLinkText = colorsCount++;
     public static final int key_windowBackgroundWhiteLinkSelection = colorsCount++;

@@ -398,11 +398,22 @@ object TgMemberStr {
                 "Вы уверены, что хотите выйти?"
             )
         )
-        titlesLanguages.add(TitleLanguages(73,
-            "Yes",
-            "Ha",
-            "Да"))
-
+        titlesLanguages.add(
+            TitleLanguages(
+                73,
+                "Yes",
+                "Ha",
+                "Да"
+            )
+        )
+        titlesLanguages.add(
+            TitleLanguages(
+                74,
+                "Please allow TG Member to receive calls so that we can automatically confirm your phone number.",
+                "Telefon raqamingizni avtomatik ravishda tasdiqlashimiz uchun TG Memberga qo‘ng‘iroqlarni qabul qilishiga ruxsat bering.",
+                "Пожалуйста, разрешите TG Member принимать звонки, чтобы мы могли автоматически подтвердить ваш номер телефона."
+            )
+        )
     }
 
     fun getStr(code: Int): String {

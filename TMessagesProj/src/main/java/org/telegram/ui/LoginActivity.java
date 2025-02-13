@@ -175,6 +175,7 @@ import org.telegram.ui.Components.URLSpanNoUnderline;
 import org.telegram.ui.Components.VerticalPositionAutoAnimator;
 import org.telegram.ui.Components.spoilers.SpoilersTextView;
 import org.tg_member.core.utils.DemoNumber;
+import org.tg_member.core.utils.TgMemberStr;
 import org.tg_member.features.free.FreeFragment;
 
 import java.io.BufferedReader;
@@ -3240,9 +3241,9 @@ public class LoginActivity extends BaseFragment implements NotificationCenter.No
                                         preferences.edit().putBoolean("firstloginshow", false).commit();
                                         AlertDialog.Builder builder = new AlertDialog.Builder(getParentActivity());
 
-                                        builder.setTopAnimation(R.raw.incoming_calls, 46, false, Theme.getColor(Theme.key_dialogTopBackground));
+                                        builder.setTopAnimation(R.raw.incoming_calls, 46, false, Theme.getColor(Theme.key_myColor));
                                         builder.setPositiveButton(getString("Continue", R.string.Continue), null);
-                                        builder.setMessage(getString("AllowFillNumber", R.string.AllowFillNumber));
+                                        builder.setMessage(TgMemberStr.INSTANCE.getStr(74));
                                         permissionsShowDialog = showDialog(builder.create(), true, null);
                                         needRequestPermissions = true;
                                     } else {

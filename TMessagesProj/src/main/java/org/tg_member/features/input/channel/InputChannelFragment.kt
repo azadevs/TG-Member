@@ -65,6 +65,7 @@ class InputChannelFragment(private val orderDisplayData: OrderDisplayData) : Bas
         binding.root.setBackgroundColor(Theme.getColor(Theme.key_iv_navigationBackground))
         binding.tvRule.setTextColor(Theme.getColor(Theme.key_chats_menuItemText))
         binding.edtInputLink.setTextColor(Theme.getColor(Theme.key_chats_menuItemText))
+        binding.edtInputLink.setHintTextColor(Theme.getColor(Theme.key_dialogTextHint))
         binding.sendBtn.setTextColor(Theme.getColor(Theme.key_chats_menuName))
         binding.sendBtn.text = TgMemberStr.getStr(43)
         binding.edtInputLink.hint = TgMemberStr.getStr(41)
