@@ -8,10 +8,7 @@ import org.telegram.messenger.R
 import org.telegram.messenger.databinding.FragmentHomeBinding
 import org.telegram.messenger.databinding.ItemTypeTabBinding
 import org.telegram.ui.ActionBar.Theme
-import org.telegram.ui.LaunchActivity
-import org.tg_member.core.utils.TgMemberStr
-import org.tg_member.features.dashboard.DashboardFragment
-import org.tg_member.features.dashboard.DashboardFragment.Companion
+import org.tg_member.features.utils.TgMemberStr
 import org.tg_member.features.home.adapters.HomePagerAdapter
 import org.tg_member.features.home.model.HomeItem
 

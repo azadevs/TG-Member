@@ -16,13 +16,12 @@ import androidx.core.content.res.ResourcesCompat
 import org.telegram.messenger.ApplicationLoader
 import org.telegram.messenger.R
 import org.telegram.messenger.databinding.LoginFragmentBinding
-import org.telegram.ui.ActionBar.ActionBar
 import org.telegram.ui.ActionBar.BaseFragment
 import org.telegram.ui.ActionBar.Theme
 import org.telegram.ui.Components.LayoutHelper
 import org.telegram.ui.LaunchActivity
-import org.tg_member.core.utils.TGMemberUtilities.isValidEmail
-import org.tg_member.core.utils.TgMemberStr
+import org.tg_member.features.utils.TGMemberUtilities.isValidEmail
+import org.tg_member.features.utils.TgMemberStr
 import org.tg_member.features.dashboard.DashboardFragment
 
 

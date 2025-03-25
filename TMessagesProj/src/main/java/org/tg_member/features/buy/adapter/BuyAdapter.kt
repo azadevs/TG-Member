@@ -1,16 +1,14 @@
 package org.tg_member.features.buy.adapter
 
 import android.annotation.SuppressLint
-import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import org.telegram.messenger.R
 import org.telegram.messenger.databinding.BuyVipItemBinding
-import org.telegram.messenger.databinding.ItemVipPriceBinding
 import org.telegram.ui.ActionBar.Theme
-import org.tg_member.core.utils.TGMemberUtilities
+import org.tg_member.features.utils.TGMemberUtilities
 import org.tg_member.features.vip.model.VipDisplayData
 
 class BuyAdapter(private var vipPriceList: ArrayList<VipDisplayData>) :

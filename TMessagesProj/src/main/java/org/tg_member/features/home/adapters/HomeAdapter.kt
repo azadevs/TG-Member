@@ -1,7 +1,6 @@
 package org.tg_member.features.home.adapters
 
 import android.annotation.SuppressLint
-import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,7 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import org.telegram.messenger.R
 import org.telegram.messenger.databinding.ItemVipPriceBinding
 import org.telegram.ui.ActionBar.Theme
-import org.tg_member.core.utils.TGMemberUtilities
+import org.tg_member.features.utils.TGMemberUtilities
 import org.tg_member.features.home.model.OrderDisplayData
 
 class HomeAdapter(var list: ArrayList<OrderDisplayData>, var homeClick: HomeClick) :
@@ -31,7 +30,7 @@ class HomeAdapter(var list: ArrayList<OrderDisplayData>, var homeClick: HomeClic
                     discount.visibility = View.VISIBLE
                     discount.apply {
                         text = "${orderDisplayData.discount}%"
-                            background=TGMemberUtilities.getDrawableStateList(R.drawable.transfer_btn,root.context,Theme.getColor(Theme.key_item_discount))
+                            background= TGMemberUtilities.getDrawableStateList(R.drawable.transfer_btn,root.context,Theme.getColor(Theme.key_item_discount))
                         setTextColor(Theme.getColor(Theme.key_chats_sentError))
                     }
                 }

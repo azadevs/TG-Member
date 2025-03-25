@@ -4,7 +4,7 @@ import android.graphics.Color
 import org.telegram.messenger.databinding.TransferFragmentBinding
 import org.telegram.ui.ActionBar.Theme
 import org.telegram.ui.LaunchActivity
-import org.tg_member.core.utils.TgMemberStr
+import org.tg_member.features.utils.TgMemberStr
 import org.tg_member.features.transfer.history.TransferHistoryFragment
 
 class TransferFragment(private var transferFragmentBinding: TransferFragmentBinding) {

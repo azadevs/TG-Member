@@ -9,8 +9,8 @@ import org.telegram.messenger.databinding.FragmentFreeBinding
 import org.telegram.ui.ActionBar.Theme
 import org.telegram.ui.LaunchActivity
 import org.telegram.ui.LoginActivity
-import org.tg_member.core.utils.TGMemberUtilities.getAccounts
-import org.tg_member.core.utils.TgMemberStr
+import org.tg_member.features.utils.TGMemberUtilities.getAccounts
+import org.tg_member.features.utils.TgMemberStr
 import org.tg_member.features.details.AccountDetailsFragment
 import org.tg_member.features.free.adapter.FreeAdapter
 

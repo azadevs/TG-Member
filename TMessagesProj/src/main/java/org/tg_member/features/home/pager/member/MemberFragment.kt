@@ -13,7 +13,7 @@ import org.telegram.messenger.databinding.FragmentMemberBinding
 import org.telegram.messenger.databinding.ItemTabCountryBinding
 import org.telegram.ui.ActionBar.Theme
 import org.telegram.ui.LaunchActivity
-import org.tg_member.core.utils.TGMemberUtilities.showNotEnoughMoneyDialog
+import org.tg_member.features.utils.TGMemberUtilities.showNotEnoughMoneyDialog
 import org.tg_member.features.home.HomeFragment
 import org.tg_member.features.home.adapters.HomeAdapter
 import org.tg_member.features.home.model.OrderDisplayData

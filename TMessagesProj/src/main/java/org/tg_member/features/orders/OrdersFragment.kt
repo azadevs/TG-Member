@@ -6,11 +6,11 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import org.telegram.messenger.R
 import org.telegram.messenger.databinding.FragmentOrdersBinding
 import org.telegram.ui.ActionBar.Theme
-import org.tg_member.core.adapter.TypeSpinnerAdapter
-import org.tg_member.core.utils.TGMemberUtilities.getDrawableStateList
-import org.tg_member.core.utils.TGMemberUtilities.getStatus
-import org.tg_member.core.utils.TGMemberUtilities.getTypes
-import org.tg_member.core.utils.TgMemberStr
+import org.tg_member.features.orders.adapter.TypeSpinnerAdapter
+import org.tg_member.features.utils.TGMemberUtilities.getDrawableStateList
+import org.tg_member.features.utils.TGMemberUtilities.getStatus
+import org.tg_member.features.utils.TGMemberUtilities.getTypes
+import org.tg_member.features.utils.TgMemberStr
 import org.tg_member.features.orders.adapter.OrdersAdapter
 import org.tg_member.features.orders.model.Order
 

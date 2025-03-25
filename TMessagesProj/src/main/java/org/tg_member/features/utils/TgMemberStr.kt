@@ -1,4 +1,4 @@
-package org.tg_member.core.utils
+package org.tg_member.features.utils
 
 import android.content.Context
 import android.content.SharedPreferences

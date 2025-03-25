@@ -3,8 +3,7 @@ package org.tg_member.features.vip
 import android.content.Context
 import org.telegram.messenger.databinding.FragmentVipBinding
 import org.telegram.ui.ActionBar.Theme
-import org.telegram.ui.LaunchActivity
-import org.tg_member.core.utils.TgMemberStr
+import org.tg_member.features.utils.TgMemberStr
 import org.tg_member.features.vip.adapter.VipPagerAdapter
 import org.tg_member.features.vip.model.VipItem
 

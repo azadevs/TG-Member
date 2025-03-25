@@ -9,8 +9,8 @@ import org.telegram.messenger.R
 import org.telegram.messenger.databinding.FragmentDashboardBinding
 import org.telegram.ui.ActionBar.BaseFragment
 import org.telegram.ui.LaunchActivity
-import org.tg_member.core.utils.TGMemberUtilities
-import org.tg_member.core.utils.TgMemberStr
+import org.tg_member.features.utils.TGMemberUtilities
+import org.tg_member.features.utils.TgMemberStr
 import org.tg_member.features.dashboard.adapter.DashboardPagerAdapter
 import org.tg_member.features.dashboard.model.DashboardItem
 

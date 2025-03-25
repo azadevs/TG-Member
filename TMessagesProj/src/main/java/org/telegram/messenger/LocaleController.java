@@ -29,7 +29,7 @@ import org.telegram.tgnet.ConnectionsManager;
 import org.telegram.tgnet.TLObject;
 import org.telegram.tgnet.TLRPC;
 import org.telegram.ui.RestrictedLanguagesSelectActivity;
-import org.tg_member.core.utils.TgMemberStr;
+import org.tg_member.features.utils.TgMemberStr;
 import org.xmlpull.v1.XmlPullParser;
 
 import java.io.BufferedWriter;

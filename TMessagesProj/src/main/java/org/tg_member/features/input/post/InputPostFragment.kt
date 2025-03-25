@@ -13,8 +13,8 @@ import org.telegram.messenger.R
 import org.telegram.messenger.databinding.FragmentInputPostBinding
 import org.telegram.ui.ActionBar.BaseFragment
 import org.telegram.ui.ActionBar.Theme
-import org.tg_member.core.utils.TGMemberUtilities
-import org.tg_member.core.utils.TgMemberStr
+import org.tg_member.features.utils.TGMemberUtilities
+import org.tg_member.features.utils.TgMemberStr
 
 /**
  * Created by : Azamat Kalmurzaev

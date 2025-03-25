@@ -1,4 +1,4 @@
-package org.tg_member.core.adapter
+package org.tg_member.features.orders.adapter
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -8,7 +8,7 @@ import android.widget.BaseAdapter
 import org.telegram.messenger.R
 import org.telegram.messenger.databinding.ItemTypeSpinnerBinding
 import org.telegram.ui.ActionBar.Theme
-import org.tg_member.core.model.SpinnerTypeData
+import org.tg_member.features.utils.SpinnerTypeData
 
 /**
  * Created by : Azamat Kalmurzaev

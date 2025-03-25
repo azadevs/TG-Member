@@ -1,4 +1,4 @@
-package org.tg_member.core.utils
+package org.tg_member.features.utils
 
 import android.content.Context
 import android.graphics.drawable.GradientDrawable
@@ -25,7 +25,6 @@ import org.telegram.ui.ActionBar.ActionBar
 import org.telegram.ui.ActionBar.Theme
 import org.telegram.ui.ActionBar.Theme.ThemeInfo
 import org.telegram.ui.Components.LayoutHelper
-import org.tg_member.core.model.SpinnerTypeData
 import org.tg_member.features.dashboard.DashboardFragment
 import org.tg_member.features.free.model.AccountData
 

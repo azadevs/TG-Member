@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.RecyclerView
 import org.telegram.messenger.R
 import org.telegram.messenger.databinding.ItemOrderBinding
 import org.telegram.ui.ActionBar.Theme
-import org.tg_member.core.utils.TgMemberStr
+import org.tg_member.features.utils.TgMemberStr
 import org.tg_member.features.orders.model.Order
 
 /**

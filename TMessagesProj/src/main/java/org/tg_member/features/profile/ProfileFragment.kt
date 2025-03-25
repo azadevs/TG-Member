@@ -6,13 +6,10 @@ import android.content.Context
 import android.content.Context.MODE_PRIVATE
 import android.content.DialogInterface
 import android.content.Intent
-import android.content.SharedPreferences
-import android.content.res.ColorStateList
 import android.net.Uri
 import android.text.InputType
 import android.text.TextUtils
 import android.view.View
-import android.widget.CompoundButton
 import android.widget.Toast
 import androidx.core.content.ContextCompat.getSystemService
 import androidx.core.content.ContextCompat.startActivity
@@ -23,9 +20,9 @@ import org.telegram.messenger.databinding.FragmentProfileBinding
 import org.telegram.ui.ActionBar.AlertDialog
 import org.telegram.ui.ActionBar.Theme
 import org.telegram.ui.LaunchActivity
-import org.tg_member.core.utils.TGMemberUtilities.changeTheme
-import org.tg_member.core.utils.TGMemberUtilities.isValidEmail
-import org.tg_member.core.utils.TgMemberStr
+import org.tg_member.features.utils.TGMemberUtilities.changeTheme
+import org.tg_member.features.utils.TGMemberUtilities.isValidEmail
+import org.tg_member.features.utils.TgMemberStr
 import org.tg_member.features.dashboard.DashboardFragment
 import org.tg_member.features.login.LoginFragment
 
@@ -147,7 +144,7 @@ class ProfileFragment(var binding: FragmentProfileBinding) {
             cardTheme.setCardBackgroundColor(Theme.getColor(Theme.key_windowBackgroundWhite))
             cardLogOut.setCardBackgroundColor(Theme.getColor(Theme.key_windowBackgroundWhite))
             tvLogOut.setTextColor(Theme.getColor(Theme.key_color_red))
-            tvLogOut.text=TgMemberStr.getStr(23)
+            tvLogOut.text= TgMemberStr.getStr(23)
             ivLogOut.setColorFilter(Theme.getColor(Theme.key_chats_menuItemText))
             themeSwitch.setTextColor(Theme.getColor(Theme.key_chats_menuItemText))
             themeSwitch.text =

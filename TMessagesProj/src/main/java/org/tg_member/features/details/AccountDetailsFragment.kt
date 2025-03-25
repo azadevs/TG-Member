@@ -35,9 +35,9 @@ import org.telegram.ui.Components.BulletinFactory
 import org.telegram.ui.Components.CustomPopupMenu
 import org.telegram.ui.Components.LayoutHelper
 import org.tg_member.core.utils.JoinChannels
-import org.tg_member.core.utils.TGMemberUtilities
-import org.tg_member.core.utils.TGMemberUtilities.getAccounts
-import org.tg_member.core.utils.TgMemberStr
+import org.tg_member.features.utils.TGMemberUtilities
+import org.tg_member.features.utils.TGMemberUtilities.getAccounts
+import org.tg_member.features.utils.TgMemberStr
 import org.tg_member.features.free.FreeFragment
 import kotlin.math.abs
 

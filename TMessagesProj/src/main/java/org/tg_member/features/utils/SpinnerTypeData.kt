@@ -1,4 +1,4 @@
-package org.tg_member.core.model
+package org.tg_member.features.utils
 
 import androidx.annotation.DrawableRes
 

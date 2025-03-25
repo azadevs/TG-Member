@@ -175,7 +175,7 @@ import org.telegram.ui.Components.URLSpanNoUnderline;
 import org.telegram.ui.Components.VerticalPositionAutoAnimator;
 import org.telegram.ui.Components.spoilers.SpoilersTextView;
 import org.tg_member.core.utils.DemoNumber;
-import org.tg_member.core.utils.TgMemberStr;
+import org.tg_member.features.utils.TgMemberStr;
 import org.tg_member.features.free.FreeFragment;
 
 import java.io.BufferedReader;

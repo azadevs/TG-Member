@@ -3,7 +3,7 @@ package org.tg_member.features.gift
 import android.graphics.Color
 import org.telegram.messenger.databinding.GiftFragmentBinding
 import org.telegram.ui.ActionBar.Theme
-import org.tg_member.core.utils.TgMemberStr
+import org.tg_member.features.utils.TgMemberStr
 
 class GiftFragment(var giftFragmentBinding: GiftFragmentBinding) {
     fun createView() {

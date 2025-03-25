@@ -14,7 +14,7 @@ import org.telegram.messenger.databinding.FragmentTransferHistoryBinding
 import org.telegram.ui.ActionBar.BaseFragment
 import org.telegram.ui.ActionBar.Theme
 import org.telegram.ui.Components.LayoutHelper
-import org.tg_member.core.utils.TgMemberStr
+import org.tg_member.features.utils.TgMemberStr
 import org.tg_member.features.transfer.history.adapter.TransferAdapter
 import org.tg_member.features.transfer.history.model.TransferDisplayData
 

@@ -13,9 +13,9 @@ import org.telegram.ui.ActionBar.AlertDialog
 import org.telegram.ui.ActionBar.BaseFragment
 import org.telegram.ui.ActionBar.Theme
 import org.tg_member.core.utils.LoadSelectedChannel
-import org.tg_member.core.utils.TGMemberUtilities
-import org.tg_member.core.utils.TGMemberUtilities.getAccounts
-import org.tg_member.core.utils.TgMemberStr
+import org.tg_member.features.utils.TGMemberUtilities
+import org.tg_member.features.utils.TGMemberUtilities.getAccounts
+import org.tg_member.features.utils.TgMemberStr
 import org.tg_member.features.home.model.OrderDisplayData
 import org.tg_member.features.input.channel.adapters.ChannelAdapter
 
@@ -73,8 +73,8 @@ class InputChannelFragment(private val orderDisplayData: OrderDisplayData) : Bas
         progressDialog = AlertDialog(context, AlertDialog.ALERT_TYPE_SPINNER)
         binding.tvFirstRule.setTextColor(Theme.getColor(Theme.key_chats_menuItemText))
         binding.tvFollowingOrder.setTextColor(Theme.getColor(Theme.key_chats_menuItemText))
-        binding.tvFirstRule.text=TgMemberStr.getStr(71)
-        binding.tvFollowingOrder.text=TgMemberStr.getStr(70)
+        binding.tvFirstRule.text= TgMemberStr.getStr(71)
+        binding.tvFollowingOrder.text= TgMemberStr.getStr(70)
     }
 
     private fun configureActionBar() {
